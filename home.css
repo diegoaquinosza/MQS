@@ -62,7 +62,7 @@ body {
     font-weight: 500;
 }
 
-/* --- WARM CARD (COM DICA EM DESTAQUE) --- */
+/* --- WARM CARD (COM DICA) --- */
 .warm-card {
     background: var(--surface);
     border-radius: var(--radius-card);
@@ -72,10 +72,9 @@ body {
     animation: fadeIn 0.5s ease;
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Espaçamento maior entre elementos */
+    gap: 20px;
 }
 
-/* Nova Caixa da Dica */
 .warm-tip-box {
     display: flex;
     flex-direction: column;
@@ -84,18 +83,19 @@ body {
 }
 
 .tip-icon {
-    font-size: 3rem; /* Emoji grande */
+    font-size: 3rem;
 }
 
+/* DICA SUAVIZADA (AJUSTE SOLICITADO) */
 .tip-text {
-    font-size: 1.1rem; /* Texto maior e legível */
-    font-weight: 600;
-    color: var(--primary); /* Cor de destaque */
-    line-height: 1.4;
-    font-style: italic;
+    font-size: 1.05rem;
+    font-weight: 500;   /* Mais leve (Medium) */
+    color: var(--primary);
+    line-height: 1.5;
+    font-style: normal; /* Sem itálico */
+    opacity: 0.9;
 }
 
-/* Caixa de Contexto (Curso Salvo) */
 .saved-context-box {
     background: #F3F4F6;
     border-radius: 16px;
@@ -108,14 +108,38 @@ body {
 #saved-course { font-weight: 700; color: var(--primary); }
 #saved-details { font-size: 0.9rem; color: var(--text-muted); }
 
-.btn-text {
-    background: none;
+/* BOTÃO TONAL (MATERIAL 3) */
+.btn-tonal {
+    background: #E0F2F1; /* Verde menta suave */
+    color: var(--primary-hover);
     border: none;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    text-decoration: underline;
+    padding: 12px 24px;
+    border-radius: var(--radius-pill);
+    width: 100%;
+    
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    
     cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 4px;
 }
+
+.btn-tonal:hover {
+    background: #B2DFDB;
+    transform: translateY(-1px);
+}
+
+.btn-tonal span.material-symbols-rounded {
+    font-size: 20px;
+}
+
 
 /* --- FORMULÁRIO --- */
 .flow-form {
@@ -269,5 +293,3 @@ body {
   75% { transform: translateX(5px); }
 }
 .shake-anim { animation: shake 0.3s ease-in-out; }
-
-/* REMOVIDO: .tip-footer */
