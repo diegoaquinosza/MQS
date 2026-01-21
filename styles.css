@@ -30,7 +30,7 @@ body {
 }
 
 /* ==========================================================================
-   HEADER (VISUAL CARD FLUTUANTE - COMPACTO)
+   HEADER (VISUAL CARD FLUTUANTE - LARGURA MOBILE EXACT MATCH)
    ========================================================================== */
 .context-header {
     position: relative; 
@@ -46,13 +46,13 @@ body {
 
 .header-content {
     /* TRANSFORMAÇÃO EM CARD */
-    background: #FFFFFF; /* Branco puro */
-    border-radius: 24px; /* Curvas suaves */
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08); /* Sombra igual da Home */
+    background: #FFFFFF;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
     
-    /* Tamanho Compacto (CORREÇÃO AQUI) */
+    /* Tamanho EXATO da Home (420px) */
     width: 100%;
-    max-width: 600px; /* Mantém compacto mesmo no Desktop */
+    max-width: 420px; /* Alinhado pixel-perfect com a Home */
     margin: 0 auto;
     padding: 16px 24px;
     
@@ -66,15 +66,14 @@ body {
     transition: max-width 0.3s ease;
 }
 
-/* Ajuste Desktop: Mantém o header compacto, mas centraliza o conteúdo */
+/* Desktop: Força a manter 420px para consistência total */
 @media (min-width: 1024px) {
     .header-content {
-        /* AQUI ESTAVA 1400px. Mudamos para manter o visual de card */
-        max-width: 600px; 
+        max-width: 420px; 
     }
 }
 
-/* Badge MQS (Pequeno) */
+/* Badge MQS */
 .logo-small {
     background: var(--primary);
     color: white;
@@ -85,12 +84,16 @@ body {
     font-family: 'Outfit', sans-serif;
     letter-spacing: 0.5px;
     box-shadow: 0 4px 10px rgba(0, 137, 123, 0.2);
+    /* Garante que o logo não encolha se o texto for grande */
+    flex-shrink: 0; 
 }
 
 /* Textos */
 .user-context {
     display: flex;
     flex-direction: column;
+    /* Garante que o texto quebre linha se precisar */
+    min-width: 0; 
 }
 
 .user-context h2 { 
@@ -100,6 +103,10 @@ body {
     color: var(--text-main); 
     margin: 0; 
     line-height: 1.2;
+    /* Truncar texto se for muito longo para 420px */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .user-context span { 
@@ -116,10 +123,10 @@ body {
 
 
 /* ==========================================================================
-   SISTEMA DE LAYOUT (ALINHAMENTO E RESPIRO)
+   SISTEMA DE LAYOUT
    ========================================================================== */
 
-/* 1. MODO VERTICAL (Mobile/Tablet Padrão) */
+/* 1. MODO VERTICAL */
 .schedule-view {
     display: flex;
     flex-direction: column;
@@ -128,14 +135,14 @@ body {
     align-items: center; 
 }
 
-/* Card Vertical: Trava em 600px */
+/* Card Vertical: Trava em 600px (Cards podem ser um pouco mais largos que o header se quiser, ou pode mudar aqui também) */
 .schedule-view .day-card {
     width: 100%;
     max-width: 600px; 
 }
 
 
-/* 2. MODO HORIZONTAL (Toggle) */
+/* 2. MODO HORIZONTAL */
 .schedule-view--horizontal {
     display: grid;
     grid-auto-flow: column;
@@ -160,9 +167,8 @@ body {
 }
 
 
-/* 3. MODO DESKTOP (Telas > 1024px) */
+/* 3. MODO DESKTOP */
 @media (min-width: 1024px) {
-    /* Grade de Aulas expandida */
     .schedule-view,
     .schedule-view--horizontal {
         display: grid;
@@ -179,7 +185,6 @@ body {
         overflow-x: auto;
     }
 
-    /* Reseta larguras do mobile */
     .day-card, 
     .schedule-view .day-card {
         width: auto;
