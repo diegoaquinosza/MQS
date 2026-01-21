@@ -91,8 +91,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Reset
+    // 4. Nova Busca / Voltar (Correção)
     searchBtn.addEventListener('click', () => {
-        if(confirm("Nova busca?")) window.location.reload();
+        // Redireciona para o arquivo inicial.
+        // IMPORTANTE: Se o nome do seu arquivo de busca for 'home.html' ou 'selecao.html', altere o nome abaixo.
+        // Se estiver usando pasta raiz, pode usar './'
+        window.location.href = 'index.html'; 
     });
 
     // Share

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MQS - Horários</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+
+<body>
+
+    <header class="context-header">
+        <div class="header-content">
+            <span class="logo-small">MQS</span>
+            <div class="user-context">
+                <h2 id="display-course">Sistemas para Internet</h2>
+                <span id="display-period">2º Período • Noturno</span>
+            </div>
+        </div>
+    </header>
+
+    <main id="app-viewport">
+        <section id="schedule-view" class="schedule-view">
+            </section>
+    </main>
+
+    <nav class="floating-dock">
+        <button class="dock-btn-icon" id="btn-search" title="Nova Busca">
+            <span class="material-symbols-rounded">search</span>
+        </button>
+        <button class="dock-btn-icon" id="btn-toggle-view" title="Alternar Visualização">
+            <span class="material-symbols-rounded" id="toggle-icon">view_week</span>
+        </button>
+        <button class="dock-btn-primary" id="btn-share" title="Salvar Grade">
+            <span class="material-symbols-rounded">ios_share</span>
+            <span>Compartilhar</span>
+        </button>
+    </nav>
+
+    <script src="app.js"></script>
+</body>
+</html>
