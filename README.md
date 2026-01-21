@@ -58,19 +58,20 @@ Conforme solicitado nas instruções do projeto:
 
 ## 6. Como Executar
 
-1. Baixe o repositório.
-2. Utilize o **Live Server** (VS Code) ou rode via terminal:
-   ```bash
-   npx http-server .
-3. Acesse http://127.0.0.1:8080.
+1.  Baixe este repositório ou descompacte o arquivo ZIP.
+2.  Não é necessário `npm install` (Projeto Vanilla).
+3.  Abra o arquivo `index.html` em seu navegador preferido.
+    * *Dica:* Utilize o "Modo Responsivo" (F12) do navegador para testar a experiência mobile.
+    * *Nota:* Para testar o `fetch` do JSON localmente sem erros de CORS, recomenda-se usar uma extensão como "Live Server" ou rodar `npx http-server`.
 
 ---
 
-## 7. Declaração de Integridade e IA
-Declaro que este código foi desenvolvido majoritariamente por mim. Ferramentas de IA (Google Gemini) foram utilizadas como "Parceiro de Programação" para:
+## 7. Declaração de Integridade Acadêmica
+Declaro que este código foi desenvolvido majoritariamente por mim, com apoio de ferramentas de IA (Google Gemini) para:
+1.  Geração de massa de dados fictícia (`db.json`).
+2.  Refinamento de CSS para compatibilidade Cross-Browser.
+3.  Revisão de lógica para otimização de laços e condicionais.
+Todas as decisões arquiteturais (BEM, escolha de bibliotecas, UX Flow) foram tomadas e validadas manualmente pelo aluno.
 
-- Geração da massa de dados (db.json).
-- Refinamento de CSS (Design System).
-- Revisão de sintaxe e boas práticas. Todas as decisões lógicas foram validadas manualmente pelo aluno.
-
-Desenvolvido por: Diego Aquino Souza - IFTO
+---
+**Desenvolvido por:** Diego Aquino Souza - IFTO
