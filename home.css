@@ -1,18 +1,13 @@
 :root {
-    /* Paleta baseada na Foto (Teal/Green) */
     --primary: #00695C;          
     --primary-hover: #004D40;
-    
     --bg-body: #F0F2F5;
     --surface: #FFFFFF;
-    
     --text-main: #1F2937;
     --text-muted: #6B7280;
     --border-light: #E5E7EB;
-    
     --radius-pill: 999px;
     --radius-card: 32px;
-    
     --shadow-hero: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
 }
 
@@ -38,7 +33,6 @@ body {
     margin-top: 40px;
 }
 
-/* --- UTILITÁRIOS (Lógica) --- */
 .hidden { display: none !important; }
 
 /* --- HERO CARD --- */
@@ -68,7 +62,7 @@ body {
     font-weight: 500;
 }
 
-/* --- WARM CARD (Boas Vindas) --- */
+/* --- WARM CARD (COM DICA EM DESTAQUE) --- */
 .warm-card {
     background: var(--surface);
     border-radius: var(--radius-card);
@@ -78,17 +72,30 @@ body {
     animation: fadeIn 0.5s ease;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 20px; /* Espaçamento maior entre elementos */
 }
 
-.welcome-icon { font-size: 3rem; margin-bottom: 4px; }
-
-.warm-title {
-    font-size: 1.25rem;
-    color: var(--text-main);
-    margin-bottom: 8px;
+/* Nova Caixa da Dica */
+.warm-tip-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
 }
 
+.tip-icon {
+    font-size: 3rem; /* Emoji grande */
+}
+
+.tip-text {
+    font-size: 1.1rem; /* Texto maior e legível */
+    font-weight: 600;
+    color: var(--primary); /* Cor de destaque */
+    line-height: 1.4;
+    font-style: italic;
+}
+
+/* Caixa de Contexto (Curso Salvo) */
 .saved-context-box {
     background: #F3F4F6;
     border-radius: 16px;
@@ -96,7 +103,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    margin-bottom: 12px;
 }
 
 #saved-course { font-weight: 700; color: var(--primary); }
@@ -109,7 +115,6 @@ body {
     font-size: 0.9rem;
     text-decoration: underline;
     cursor: pointer;
-    margin-top: 8px;
 }
 
 /* --- FORMULÁRIO --- */
@@ -129,7 +134,6 @@ body {
     margin-left: 4px;
 }
 
-/* Input Pílula */
 .input-wrapper {
     position: relative;
     display: flex;
@@ -156,9 +160,9 @@ body {
     outline: none;
     border-color: var(--primary);
     border-width: 2px;
+    padding: 15px 15px 15px 51px;
 }
 
-/* Segmented Button (Outline) */
 .segmented-control {
     display: flex;
     background: transparent;
@@ -183,7 +187,6 @@ body {
     font-weight: 600;
 }
 
-/* Chips (Círculos Outline) */
 .horizontal-scroll-wrapper {
     position: relative;
     margin: 0 -20px;
@@ -218,7 +221,6 @@ body {
     transform: scale(1.05);
 }
 
-/* Scroll Fade */
 .scroll-fade {
     position: absolute;
     right: 0; top: 0;
@@ -227,7 +229,6 @@ body {
     pointer-events: none;
 }
 
-/* Feedback Msg */
 .feedback-msg {
     display: flex;
     align-items: center;
@@ -240,10 +241,8 @@ body {
     font-size: 0.9rem;
     font-weight: 500;
     border: 1px solid #EF9A9A;
-    animation: fadeIn 0.3s;
 }
 
-/* Botão CTA */
 .cta-primary {
     width: 100%;
     background: var(--primary);
@@ -260,24 +259,15 @@ body {
 .cta-primary:hover { background: var(--primary-hover); }
 .cta-primary:active { transform: scale(0.98); }
 
-/* Footer Dica */
-.tip-footer {
-    text-align: center;
-    margin-top: 20px;
-    opacity: 0.6;
-    font-size: 0.8rem;
-    font-style: italic;
-    color: var(--text-muted);
-}
-
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-5px); }
   75% { transform: translateX(5px); }
 }
 .shake-anim { animation: shake 0.3s ease-in-out; }
+
+/* REMOVIDO: .tip-footer */

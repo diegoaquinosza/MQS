@@ -52,13 +52,14 @@ body {
     
     /* Tamanho EXATO da Home (420px) */
     width: 100%;
-    max-width: 420px; /* Alinhado pixel-perfect com a Home */
+    max-width: 420px; 
     margin: 0 auto;
     padding: 16px 24px;
     
     /* Layout Interno */
     display: flex;
     align-items: center;
+    justify-content: center; /* <--- AQUI: Centraliza o conjunto Logo + Texto */
     gap: 16px;
     
     /* Animação */

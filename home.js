@@ -10,6 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const quickBtn = document.getElementById('btn-quick-access');
     const resetBtn = document.getElementById('btn-reset-app');
     
+    // NOVOS Elementos da Dica
+    const tipTextElement = document.getElementById('warm-tip-text');
+    // const tipIconElement = document.getElementById('warm-tip-icon'); // Ícone é fixo por enquanto
+    
     // Elementos do Formulário
     const courseInput = document.getElementById('course-input');
     const shiftBtns = document.querySelectorAll('.segment-btn');
@@ -17,10 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('btn-ver-horarios');
     const feedbackMsg = document.getElementById('form-feedback');
 
-    // Estado Inicial do Formulário
     let userSelection = { course: '', shift: 'matutino', period: '2' };
 
-    // 🔒 1. LISTA DE CURSOS PERMITIDOS (Whitelist)
     const ALLOWED_COURSES = [
         "Sistemas para Internet",
         "sistemas para internet", 
@@ -49,10 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
     // INTERAÇÃO
     // ============================================================
-    
-    quickBtn.addEventListener('click', () => {
-        window.location.href = 'grade.html';
-    });
+    quickBtn.addEventListener('click', () => window.location.href = 'grade.html');
 
     resetBtn.addEventListener('click', () => {
         localStorage.removeItem('mqs_user_data');
@@ -62,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
         feedbackMsg.classList.add('hidden');
     });
 
-    // Seleção de Turno
     shiftBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             userSelection.shift = btn.getAttribute('data-value');
@@ -70,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Seleção de Período
     periodBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             userSelection.period = btn.getAttribute('data-value');
@@ -79,80 +76,62 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ============================================================
-    // 🛡️ VALIDAÇÃO RIGOROSA (SUBMIT)
+    // VALIDAÇÃO
     // ============================================================
     submitBtn.addEventListener('click', () => {
         const courseValue = courseInput.value.trim();
+        if (!courseValue) { showError("Por favor, digite o nome do curso!"); return; }
 
-        // 1. Validação: Campo Vazio
-        if (!courseValue) {
-            showError("Por favor, digite o nome do curso!");
-            return;
-        }
-
-        // 2. Validação: Curso Existe?
         const isSistemas = ALLOWED_COURSES.includes(courseValue);
-        
-        if (!isSistemas) {
-            showError(`O curso "${courseValue}" estará disponível em breve!`);
-            return;
-        }
+        if (!isSistemas) { showError(`O curso "${courseValue}" estará disponível em breve!`); return; }
 
-        // 3. Validação: Combinação Exata (SÓ TEMOS 2º MATUTINO)
-        // Se for Sistemas, MAS o turno ou período estiverem errados:
         if (isSistemas) {
             const isMatutino = userSelection.shift === 'matutino';
             const isSegundoPeriodo = userSelection.period === '2';
-
             if (!isMatutino || !isSegundoPeriodo) {
-                // Formata mensagem bonita
                 const turnoEscolhido = userSelection.shift.charAt(0).toUpperCase() + userSelection.shift.slice(1);
-                showError(`A grade de ${userSelection.period}º Período ${turnoEscolhido} ainda não foi cadastrada. Apenas 2º Matutino disponível.`);
+                showError(`Grade de ${userSelection.period}º ${turnoEscolhido} não cadastrada. Apenas 2º Matutino disponível.`);
                 return;
             }
         }
 
-        // SUCESSO: Passou por todas as barreiras
         userSelection.course = courseValue;
         localStorage.setItem('mqs_user_data', JSON.stringify(userSelection));
         window.location.href = 'grade.html';
     });
 
-    // Funções Auxiliares
     function updateVisuals(nodeList, value) {
         nodeList.forEach(btn => {
             if (btn.getAttribute('data-value') === value) {
                 btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
+            } else { btn.classList.remove('active'); }
         });
     }
 
     function showError(message) {
-        feedbackMsg.textContent = message;
+        feedbackMsg.innerHTML = `<span class="material-symbols-rounded">error</span> ${message}`;
         feedbackMsg.classList.remove('hidden');
         courseInput.style.borderColor = '#C62828';
-        
-        // Se o erro for de seleção (não de digitação), destaca o form inteiro visualmente
         form.classList.add('shake-anim');
         setTimeout(() => form.classList.remove('shake-anim'), 500);
     }
 
     // ============================================================
-    // REQUISITO: DICA DO DIA
+    // DICA DO DIA (NOVO LOCAL)
     // ============================================================
-    const tipElement = document.getElementById('daily-tip-text');
-    
-    fetch('https://api.quotable.io/random?tags=technology,wisdom&maxLength=60')
-        .then(response => {
-            if (!response.ok) throw new Error('Falha na rede');
-            return response.json();
-        })
-        .then(data => {
-            tipElement.textContent = `💡 "${data.content}"`;
-        })
-        .catch(error => {
-            tipElement.textContent = "💡 Dica: Mantenha o foco e beba água!";
-        });
+    // Se o card de boas-vindas estiver visível, buscamos a dica.
+    if (savedData) {
+        fetch('https://api.quotable.io/random?tags=wisdom,inspiration&maxLength=80')
+            .then(response => {
+                if (!response.ok) throw new Error('Falha na rede');
+                return response.json();
+            })
+            .then(data => {
+                // Insere a dica no novo elemento de destaque
+                tipTextElement.textContent = `"${data.content}"`;
+            })
+            .catch(() => {
+                tipTextElement.textContent = "Mantenha o foco e beba água!";
+            });
+    }
 });

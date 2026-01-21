@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="home.css">
 </head>
 
-<body> <main class="zen-container">
+<body>
+
+    <main class="zen-container">
         
         <header class="hero-card">
             <h1 class="brand-title">MQS</h1>
@@ -21,12 +23,15 @@
         </header>
 
         <div id="warm-welcome" class="warm-card hidden">
-            <div class="welcome-icon">👋</div>
-            <h3 class="warm-title">De volta à labuta?</h3>
+            
+            <div class="warm-tip-box">
+                <span id="warm-tip-icon" class="tip-icon">💡</span>
+                <p id="warm-tip-text" class="tip-text">Carregando sua dose de sabedoria...</p>
+            </div>
             
             <div class="saved-context-box">
-                <span id="saved-course">Sistemas para Internet</span>
-                <span id="saved-details">2º Período • Noite</span>
+                <span id="saved-course">Curso Salvo</span>
+                <span id="saved-details">Detalhes Salvos</span>
             </div>
             
             <button id="btn-quick-access" class="cta-primary">
@@ -39,7 +44,6 @@
         </div>
 
         <form id="selection-form" class="flow-form">
-            
             <div class="form-group">
                 <label for="course-input" class="label-zen">Curso</label>
                 <div class="input-wrapper">
@@ -82,7 +86,7 @@
 
             <div id="form-feedback" class="feedback-msg hidden">
                 <span class="material-symbols-rounded">error</span>
-                Por favor, selecione seu curso!
+                Erro de validação.
             </div>
 
             <div class="action-area">
@@ -90,14 +94,9 @@
                     Ver Horários
                 </button>
             </div>
-
         </form>
 
-        <footer class="tip-footer">
-            <small id="daily-tip-text">Carregando pensamento do dia...</small>
-        </footer>
-
-    </main>
+        </main>
 
     <script src="home.js"></script>
 </body>
