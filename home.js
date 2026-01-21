@@ -20,47 +20,46 @@ document.addEventListener('DOMContentLoaded', () => {
     // Estado Inicial do Formulário
     let userSelection = { course: '', shift: 'matutino', period: '2' };
 
+    // 🔒 1. LISTA DE CURSOS PERMITIDOS (Whitelist)
+    const ALLOWED_COURSES = [
+        "Sistemas para Internet",
+        "sistemas para internet", 
+        "Sistemas Para Internet"
+    ];
+
     // ============================================================
-    // 1. LÓGICA DE START (Cold vs Warm)
+    // LÓGICA DE START
     // ============================================================
     const savedData = localStorage.getItem('mqs_user_data');
 
     if (savedData) {
-        // --- CENÁRIO: ALUNO JÁ CONHECIDO ---
         const data = JSON.parse(savedData);
-        
-        // Esconde form, mostra boas-vindas
         form.classList.add('hidden');
         warmDiv.classList.remove('hidden');
         
-        // Preenche os dados visuais
         savedCourse.textContent = data.course;
-        // Formata turno (Matutino/Noturno)
         const shiftFormatted = data.shift.charAt(0).toUpperCase() + data.shift.slice(1);
         savedDetails.textContent = `${data.period}º Período • ${shiftFormatted}`;
 
     } else {
-        // --- CENÁRIO: PRIMEIRO ACESSO ---
         warmDiv.classList.add('hidden');
         form.classList.remove('hidden');
     }
 
     // ============================================================
-    // 2. INTERAÇÃO DO USUÁRIO
+    // INTERAÇÃO
     // ============================================================
     
-    // Botão "Ver Grade Agora" (Acesso Rápido)
     quickBtn.addEventListener('click', () => {
         window.location.href = 'grade.html';
     });
 
-    // Botão "Alterar Curso" (Reset)
     resetBtn.addEventListener('click', () => {
-        // Remove dados e volta ao form
         localStorage.removeItem('mqs_user_data');
         warmDiv.classList.add('hidden');
         form.classList.remove('hidden');
-        courseInput.value = ''; // Limpa input
+        courseInput.value = ''; 
+        feedbackMsg.classList.add('hidden');
     });
 
     // Seleção de Turno
@@ -79,26 +78,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Botão "Ver Horários" (Submit)
+    // ============================================================
+    // 🛡️ VALIDAÇÃO RIGOROSA (SUBMIT)
+    // ============================================================
     submitBtn.addEventListener('click', () => {
         const courseValue = courseInput.value.trim();
 
-        // Validação
+        // 1. Validação: Campo Vazio
         if (!courseValue) {
-            feedbackMsg.classList.remove('hidden');
-            courseInput.style.borderColor = '#C62828';
-            courseInput.focus();
+            showError("Por favor, digite o nome do curso!");
             return;
         }
 
-        userSelection.course = courseValue;
+        // 2. Validação: Curso Existe?
+        const isSistemas = ALLOWED_COURSES.includes(courseValue);
+        
+        if (!isSistemas) {
+            showError(`O curso "${courseValue}" estará disponível em breve!`);
+            return;
+        }
 
-        // Salva e Navega
+        // 3. Validação: Combinação Exata (SÓ TEMOS 2º MATUTINO)
+        // Se for Sistemas, MAS o turno ou período estiverem errados:
+        if (isSistemas) {
+            const isMatutino = userSelection.shift === 'matutino';
+            const isSegundoPeriodo = userSelection.period === '2';
+
+            if (!isMatutino || !isSegundoPeriodo) {
+                // Formata mensagem bonita
+                const turnoEscolhido = userSelection.shift.charAt(0).toUpperCase() + userSelection.shift.slice(1);
+                showError(`A grade de ${userSelection.period}º Período ${turnoEscolhido} ainda não foi cadastrada. Apenas 2º Matutino disponível.`);
+                return;
+            }
+        }
+
+        // SUCESSO: Passou por todas as barreiras
+        userSelection.course = courseValue;
         localStorage.setItem('mqs_user_data', JSON.stringify(userSelection));
         window.location.href = 'grade.html';
     });
 
-    // Função visual auxiliar
+    // Funções Auxiliares
     function updateVisuals(nodeList, value) {
         nodeList.forEach(btn => {
             if (btn.getAttribute('data-value') === value) {
@@ -109,13 +129,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function showError(message) {
+        feedbackMsg.textContent = message;
+        feedbackMsg.classList.remove('hidden');
+        courseInput.style.borderColor = '#C62828';
+        
+        // Se o erro for de seleção (não de digitação), destaca o form inteiro visualmente
+        form.classList.add('shake-anim');
+        setTimeout(() => form.classList.remove('shake-anim'), 500);
+    }
+
     // ============================================================
-    // 3. REQUISITO ACADÊMICO: FETCH COM .THEN
-    // (Dica do dia)
+    // REQUISITO: DICA DO DIA
     // ============================================================
     const tipElement = document.getElementById('daily-tip-text');
     
-    // Usando uma API pública de citações (fallback seguro)
     fetch('https://api.quotable.io/random?tags=technology,wisdom&maxLength=60')
         .then(response => {
             if (!response.ok) throw new Error('Falha na rede');
@@ -125,8 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
             tipElement.textContent = `💡 "${data.content}"`;
         })
         .catch(error => {
-            // Fallback se estiver offline
-            console.log("Modo Offline ativado para dicas.");
             tipElement.textContent = "💡 Dica: Mantenha o foco e beba água!";
         });
 });

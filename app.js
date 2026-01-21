@@ -1,8 +1,16 @@
-// DADOS FIXOS (Simulação do Banco de Dados)
+// =================================================================
+// ⚠️ ÁREA DE DADOS (DATABASE)
+// É AQUI QUE VOCÊ VAI EDITAR OS HORÁRIOS NO FUTURO!
+// =================================================================
+
+// Por enquanto, esta lista representa APENAS: 
+// Curso: Sistemas para Internet | Período: 2º | Turno: Matutino
 const scheduleData = [
     {
         day: "Segunda",
         items: [
+            // { type: 'class', ... } -> Use para aulas
+            // { type: 'interval', ... } -> Use para intervalos
             { type: 'class', timeStart: '07:30', timeEnd: '09:00', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' },
             { type: 'interval', timeStart: '09:00', timeEnd: '09:15', label: 'INTERVALO' },
             { type: 'class', timeStart: '09:15', timeEnd: '10:45', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' }
@@ -42,6 +50,11 @@ const scheduleData = [
     }
 ];
 
+// 🛑 FIM DA ÁREA DE DADOS
+// NÃO MEXA DAQUI PARA BAIXO A MENOS QUE SAIBA O QUE ESTÁ FAZENDO
+// =================================================================
+
+
 document.addEventListener('DOMContentLoaded', () => {
     
     // --- ELEMENTOS ---
@@ -71,8 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
         displayPeriod.textContent = `${userContext.period}º Período • ${shiftDisplay}`;
         
     } else {
-        // Se NÃO tem dados (acesso direto indevido), volta pra Home
-        // Comentado para facilitar seus testes, mas num app real seria ativo:
+        // Se o usuário entrou direto sem passar pela home
+        // (Opcional) alert("Por favor, selecione o curso primeiro!");
         // window.location.href = 'index.html';
     }
 
@@ -122,19 +135,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Botão Nova Busca / Voltar
     searchBtn.addEventListener('click', () => {
-        // Tenta voltar para a página anterior (Home)
         if (window.history.length > 1) {
             window.history.back();
         } else {
-            // Fallback seguro
             window.location.href = 'index.html';
         }
     });
 
-    // 5. Compartilhar (Screenshot)
+    // 5. Compartilhar
     shareBtn.addEventListener('click', async () => {
         const dock = document.querySelector('.floating-dock');
-        dock.style.display = 'none'; // Esconde o dock na foto
+        dock.style.display = 'none'; 
         try {
             const canvas = await html2canvas(document.getElementById("app-viewport"), {
                 backgroundColor: "#F0F4F8", scale: 2
@@ -146,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     navigator.share({ 
                         files: [file], 
                         title: 'Minha Grade MQS',
-                        text: 'Confira minha grade de horários!'
                     });
                 } else {
                     const link = document.createElement('a');
