@@ -1,4 +1,4 @@
-// DADOS FIXOS
+// DADOS FIXOS (Simulação do Banco de Dados)
 const scheduleData = [
     {
         day: "Segunda",
@@ -43,12 +43,42 @@ const scheduleData = [
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- ELEMENTOS ---
     const scheduleView = document.getElementById('schedule-view');
     const toggleBtn = document.getElementById('btn-toggle-view');
     const shareBtn = document.getElementById('btn-share');
     const searchBtn = document.getElementById('btn-search');
+    
+    // Elementos de Texto do Cabeçalho
+    const displayCourse = document.getElementById('display-course');
+    const displayPeriod = document.getElementById('display-period');
 
-    // Renderizar
+    // =========================================================
+    // 1. INTEGRAÇÃO COM A HOME (Ler LocalStorage)
+    // =========================================================
+    const savedData = localStorage.getItem('mqs_user_data');
+
+    if (savedData) {
+        // Se tem dados salvos, aplica na tela
+        const userContext = JSON.parse(savedData);
+        
+        // Atualiza Título do Curso
+        displayCourse.textContent = userContext.course;
+        
+        // Atualiza Subtítulo (Ex: 2º Período • Noturno)
+        const shiftDisplay = userContext.shift.charAt(0).toUpperCase() + userContext.shift.slice(1);
+        displayPeriod.textContent = `${userContext.period}º Período • ${shiftDisplay}`;
+        
+    } else {
+        // Se NÃO tem dados (acesso direto indevido), volta pra Home
+        // Comentado para facilitar seus testes, mas num app real seria ativo:
+        // window.location.href = 'index.html';
+    }
+
+    // =========================================================
+    // 2. RENDERIZAÇÃO
+    // =========================================================
     function renderSchedule() {
         const currentDay = new Date().getDay(); 
         const todayIndex = (currentDay >= 1 && currentDay <= 5) ? currentDay - 1 : -1;
@@ -83,37 +113,44 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
 
-    // Toggle View
+    // 3. Toggle View (Horizontal/Vertical)
     toggleBtn.addEventListener('click', () => {
         scheduleView.classList.toggle('schedule-view--horizontal');
         const icon = document.getElementById('toggle-icon');
         icon.textContent = scheduleView.classList.contains('schedule-view--horizontal') ? 'view_agenda' : 'view_week';
     });
 
-    // Reset
-    // 4. Nova Busca / Voltar (Correção)
+    // 4. Botão Nova Busca / Voltar
     searchBtn.addEventListener('click', () => {
-        // Redireciona para o arquivo inicial.
-        // IMPORTANTE: Se o nome do seu arquivo de busca for 'home.html' ou 'selecao.html', altere o nome abaixo.
-        // Se estiver usando pasta raiz, pode usar './'
-        window.location.href = 'index.html'; 
+        // Tenta voltar para a página anterior (Home)
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            // Fallback seguro
+            window.location.href = 'index.html';
+        }
     });
 
-    // Share
+    // 5. Compartilhar (Screenshot)
     shareBtn.addEventListener('click', async () => {
         const dock = document.querySelector('.floating-dock');
-        dock.style.display = 'none';
+        dock.style.display = 'none'; // Esconde o dock na foto
         try {
             const canvas = await html2canvas(document.getElementById("app-viewport"), {
                 backgroundColor: "#F0F4F8", scale: 2
             });
             canvas.toBlob(blob => {
-                const file = new File([blob], "grade.png", { type: "image/png" });
+                const file = new File([blob], "grade_mqs.png", { type: "image/png" });
+                
                 if (navigator.share) {
-                    navigator.share({ files: [file], title: 'Minha Grade' });
+                    navigator.share({ 
+                        files: [file], 
+                        title: 'Minha Grade MQS',
+                        text: 'Confira minha grade de horários!'
+                    });
                 } else {
                     const link = document.createElement('a');
-                    link.download = 'grade.png';
+                    link.download = 'grade_mqs.png';
                     link.href = URL.createObjectURL(blob);
                     link.click();
                 }
