@@ -117,20 +117,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ============================================================
-    // DICA DO DIA (NOVO LOCAL)
+    // DICA DO DIA (Fluxo B: .then/.catch com JSON Local) [cite: 6]
     // ============================================================
-    // Se o card de boas-vindas estiver visível, buscamos a dica.
     if (savedData) {
-        fetch('https://api.quotable.io/random?tags=wisdom,inspiration&maxLength=80')
+        // Substituindo API externa por arquivo local para garantir funcionamento offline
+        fetch('tip_of_day.json')
             .then(response => {
-                if (!response.ok) throw new Error('Falha na rede');
+                if (!response.ok) throw new Error('Erro ao ler dicas');
                 return response.json();
             })
             .then(data => {
-                // Insere a dica no novo elemento de destaque
-                tipTextElement.textContent = `"${data.content}"`;
+                // Sorteia uma dica aleatória do array
+                const randomTip = data.tips[Math.floor(Math.random() * data.tips.length)];
+                tipTextElement.textContent = `"${randomTip}"`;
             })
-            .catch(() => {
+            .catch(err => {
+                console.warn('Fallback de dica ativado:', err);
                 tipTextElement.textContent = "Mantenha o foco e beba água!";
             });
     }

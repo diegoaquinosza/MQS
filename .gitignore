@@ -1,18 +1,29 @@
-# Dependencies
+# --- DEPENDÊNCIAS E LOGS (Padrão) ---
 node_modules/
 .pnp
 .pnp.js
-
-# Testing
-coverage/
-
-# Production
-build/
-dist/
-
-# Misc
-.DS_Store
-.env
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# --- SISTEMA OPERACIONAL ---
+.DS_Store
+Thumbs.db
+
+# --- CONFIGURAÇÕES DE AMBIENTE ---
+.env
+
+# --- ARQUIVOS DE NODE/NPM (Ignorar pois o projeto é Vanilla) ---
+package.json
+package-lock.json
+
+# --- DOCUMENTAÇÃO INTERNA E CONTEXTO (Para seu uso local apenas) ---
+REQUISITOS_PROJETO.md
+Contexto MQS.txt
+MQS Historico.txt
+LICENSE
+
+# --- ARQUIVOS DE BUILD (Não usados agora, mas bom prevenir) ---
+build/
+dist/
+coverage/

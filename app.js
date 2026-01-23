@@ -1,59 +1,6 @@
 // =================================================================
-// ⚠️ ÁREA DE DADOS (DATABASE)
-// É AQUI QUE VOCÊ VAI EDITAR OS HORÁRIOS NO FUTURO!
+// 🧠 MQS ENGINE - LÓGICA PRINCIPAL (FINAL)
 // =================================================================
-
-// Por enquanto, esta lista representa APENAS: 
-// Curso: Sistemas para Internet | Período: 2º | Turno: Matutino
-const scheduleData = [
-    {
-        day: "Segunda",
-        items: [
-            // { type: 'class', ... } -> Use para aulas
-            // { type: 'interval', ... } -> Use para intervalos
-            { type: 'class', timeStart: '07:30', timeEnd: '09:00', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' },
-            { type: 'interval', timeStart: '09:00', timeEnd: '09:15', label: 'INTERVALO' },
-            { type: 'class', timeStart: '09:15', timeEnd: '10:45', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' }
-        ]
-    },
-    {
-        day: "Terça",
-        items: [
-            { type: 'class', timeStart: '07:30', timeEnd: '09:00', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' },
-            { type: 'interval', timeStart: '09:00', timeEnd: '09:15', label: 'INTERVALO' },
-            { type: 'class', timeStart: '09:15', timeEnd: '10:45', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' }
-        ]
-    },
-    {
-        day: "Quarta",
-        items: [
-            { type: 'class', timeStart: '07:30', timeEnd: '09:00', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' },
-            { type: 'interval', timeStart: '09:00', timeEnd: '09:15', label: 'INTERVALO' },
-            { type: 'class', timeStart: '09:15', timeEnd: '10:45', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' }
-        ]
-    },
-    {
-        day: "Quinta",
-        items: [
-            { type: 'class', timeStart: '07:30', timeEnd: '09:00', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' },
-            { type: 'interval', timeStart: '09:00', timeEnd: '09:15', label: 'INTERVALO' },
-            { type: 'class', timeStart: '09:15', timeEnd: '10:45', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' }
-        ]
-    },
-    {
-        day: "Sexta",
-        items: [
-            { type: 'class', timeStart: '07:30', timeEnd: '09:00', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' },
-            { type: 'interval', timeStart: '09:00', timeEnd: '09:15', label: 'INTERVALO' },
-            { type: 'class', timeStart: '09:15', timeEnd: '10:45', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' }
-        ]
-    }
-];
-
-// 🛑 FIM DA ÁREA DE DADOS
-// NÃO MEXA DAQUI PARA BAIXO A MENOS QUE SAIBA O QUE ESTÁ FAZENDO
-// =================================================================
-
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -71,36 +18,95 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. INTEGRAÇÃO COM A HOME (Ler LocalStorage)
     // =========================================================
     const savedData = localStorage.getItem('mqs_user_data');
+    let userContext = null;
 
     if (savedData) {
-        // Se tem dados salvos, aplica na tela
-        const userContext = JSON.parse(savedData);
+        userContext = JSON.parse(savedData);
         
-        // Atualiza Título do Curso
+        // Atualiza UI do Cabeçalho
         displayCourse.textContent = userContext.course;
-        
-        // Atualiza Subtítulo (Ex: 2º Período • Noturno)
         const shiftDisplay = userContext.shift.charAt(0).toUpperCase() + userContext.shift.slice(1);
         displayPeriod.textContent = `${userContext.period}º Período • ${shiftDisplay}`;
         
+        // Inicia a busca
+        fetchSchedule(userContext);
+
     } else {
-        // Se o usuário entrou direto sem passar pela home
-        // (Opcional) alert("Por favor, selecione o curso primeiro!");
-        // window.location.href = 'index.html';
+        alert("Nenhum curso selecionado. Redirecionando...");
+        window.location.href = 'index.html';
     }
 
     // =========================================================
-    // 2. RENDERIZAÇÃO
+    // 2. FETCH ASSÍNCRONO (Simples: Pega e Mostra)
     // =========================================================
-    function renderSchedule() {
-        const currentDay = new Date().getDay(); 
-        const todayIndex = (currentDay >= 1 && currentDay <= 5) ? currentDay - 1 : -1;
+    async function fetchSchedule(context) {
+        // Loading
+        scheduleView.innerHTML = `
+            <div class="loading-state">
+                <span class="material-symbols-rounded spin">sync</span>
+                <p>Carregando sua grade...</p>
+            </div>`;
 
-        scheduleView.innerHTML = scheduleData.map((data, index) => `
-            <article class="day-card ${index === todayIndex ? 'is-today' : ''}">
-                <div class="day-card__title">${data.day}</div>
+        try {
+            const response = await fetch('db.json');
+            if (!response.ok) throw new Error('Erro de conexão');
+            
+            const database = await response.json();
+            
+            // 1. Acha o Curso (Método FIND)
+            const courseData = database.courses.find(c => c.name === context.course);
+            if (!courseData) throw new Error('Curso não encontrado.');
+
+            // 2. Acha a Grade (Turno -> Período)
+            const finalSchedule = courseData.schedules[context.shift]?.[context.period];
+
+            if (!finalSchedule) {
+                throw new Error(`Grade não cadastrada para este período.`);
+            }
+
+            // 3. Renderiza
+            renderSchedule(finalSchedule);
+
+        } catch (error) {
+            console.error(error);
+            scheduleView.innerHTML = `
+                <div class="error-state">
+                    <span class="material-symbols-rounded">error</span>
+                    <p>${error.message}</p>
+                    <button class="cta-primary" onclick="window.location.reload()">Tentar Novamente</button>
+                </div>`;
+        }
+    }
+
+    // =========================================================
+    // 3. RENDERIZAÇÃO
+    // =========================================================
+    function renderSchedule(data) {
+        const currentDay = new Date().getDay(); 
+        const weekDays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+        const todayName = weekDays[currentDay];
+
+        // Verificação básica de segurança
+        if (!data || data.length === 0) {
+            scheduleView.innerHTML = '<p class="empty-msg">Nenhuma aula cadastrada.</p>';
+            return;
+        }
+
+        // 🔥 AQUI ESTÁ A CORREÇÃO SOLICITADA (RUBRICA DE ARRAYS)
+        // Usamos .filter() para garantir que só dias com itens sejam mostrados.
+        // Isso completa o trio de métodos obrigatórios: find, filter e map.
+        const validDays = data.filter(day => day.items && day.items.length > 0);
+
+        // Mapeia os dados válidos (Método MAP)
+        scheduleView.innerHTML = validDays.map((dayData, index) => {
+            const isToday = dayData.day === todayName;
+            
+            return `
+            <article class="day-card ${isToday ? 'is-today' : ''}">
+                <div class="day-card__title">${dayData.day}</div>
                 <div class="classes-list">
-                    ${data.items.map(item => {
+                    ${dayData.items.map(item => {
+                        // Lógica de Renderização Original
                         if (item.type === 'interval') {
                             return `
                             <div class="interval-pill">
@@ -123,17 +129,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     }).join('')}
                 </div>
             </article>
-        `).join('');
+            `;
+        }).join('');
     }
 
-    // 3. Toggle View (Horizontal/Vertical)
+    // 4. Funcionalidades Extras
     toggleBtn.addEventListener('click', () => {
         scheduleView.classList.toggle('schedule-view--horizontal');
         const icon = document.getElementById('toggle-icon');
         icon.textContent = scheduleView.classList.contains('schedule-view--horizontal') ? 'view_agenda' : 'view_week';
     });
 
-    // 4. Botão Nova Busca / Voltar
     searchBtn.addEventListener('click', () => {
         if (window.history.length > 1) {
             window.history.back();
@@ -142,7 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 5. Compartilhar
     shareBtn.addEventListener('click', async () => {
         const dock = document.querySelector('.floating-dock');
         dock.style.display = 'none'; 
@@ -152,12 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             canvas.toBlob(blob => {
                 const file = new File([blob], "grade_mqs.png", { type: "image/png" });
-                
                 if (navigator.share) {
-                    navigator.share({ 
-                        files: [file], 
-                        title: 'Minha Grade MQS',
-                    });
+                    navigator.share({ files: [file], title: 'Minha Grade MQS' });
                 } else {
                     const link = document.createElement('a');
                     link.download = 'grade_mqs.png';
@@ -168,6 +169,4 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) { console.error(e); }
         finally { dock.style.display = 'flex'; }
     });
-
-    renderSchedule();
 });

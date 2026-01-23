@@ -5,30 +5,51 @@
       "name": "Sistemas para Internet",
       "schedules": {
         "matutino": {
-          "1": [
-            {"day": "Segunda", "subject": "Algoritmos", "room": "Lab 01", "time": "08:00"},
-            {"day": "Terça", "subject": "Design UI/UX", "room": "Sala 102", "time": "08:00"}
-          ],
           "2": [
-            {"day": "Segunda", "subject": "Estrutura de Dados", "room": "Lab 04", "time": "08:00"}
+            {
+              "day": "Segunda",
+              "items": [
+                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" },
+                { "type": "interval", "timeStart": "09:00", "timeEnd": "09:15", "label": "INTERVALO" },
+                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" }
+              ]
+            },
+            {
+              "day": "Terça",
+              "items": [
+                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" },
+                { "type": "interval", "timeStart": "09:00", "timeEnd": "09:15", "label": "INTERVALO" },
+                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" }
+              ]
+            },
+            {
+              "day": "Quarta",
+              "items": [
+                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" },
+                { "type": "interval", "timeStart": "09:00", "timeEnd": "09:15", "label": "INTERVALO" },
+                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" }
+              ]
+            },
+            {
+              "day": "Quinta",
+              "items": [
+                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" },
+                { "type": "interval", "timeStart": "09:00", "timeEnd": "09:15", "label": "INTERVALO" },
+                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" }
+              ]
+            },
+            {
+              "day": "Sexta",
+              "items": [
+                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" },
+                { "type": "interval", "timeStart": "09:00", "timeEnd": "09:15", "label": "INTERVALO" },
+                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" }
+              ]
+            }
           ]
         },
         "noturno": {
-          "1": [
-            {"day": "Segunda", "subject": "Introdução à Web", "room": "Lab 02", "time": "19:00"},
-            {"day": "Quarta", "subject": "Lógica", "room": "Sala 205", "time": "19:00"}
-          ]
-        }
-      }
-    },
-    {
-      "id": "ads",
-      "name": "Análise e Desenv. de Sistemas",
-      "schedules": {
-        "noturno": {
-          "1": [
-            {"day": "Segunda", "subject": "Engenharia de Software", "room": "Sala 301", "time": "19:00"}
-          ]
+           "1": []
         }
       }
     }
