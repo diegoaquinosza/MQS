@@ -50,6 +50,8 @@ Este projeto foi construído seguindo a metodologia **"Vanilla First"**, garanti
 * **Apoio Técnico (Pair Programming):** Google Gemini.
     * *Função:* Atuou na revisão de sintaxe, otimização de queries (ex: métodos de array) e explicação de conceitos avançados, simulando um ambiente de *Code Review* profissional.
 
+---
+
 ## 5. Mapeamento Técnico (Conformidade com a Rubrica)
 
 Este projeto foi construído com **JavaScript Vanilla (ES6+)**, HTML5 Semântico e CSS3 Moderno, atendendo rigorosamente aos requisitos:
