@@ -2,9 +2,9 @@
     /* --- PALETA ZEN --- */
     --primary: #00897B;
     --primary-light: #c8e5e4;
-    --primary-medium: #a4cdca;
+    --primary-medium: #a2ccc9;
     --primary-dark: #004D40;
-    --surface-glass: rgba(255, 255, 255, 0.7);
+    --surface-glass: rgba(255, 255, 255, 0.901);
     --surface: #FFFFFF;
     --bg-body: #F0F4F8;
     --text-main: #263238;
@@ -12,7 +12,7 @@
     
     /* --- GEOMETRIA --- */
     --radius-day: 24px;
-    --radius-item: 16px;
+    --radius-item: 24px;
     --radius-pill: 9999px;
     --spacing-p4: 16px;
 }
@@ -146,7 +146,7 @@ body {
 /* Card Vertical: Trava em 600px (Cards podem ser um pouco mais largos que o header se quiser, ou pode mudar aqui também) */
 .schedule-view .day-card {
     width: 100%;
-    max-width: 600px; 
+    max-width: 400px; 
 }
 
 
@@ -180,7 +180,7 @@ body {
     .schedule-view,
     .schedule-view--horizontal {
         display: grid;
-        grid-template-columns: repeat(5, minmax(250px, 300px));
+        grid-template-columns: repeat(5, minmax(250px, 400px));
         gap: 24px;
         
         width: fit-content;
@@ -250,7 +250,7 @@ body {
 }
 
 .class-item__prof {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     text-align: center;
     margin-top: 4px;
     display: block;
@@ -266,7 +266,7 @@ body {
     align-items: center;
     color: var(--primary-dark);
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: 300;
     margin-bottom: 12px;
 }
 
