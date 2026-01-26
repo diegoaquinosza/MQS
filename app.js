@@ -271,11 +271,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 const canvas = await html2canvas(stage, options);
                 document.body.removeChild(stage);
 
-                // 6. DOWNLOAD/SHARE
+                // 6. COMPARTILHAR / BAIXAR
                 canvas.toBlob(blob => {
                     const file = new File([blob], "grade_mqs.png", { type: "image/png" });
+
                     if (navigator.share) {
-                        navigator.share({ files: [file], title: 'Minha Grade MQS' }).catch(e => console.log(e));
+                        // Monta o texto: Curso + Quebra de Linha + Detalhes (Período/Turno)
+                        const shareText = `${displayCourse.textContent}\n${displayPeriod.textContent}`;
+
+                        navigator.share({
+                            files: [file],
+                            title: 'Grade Horária', // Título para e-mail/sistema
+                            text: shareText         // Legenda que vai no WhatsApp/Telegram
+                        }).catch(e => console.log("Compartilhamento cancelado", e));
+
                     } else {
                         const link = document.createElement('a');
                         link.download = 'grade_mqs.png';
