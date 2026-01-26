@@ -39,10 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchSchedule(userContext);
 
     } else {
-        // Se não tiver dados, volta pra home (segurança)
-        // Comentado para evitar loop infinito em testes locais se estiver sem dados
-        // window.location.href = 'index.html'; 
-        console.warn("Nenhum dado de usuário encontrado.");
+        // SEGURANÇA: Se não houver dados salvos, redireciona para a Home imediatamente.
+        // Isso impede que o usuário fique preso na tela "Carregando..." ao acessar grade.html direto.
+        console.warn("Nenhum dado encontrado. Redirecionando para a Home...");
+        window.location.href = 'index.html'; 
+        return; // Interrompe a execução do script aqui
     }
 
     // =========================================================
