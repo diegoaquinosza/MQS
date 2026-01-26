@@ -9,41 +9,41 @@
             {
               "day": "Segunda",
               "items": [
-                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" },
+                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Fund. Bancos de Dados", "room": "LABDES", "prof": "Liliane Felix" },
                 { "type": "interval", "timeStart": "09:00", "timeEnd": "09:15", "label": "INTERVALO" },
-                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" }
+                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Fund. Bancos de Dados", "room": "LABDES", "prof": "Liliane Felix" }
               ]
             },
             {
               "day": "Terça",
               "items": [
-                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" },
+                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Inglês Instrumental", "room": "LABDES", "prof": "Mirian Nichida" },
                 { "type": "interval", "timeStart": "09:00", "timeEnd": "09:15", "label": "INTERVALO" },
-                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" }
+                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Análise de Sistemas", "room": "LABDES", "prof": "Gerson Focking" }
               ]
             },
             {
               "day": "Quarta",
               "items": [
-                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" },
+                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Prog. Básica para Web", "room": "LABDES", "prof": "Ricardo Loureiro" },
                 { "type": "interval", "timeStart": "09:00", "timeEnd": "09:15", "label": "INTERVALO" },
-                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" }
+                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Prog. Básica para Web", "room": "LABDES", "prof": "Ricardo Loureiro" }
               ]
             },
             {
               "day": "Quinta",
               "items": [
-                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" },
+                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Fund. Prog. Científica", "room": "LABDES", "prof": "Vinicius Rios" },
                 { "type": "interval", "timeStart": "09:00", "timeEnd": "09:15", "label": "INTERVALO" },
-                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" }
+                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Fund. Prog. Científica", "room": "LABDES", "prof": "Vinicius Rios" }
               ]
             },
             {
               "day": "Sexta",
               "items": [
-                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" },
+                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Prog. Orientada a Objetos", "room": "LABDES", "prof": "Helder Pereira" },
                 { "type": "interval", "timeStart": "09:00", "timeEnd": "09:15", "label": "INTERVALO" },
-                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Fund Proj b de Dados", "room": "LABDES", "prof": "Liliane Felix" }
+                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Prog. Orientada a Objetos", "room": "LABDES", "prof": "Helder Pereira" }
               ]
             }
           ]
