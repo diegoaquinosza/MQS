@@ -266,7 +266,7 @@ body {
     /* RESPIRO LATERAL IMPORTANTE:
        padding-left: Garante que o 1º botão não seja cortado ao crescer.
        padding-bottom: Espaço extra para a sombra não ser cortada. */
-    padding: 4px 20px 5px 20px;
+    padding: 5px 20px;
     
     /* Esconde barra de rolagem */
     scrollbar-width: none;
@@ -278,8 +278,8 @@ body {
 .chips-container::-webkit-scrollbar { display: none; }
 
 .chip-btn {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     
     /* ESTILO MATERIAL 3 (TONAL) */
