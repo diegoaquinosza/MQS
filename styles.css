@@ -214,8 +214,10 @@ body {
 /* Resolve o efeito "esticado" fixando a largura em um valor harmônico */
 @media (min-width: 500px) and (max-width: 1023px) {
     .schedule-view .day-card {
-        width: 270px;      /* Tamanho fixo, próximo ao do Desktop */
-        max-width: 270px;  /* Força bruta para impedir o estiramento */
+        width: 270px;
+        /* Tamanho fixo, próximo ao do Desktop */
+        max-width: 270px;
+        /* Força bruta para impedir o estiramento */
     }
 }
 
@@ -250,6 +252,16 @@ body {
         scrollbar-width: none;
         /* Firefox */
 
+    }
+
+    /* ==========================================================================
+   AJUSTE PARA TELAS GRANDES (Monitor Wide / Full HD)
+   ========================================================================== */
+    @media (min-width: 1600px) {
+        .schedule-view {
+            /* Centraliza o bloco de cards na tela quando sobra espaço */
+            justify-content: center !important;
+        }
     }
 
     .hero-card {
@@ -322,8 +334,8 @@ body {
 }
 
 .day-card.is-today {
-    border-color: var(--primary-dark);
-    box-shadow: 0 0 0 4px rgba(0, 137, 123, 0.15);
+    border-color: #00887a5b;
+    box-shadow: 0 0 0 4px rgba(0, 125, 113, 0.15);
 }
 
 .day-card__title {
@@ -488,19 +500,20 @@ body {
     display: flex;
     position: absolute;
     /* 🧠 ALINHAMENTO UNIFICADO: 14% coloca a seta na linha do Título/Intervalo */
-    top: 11%; 
+    top: 11%;
     transform: translateY(-50%);
     z-index: 100;
 
     background: var(--surface);
     color: var(--primary-dark);
     border: 2px solid var(--primary-light);
-    width: 60px; /* Um pouco menor em telas pequenas para não cobrir muito */
+    width: 60px;
+    /* Um pouco menor em telas pequenas para não cobrir muito */
     height: 60px;
     border-radius: 50%;
 
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    
+
     cursor: pointer;
     align-items: center;
     justify-content: center;
@@ -513,9 +526,17 @@ body {
     transform: translateY(-50%) scale(1.1);
 }
 
-.nav-arrow.left { left: 8px; }
-.nav-arrow.right { right: 8px; }
-.nav-arrow span { font-size: 28px; }
+.nav-arrow.left {
+    left: 8px;
+}
+
+.nav-arrow.right {
+    right: 8px;
+}
+
+.nav-arrow span {
+    font-size: 28px;
+}
 
 /* Classe para esconder */
 .nav-arrow.is-hidden {
@@ -526,7 +547,9 @@ body {
 
 /* 🧠 NEURO-ADAPTAÇÃO: Esconde as setas APENAS se o dispositivo for de toque (Dedo) */
 @media (pointer: coarse) {
-    .nav-arrow { display: none !important; }
+    .nav-arrow {
+        display: none !important;
+    }
 }
 
 /* Ajuste específico para Desktop (Setas maiores e posição refinada) */
@@ -534,12 +557,22 @@ body {
     .nav-arrow {
         width: 60px;
         height: 60px;
-        top: 14%; /* Seu ajuste personalizado de altura */
+        top: 14%;
+        /* Seu ajuste personalizado de altura */
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.1);
     }
-    .nav-arrow span { font-size: 32px; }
-    .nav-arrow.left { left: 10px; }
-    .nav-arrow.right { right: 10px; }
+
+    .nav-arrow span {
+        font-size: 32px;
+    }
+
+    .nav-arrow.left {
+        left: 10px;
+    }
+
+    .nav-arrow.right {
+        right: 10px;
+    }
 }
 
 @media (min-width: 1024px) {

@@ -121,15 +121,22 @@ body {
 
 /* BOTÃO TONAL (MATERIAL 3) */
 .btn-tonal {
-    background: #E0F2F1; /* Verde menta suave */
+    background: #E0F2F1;
     color: var(--primary-hover);
     border: none;
-    padding: 12px 24px;
+    
+    /* MANTÉM: Altura igualada ao botão principal */
+    min-height: 56px; 
+    padding: 0 32px; /* Aumentei um pouco o padding lateral para ficar mais bonito solto */
+    
     border-radius: var(--radius-pill);
-    width: 100%;
+    
+    /* ALTERAÇÃO AQUI: De 100% para fit-content e centraliza */
+    width: fit-content; 
+    margin: 4px auto 0 auto; /* O 'auto' nas laterais faz ele centralizar */
     
     font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 600;
     
     display: flex;
@@ -139,7 +146,6 @@ body {
     
     cursor: pointer;
     transition: all 0.2s ease;
-    margin-top: 4px;
 }
 
 .btn-tonal:hover {
@@ -148,7 +154,7 @@ body {
 }
 
 .btn-tonal span.material-symbols-rounded {
-    font-size: 20px;
+    font-size: 24px;
 }
 
 

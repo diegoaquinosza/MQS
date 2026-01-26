@@ -11,6 +11,17 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     
     <link rel="stylesheet" href="home.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📅</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📅</text></svg>">
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00897b">
+    
+    <link rel="apple-touch-icon" href="./assets/icon-192.png">
+    <meta name="apple-mobile-web-app-title" content="MQS">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
 
 <body>
@@ -38,7 +49,7 @@
             </button>
             
             <button id="btn-reset-app" class="btn-tonal">
-                <span class="material-symbols-rounded">edit</span>
+                <span class="material-symbols-rounded">home</span>
                 <span>Alterar curso ou período</span>
             </button>
         </div>
@@ -52,10 +63,8 @@
                     <input type="text" id="course-input" list="courses-list" placeholder="Ex: Sistemas para Internet" autocomplete="off">
                     <datalist id="courses-list">
                         <option value="Sistemas para Internet">
-                        <option value="Direito">
-                        <option value="Enfermagem">
-                        <option value="Psicologia">
-                        <option value="Engenharia de Software">
+                        <option value="Agronomia">
+                        <option value="Engenharia Civil">
                     </datalist>
                 </div>
             </div>
@@ -63,7 +72,7 @@
             <div class="form-group">
                 <label class="label-zen">Turno</label>
                 <div class="segmented-control" id="shift-selector">
-                    <button type="button" class="segment-btn active" data-value="matutino">Matutino</button>
+                    <button type="button" class="segment-btn" data-value="matutino">Matutino</button>
                     <button type="button" class="segment-btn" data-value="noturno">Noturno</button>
                 </div>
             </div>
@@ -73,7 +82,7 @@
                 <div class="horizontal-scroll-wrapper">
                     <div class="chips-container" id="period-selector">
                         <button type="button" class="chip-btn" data-value="1">1º</button>
-                        <button type="button" class="chip-btn active" data-value="2">2º</button>
+                        <button type="button" class="chip-btn" data-value="2">2º</button>
                         <button type="button" class="chip-btn" data-value="3">3º</button>
                         <button type="button" class="chip-btn" data-value="4">4º</button>
                         <button type="button" class="chip-btn" data-value="5">5º</button>
