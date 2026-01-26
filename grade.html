@@ -20,38 +20,39 @@
 
 <body>
 
-    <header class="context-header">
-        <div class="hero-card" style="margin-bottom: 16px;">
-            <img src="./assets/banner-mqs.png" class="hero-image" alt="Banner MQS">
-        </div>
+    <div id="capture-target">
 
-        <div class="header-content" style="justify-content: center; text-align: center;">
-            <div class="user-context">
-                <h2 id="display-course">Carregando curso...</h2>
-                <span id="display-period">Carregando período...</span>
+        <header class="context-header">
+            <div class="hero-card" style="margin-bottom: 16px;">
+                <img src="./assets/banner-mqs.png" class="hero-image" alt="Banner MQS">
             </div>
-        </div>
-    </header>
 
-    <main id="app-viewport" style="position: relative;">
-        <button class="nav-arrow left" id="scroll-left">
-            <span class="material-symbols-rounded">chevron_left</span>
-        </button>
-        <button class="nav-arrow right" id="scroll-right">
-            <span class="material-symbols-rounded">chevron_right</span>
-        </button>
+            <div class="header-content" style="justify-content: center; text-align: center;">
+                <div class="user-context">
+                    <h2 id="display-course">Carregando curso...</h2>
+                    <span id="display-period">Carregando período...</span>
+                </div>
+            </div>
+        </header>
 
-        <section id="schedule-view" class="schedule-view">
-        </section>
-    </main>
+        <main id="app-viewport" style="position: relative;">
+            <button class="nav-arrow left" id="scroll-left">
+                <span class="material-symbols-rounded">chevron_left</span>
+            </button>
+            <button class="nav-arrow right" id="scroll-right">
+                <span class="material-symbols-rounded">chevron_right</span>
+            </button>
 
+            <section id="schedule-view" class="schedule-view">
+            </section>
+        </main>
+
+    </div>
     <nav class="floating-dock">
-        <button class="dock-btn-icon" id="btn-search" title="Nova Busca">
-            <span class="material-symbols-rounded">search</span>
+        <button class="dock-btn-icon" id="btn-home" title="Voltar ao Início">
+            <span class="material-symbols-rounded">home</span>
         </button>
-        <button class="dock-btn-icon" id="btn-toggle-view" title="Alternar Visualização">
-            <span class="material-symbols-rounded" id="toggle-icon">view_week</span>
-        </button>
+        
         <button class="dock-btn-primary" id="btn-share" title="Salvar Grade">
             <span class="material-symbols-rounded">ios_share</span>
             <span>Compartilhar</span>
