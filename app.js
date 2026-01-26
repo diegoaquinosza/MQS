@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const scheduleView = document.getElementById('schedule-view'); // Container da grade
     const shareBtn = document.getElementById('btn-share');
     const homeBtn = document.getElementById('btn-home');
-    
+
     // Elementos de Navegação (Setas)
     const btnLeft = document.getElementById('scroll-left');
     const btnRight = document.getElementById('scroll-right');
@@ -28,9 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
         userContext = JSON.parse(savedData);
 
         // Atualiza UI do Cabeçalho
-        if(displayCourse) displayCourse.textContent = userContext.course;
-        
-        if(displayPeriod) {
+        if (displayCourse) displayCourse.textContent = userContext.course;
+
+        if (displayPeriod) {
             const shiftDisplay = userContext.shift.charAt(0).toUpperCase() + userContext.shift.slice(1);
             displayPeriod.textContent = `${userContext.period}º Período • ${shiftDisplay}`;
         }
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const scrollWidth = scheduleView.scrollWidth;
         const clientWidth = scheduleView.offsetWidth;
         const scrollLeft = scheduleView.scrollLeft;
-        
+
         // Verifica se há conteúdo suficiente para rolar
         const isScrollable = scrollWidth > (clientWidth + 20);
 
@@ -194,25 +194,27 @@ document.addEventListener('DOMContentLoaded', () => {
             shareBtn.style.pointerEvents = 'none';
 
             try {
-                // 1. CRIAR O PALCO INVISÍVEL
+                // 1. CRIAR O PALCO INVISÍVEL (Largura Dinâmica Ajustada)
                 const stage = document.createElement('div');
                 stage.id = "temp-print-stage";
                 stage.style.cssText = `
-                    position: fixed; top: 0; left: 0;
-                    width: 1920px;
-                    background-color: #F0F4F8;
-                    padding: 60px 40px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    z-index: -9999;
-                    font-family: 'Inter', sans-serif;
-                `;
+                position: fixed; top: 0; left: 0;
+                width: fit-content; /* AJUSTE CIRÚRGICO: Abraça o conteúdo exato */
+                min-width: 1024px; /* Segurança para o cabeçalho não quebrar se a grade for muito pequena */
+                background-color: #F0F4F8;
+                /* AJUSTE CIRÚRGICO: Padding lateral de 24px (igual ao gap entre cards) */
+                padding: 60px 24px; 
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                z-index: -9999;
+                font-family: 'Inter', sans-serif;
+            `;
 
                 // 2. CABEÇALHO SINTÉTICO
                 const simpleHeader = document.createElement('div');
                 simpleHeader.style.cssText = "text-align: center; margin-bottom: 50px; width: 100%;";
-                
+
                 simpleHeader.innerHTML = `
                     <div style="background: #00897bd0; color: white; display: inline-block; padding: 8px 16px; border-radius: 12px; font-weight: 800; font-size: 1.2rem; margin-bottom: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
                         MQS
@@ -257,11 +259,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // 5. CAPTURA
                 const options = {
-                    scale: 2,
+                    scale: 2, // Mantém alta resolução (Retina)
                     backgroundColor: "#F0F4F8",
                     logging: false,
-                    width: 1920,
-                    windowWidth: 1920,
+                    // width e windowWidth REMOVIDOS para detectar o tamanho "fit-content" automaticamente
                     ignoreElements: (el) => el.classList.contains('nav-arrow')
                 };
 
