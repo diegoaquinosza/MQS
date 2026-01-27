@@ -3,7 +3,7 @@
 :root {
     --primary: #00897bd0;
     --primary-hover: #00897B;
-    --bg-body: hsl(210, 36%, 95%);
+    --bg-body: #DAE5E3;
     --surface: #FFFFFF;
     --text-main: #004c44;
     --text-medium: #008b7e;
@@ -462,14 +462,14 @@ body {
     /* Como removemos o padding excessivo do wrapper, o 50% agora bate com o centro dos botões */
     top: 50%;
     transform: translateY(-50%);
-    margin-top: -4px;
+    margin-top: -3px;
     
     /* SOBREPOSIÇÃO (CAMADA) */
     z-index: 20; /* Aumentei para 20 para garantir que fique ACIMA dos botões */
     
     /* TAMANHO IGUAL AO BOTÃO DE PERÍODO */
-    width: 69px;
-    height: 69px;
+    width: 61px;
+    height: 61px;
     border-radius: 50%;
     
     /* Estilo Visual */
@@ -494,11 +494,11 @@ body {
 /* POSICIONAMENTO LATERAL (Overlay) */
 /* Usamos valores negativos leves para ela morder a borda mas ficar em cima do carrossel */
 .mini-arrow.left {
-    left: -8px; 
+    left: -3px; 
 }
 
 .mini-arrow.right {
-    right: -8px;
+    right: -3px;
 }
 
 /* Esconde APENAS em dispositivos de toque */
@@ -510,9 +510,9 @@ body {
 
 /* Hover e Hidden mantidos... */
 .mini-arrow:hover {
-    background: var(--primary);
+    background: var(--primary-hover);
     color: white;
-    border-color: var(--primary);
+    border-color: var(--primary-hover);
     transform: translateY(-50%) scale(1.1);
     box-shadow: 0 8px 20px rgba(0, 137, 123, 0.3);
 }
