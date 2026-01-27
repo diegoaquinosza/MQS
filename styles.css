@@ -3,13 +3,15 @@
 :root {
     /* --- PALETA ZEN --- */
     --primary: #00897bd0;
+    --primary-hover: #00897B;
     --primary-light: #c8e5e4;
     --primary-medium: #a2ccc9;
     --primary-dark: #00816b;
     --surface-glass: rgba(255, 255, 255, 0.901);
     --surface: #FFFFFF;
-    --bg-body: #F4FBFA;
+    --bg-body: #DAE5E3;
     --text-main: #004c44;
+    --text-medium: #008b7e;
     --text-muted: #607D8B;
 
     /* --- GEOMETRIA --- */
@@ -325,7 +327,7 @@ body {
 
 /* --- COMPONENTES --- */
 .day-card {
-    background: var(--primary-light);
+    background: var(--primary-medium);
     border-radius: var(--radius-day);
     padding: var(--spacing-p4);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -334,16 +336,17 @@ body {
 }
 
 .day-card.is-today {
-    border-color: #00887a5b;
-    box-shadow: 0 0 0 4px rgba(0, 125, 113, 0.15);
+    border-color: #FFFFFF;
+    box-shadow: 0 15px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .day-card__title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #00766ad0;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .class-item {
@@ -364,7 +367,7 @@ body {
 .class-item__details {
     display: flex;
     justify-content: space-between;
-    margin-top: 8px;
+    margin-top: 10px;
     font-size: 0.875rem;
     color: var(--text-main);
 }
@@ -372,13 +375,13 @@ body {
 .class-item__prof {
     font-size: 0.875rem;
     text-align: center;
-    margin-top: 4px;
+    margin-top: 10px;
     display: block;
     color: var(--text-muted);
 }
 
 .interval-pill {
-    background: var(--primary-medium);
+    background: var(--primary-light);
     border-radius: var(--radius-pill);
     padding: 8px 16px;
     display: flex;
