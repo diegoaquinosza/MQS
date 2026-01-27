@@ -21,6 +21,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('btn-ver-horarios');
     const feedbackMsg = document.getElementById('form-feedback');
 
+    // --- NOVO: Variáveis e Função de Navegação (Movidos para o topo) ---
+    const scrollContainer = document.getElementById('period-selector');
+    const btnLeft = document.getElementById('btn-scroll-left');
+    const btnRight = document.getElementById('btn-scroll-right');
+
+    const updateMiniArrows = () => {
+        if (!scrollContainer || !btnLeft || !btnRight) return;
+        const scrollWidth = scrollContainer.scrollWidth;
+        const clientWidth = scrollContainer.offsetWidth;
+        const scrollLeft = scrollContainer.scrollLeft;
+
+        const isScrollable = scrollWidth > (clientWidth + 10);
+
+        if (!isScrollable) {
+            btnLeft.classList.add('hidden');
+            btnRight.classList.add('hidden');
+        } else {
+            // Esquerda
+            if (scrollLeft <= 5) btnLeft.classList.add('hidden');
+            else btnLeft.classList.remove('hidden');
+
+            // Direita
+            if (scrollLeft >= (scrollWidth - clientWidth - 5)) btnRight.classList.add('hidden');
+            else btnRight.classList.remove('hidden');
+        }
+    };
+
     let userSelection = { course: '', shift: null, period: null };
 
     const ALLOWED_COURSES = [
@@ -78,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // REMOVE A CLASSE ACTIVE VISUALMENTE DE TODOS OS BOTÕES
         shiftBtns.forEach(btn => btn.classList.remove('active'));
         periodBtns.forEach(btn => btn.classList.remove('active'));
+        setTimeout(updateMiniArrows, 50);
     });
 
     shiftBtns.forEach(btn => {
@@ -162,72 +190,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ============================================================
-    // NAVEGAÇÃO HORIZONTAL (Lógica do app.js portada para Home)
+    // EVENT LISTENERS DE NAVEGAÇÃO
     // ============================================================
-    const scrollContainer = document.getElementById('period-selector');
-    const btnLeft = document.getElementById('btn-scroll-left');
-    const btnRight = document.getElementById('btn-scroll-right');
-
     if (scrollContainer && btnLeft && btnRight) {
+        // Apenas conecta os eventos, pois a função já foi criada lá no topo
+        btnLeft.addEventListener('click', () => scrollContainer.scrollBy({ left: -200, behavior: 'smooth' }));
+        btnRight.addEventListener('click', () => scrollContainer.scrollBy({ left: 200, behavior: 'smooth' }));
 
-        const updateMiniArrows = () => {
-            const scrollWidth = scrollContainer.scrollWidth;
-            const clientWidth = scrollContainer.offsetWidth; // Área visível
-            const scrollLeft = scrollContainer.scrollLeft;
-
-            // Lógica do app.js: Verifica se o conteúdo é maior que a área visível (+ margem de segurança)
-            const isScrollable = scrollWidth > (clientWidth + 10);
-
-            if (!isScrollable) {
-                // Se cabe tudo na tela, esconde as duas setas
-                btnLeft.classList.add('hidden');
-                btnRight.classList.add('hidden');
-            } else {
-                // Se tem rolagem, controla qual aparece
-
-                // Esquerda: Some se estiver no início (margem 5px)
-                if (scrollLeft <= 5) {
-                    btnLeft.classList.add('hidden');
-                } else {
-                    btnLeft.classList.remove('hidden');
-                }
-
-                // Direita: Some se estiver no fim (Cálculo matemático preciso)
-                if (scrollLeft >= (scrollWidth - clientWidth - 5)) {
-                    btnRight.classList.add('hidden');
-                } else {
-                    btnRight.classList.remove('hidden');
-                }
-            }
-        };
-
-        // Eventos de Clique (Scroll suave)
-        btnLeft.addEventListener('click', () => {
-            scrollContainer.scrollBy({ left: -200, behavior: 'smooth' });
-        });
-
-        btnRight.addEventListener('click', () => {
-            scrollContainer.scrollBy({ left: 200, behavior: 'smooth' });
-        });
-
-        // Listeners essenciais (Scroll e Resize)
         scrollContainer.addEventListener('scroll', updateMiniArrows);
         window.addEventListener('resize', updateMiniArrows);
 
-        // --- CORREÇÃO CIRÚRGICA DE RENDERIZAÇÃO ---
-        // Estratégia de Múltiplas Verificações para garantir que não falhe
-
-        // 1. Tenta calcular imediatamente (DOM Ready)
+        // Verificações iniciais
         updateMiniArrows();
-
-        // 2. Recalcula após breve respiro do navegador (100ms)
         setTimeout(updateMiniArrows, 100);
-
-        // 3. Recalcula após segurança (500ms) - Garante que pegue após animações
         setTimeout(updateMiniArrows, 500);
-
-        // 4. O MAIS IMPORTANTE: Recalcula quando a página carregar tudo (Imagens/Fontes/Cache)
-        // Isso resolve o problema de quando você volta para a Home
         window.addEventListener('load', updateMiniArrows);
     }
 });
