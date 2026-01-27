@@ -214,9 +214,20 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollContainer.addEventListener('scroll', updateMiniArrows);
         window.addEventListener('resize', updateMiniArrows);
 
-        // Inicialização
-        // Pequeno delay para garantir que o CSS renderizou os tamanhos
-        setTimeout(updateMiniArrows, 50);
-    }
+        // --- CORREÇÃO CIRÚRGICA DE RENDERIZAÇÃO ---
+        // Estratégia de Múltiplas Verificações para garantir que não falhe
 
+        // 1. Tenta calcular imediatamente (DOM Ready)
+        updateMiniArrows();
+
+        // 2. Recalcula após breve respiro do navegador (100ms)
+        setTimeout(updateMiniArrows, 100);
+
+        // 3. Recalcula após segurança (500ms) - Garante que pegue após animações
+        setTimeout(updateMiniArrows, 500);
+
+        // 4. O MAIS IMPORTANTE: Recalcula quando a página carregar tudo (Imagens/Fontes/Cache)
+        // Isso resolve o problema de quando você volta para a Home
+        window.addEventListener('load', updateMiniArrows);
+    }
 });
