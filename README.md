@@ -58,26 +58,61 @@ Este projeto foi construído seguindo a metodologia **"Vanilla First"**, garanti
 
 ---
 
-## 5. Mapeamento Técnico (Conformidade com a Rubrica)
+## 5. Mapeamento Técnico & Checklist de Conformidade
+📋 Checklist Obrigatório
+Conforme solicitado nas diretrizes do Projeto Integrador:
 
-Este projeto atende rigorosamente aos requisitos do Projeto Integrador:
+[x] Estruturas básicas (condicionais, laços, funções).
 
-### ✅ A. Estruturas e Lógica de Arrays
-Uso intensivo de métodos de Array no arquivo `app.js` para manipulação do JSON:
-1.  **`.find()`**: Localiza o Curso e a Grade específica dentro da base de dados.
-2.  **`.filter()`**: Higieniza a grade, removendo dias vazios antes da renderização.
-3.  **`.map()`**: Transforma os dados brutos em componentes visuais (Cards e Listas de Aulas).
+[x] Objetos + Arrays com map/filter/reduce (≥ 3 métodos).
 
-### ✅ B. Assincronicidade (Dois Fluxos)
-Implementação de duas estratégias distintas de consumo de dados:
-* **Fluxo 1 (`async/await`):** Em `app.js`, função `fetchSchedule`. Busca os dados críticos da grade com tratamento robusto `try/catch`.
-* **Fluxo 2 (`Promise .then`):** Em `home.js`. Busca o arquivo `tip_of_day.json` para exibir frases motivacionais ("Dica do dia").
+[x] Arrow functions (incluindo eventos).
 
-### ✅ C. Persistência de Dados
-* **Web Storage:** O objeto `userContext` é salvo no `localStorage`. Isso permite manter o estado da aplicação entre sessões, simulando um app nativo.
+[x] DOM dinâmico (criação/remoção/atualização; formulários e eventos).
 
-### ✅ D. API HTML5 Extra
-* **Web Share API + History API:** Implementação de compartilhamento nativo de arquivos e manipulação do histórico do navegador para navegação fluida (SPA-like).
+[x] Requisição assíncrona com fetch + loading/erros.
+
+[x] Promises (.then/.catch) e async/await (try/catch).
+
+[x] Web Storage para persistência.
+
+[x] +1 API HTML5 opcional (File/Geolocation/History/Canvas/Audio/Video/Clipboard).
+
+[x] Responsivo + semântica + acessibilidade básica.
+
+[x] Organização de arquivos e README completo.
+
+### 🔍 Evidência de Implementação
+
+Detalhamento de como os requisitos acima foram aplicados no código:
+
+✅ **A. Objetos e Arrays (Manipulação Avançada)**
+Superando o mínimo de 3 métodos, o arquivo app.js utiliza:
+
+- .find(): Localiza o objeto do curso e a grade específica dentro da estrutura JSON.
+
+- .filter(): Higieniza a grade, filtrando dias que não possuem aulas cadastradas.
+
+- .map(): Essencial para a renderização do DOM, transformando dados brutos em componentes HTML (Cards de Dias e Listas de Aulas).
+
+✅ **B. Assincronicidade (Dois Fluxos Distintos)**
+Implementação de duas estratégias de consumo de dados para fins didáticos e práticos:
+
+- Fluxo 1 (async/await + try/catch): Em app.js, a função fetchSchedule gerencia a busca crítica da grade, com tratamento de erros de rede e feedback visual de loading.
+
+- Fluxo 2 (Promise .then/.catch): Em home.js, consome o arquivo tip_of_day.json para exibir frases aleatórias, com fallback automático em caso de falha.
+
+✅ **C. Persistência e DOM**
+- Web Storage: O estado do usuário (Curso/Turno) é salvo no localStorage, permitindo o "Warm Start" (início imediato sem reconfiguração).
+
+- DOM Dinâmico: A interface é 100% construída via JavaScript (sem recarregar a página), reagindo às interações de formulário e cliques.
+
+✅ **D. APIs HTML5 Extras**
+- History API: Manipulação da URL para navegação fluida sem refresh.
+
+- Canvas API (via html2canvas): Utilizada para renderizar a grade como imagem PNG.
+
+- Web Share API: Integração com o sistema nativo de compartilhamento do dispositivo (WhatsApp/Telegram).
 
 ---
 
