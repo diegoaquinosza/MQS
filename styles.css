@@ -611,3 +611,35 @@ body {
     font-size: 1.1rem;
     margin-top: 40px;
 }
+
+/* --- APP FOOTER (Rodapé Padrão) --- */
+.app-footer {
+    text-align: center;
+    margin-top: 52px;
+    width: 100%;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    opacity: 0.9;
+}
+
+.app-footer p {
+    margin: 4px 0 0 0;
+}
+
+.footer-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #607D8B;
+}
+
+.footer-credits strong {
+    font-weight: 600;
+    color: #607D8B;
+}
+
+.footer-link {
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
