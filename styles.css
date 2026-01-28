@@ -12,7 +12,7 @@
     --bg-body: #DAE5E3;
     --text-main: #004c44;
     --text-medium: #008b7e;
-    --text-muted: #607D8B;
+    --text-muted: #8E8E93;
 
     /* --- GEOMETRIA --- */
     --radius-day: 32px;
@@ -615,7 +615,7 @@ body {
 /* --- APP FOOTER (Rodapé Padrão) --- */
 .app-footer {
     text-align: center;
-    margin-top: 52px;
+    margin-top: 65px;
     width: 100%;
     color: var(--text-muted);
     font-family: 'Inter', sans-serif;
@@ -631,12 +631,12 @@ body {
 .footer-brand {
     font-weight: 700;
     letter-spacing: 0.5px;
-    color: #607D8B;
+    color: var(--text-muted);
 }
 
 .footer-credits strong {
     font-weight: 600;
-    color: #607D8B;
+    color: var(--text-muted);
 }
 
 .footer-link {

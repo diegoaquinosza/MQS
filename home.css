@@ -526,14 +526,13 @@ body {
 /* --- APP FOOTER (Rodapé Padrão) --- */
 .app-footer {
     text-align: center;
-    margin-top: 40px;
+    margin-top: 52px;
     width: 100%;
     color: var(--text-muted);
     font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     line-height: 1.5;
     opacity: 0.9;
-    padding-bottom: 20px; /* Espaço extra para não colar na borda do celular */
 }
 
 .app-footer p {
@@ -543,12 +542,12 @@ body {
 .footer-brand {
     font-weight: 700;
     letter-spacing: 0.5px;
-    color: #607D8B;
+    color: var(--text-muted);
 }
 
 .footer-credits strong {
     font-weight: 600;
-    color: #607D8B;
+    color: var(--text-muted);
 }
 
 .footer-link {
