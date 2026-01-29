@@ -19,9 +19,17 @@ Um facilitador logístico que atua como um "colega digital". Através de persist
 
 ### 📸 Screenshots
 
-| Tela Inicial (Onboarding) | Grade Horária (Card) |
-|:---:|:---:|
-| <img src="./assets/print_home.png" width="300" alt="Tela Inicial do App"> | <img src="./assets/print_grade.png" width="300" alt="Visualização da Grade"> |
+**📱 Fluxo Mobile (PWA)**
+| 1. Onboarding (Novo Usuário) | 2. Warm Start (Retorno) | 3. Visualização (Card) |
+|:---:|:---:|:---:|
+| <img src="./assets/print_home.png" width="250" alt="Tela Inicial"> | <img src="./assets/print_warm.png" width="250" alt="Tela de Warm Start"> | <img src="./assets/print_grade.png" width="250" alt="Grade em Card"> |
+
+<br>
+
+**💻 Visualização Completa (Desktop & Compartilhamento)**
+> *Layout gerado automaticamente via html2canvas para envio no WhatsApp.*
+
+<img src="./assets/print_grade_compartilhar.png" width="100%" alt="Grade Completa Horizontal">
 
 ---
 
