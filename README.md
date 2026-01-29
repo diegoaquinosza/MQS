@@ -130,7 +130,7 @@ A arquitetura segue o princípio de Separação de Responsabilidades (SoC), gara
 ├── grade.css           # Estilos da Grade (Antigo styles.css)
 ├── grade.js            # Motor da Grade (Async + Renderização - Antigo app.js)
 │
-├── db.json             # Base de dados Mock (Grade Horária)
+├── db.json             # Base de dados (Grade Horária)
 ├── tip_of_day.json     # Micro-serviço de frases (Dica do dia)
 │
 ├── manifest.json       # Configuração PWA (Instalabilidade)
