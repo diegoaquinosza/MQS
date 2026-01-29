@@ -166,7 +166,8 @@ Para garantir o funcionamento das requisições fetch:
 
 4.  Ou via terminal (Node.js):
     ```bash
-    npx http-server .
+    npx http-server
+    ```
 
 ---
 
