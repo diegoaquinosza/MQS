@@ -13,9 +13,9 @@
                   "type": "class",
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
-                  "subject": "Fundamentos de Redes e Conectividades",
+                  "subject": "Fund. de Redes e Conectividades",
                   "room": "LABCONF",
-                  "prof": "Bruno Viana Coutinho"
+                  "prof": "Bruno Viana"
                 },
                 {
                   "type": "interval",
@@ -27,9 +27,9 @@
                   "type": "class",
                   "timeStart": "09:15",
                   "timeEnd": "10:45",
-                  "subject": "Fundamentos de Redes e Conectividades",
+                  "subject": "Fund. de Redes e Conectividades",
                   "room": "LABCONF",
-                  "prof": "Bruno Viana Coutinho"
+                  "prof": "Bruno Viana"
                 }
               ]
             },
@@ -40,9 +40,9 @@
                   "type": "class",
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
-                  "subject": "Introd. a Const. Páginas Web",
+                  "subject": "Intro. a Constr. Páginas Web",
                   "room": "LABCONF",
-                  "prof": "Carlos Henrique Correa Tolentino"
+                  "prof": "Carlos Henrique"
                 },
                 {
                   "type": "interval",
@@ -54,9 +54,9 @@
                   "type": "class",
                   "timeStart": "09:15",
                   "timeEnd": "10:45",
-                  "subject": "Introd. a Const. Páginas Web",
+                  "subject": "Intro. a Constr. Páginas Web",
                   "room": "LABCONF",
-                  "prof": "Carlos Henrique Correa Tolentino"
+                  "prof": "Carlos Henrique"
                 }
               ]
             },
@@ -96,7 +96,7 @@
                   "timeEnd": "09:00",
                   "subject": "Algoritmos e Progamação",
                   "room": "LABCONF",
-                  "prof": "Francisco das Chagas de Souza"
+                  "prof": "Francisco das Chagas"
                 },
                 {
                   "type": "interval",
@@ -110,7 +110,7 @@
                   "timeEnd": "10:45",
                   "subject": "Algoritmos e Progamação",
                   "room": "LABCONF",
-                  "prof": "Francisco das Chagas de Souza"
+                  "prof": "Francisco das Chagas"
                 }
               ]
             },
@@ -123,7 +123,7 @@
                   "timeEnd": "09:00",
                   "subject": "Algoritmos e Progamação",
                   "room": "LABCONF",
-                  "prof": "Francisco das Chagas de Souza"
+                  "prof": "Francisco das Chagas"
                 },
                 {
                   "type": "interval",
@@ -137,7 +137,7 @@
                   "timeEnd": "10:45",
                   "subject": "Algoritmos e Progamação",
                   "room": "LABCONF",
-                  "prof": "Francisco das Chagas de Souza"
+                  "prof": "Francisco das Chagas"
                 }
               ]
             }
@@ -150,7 +150,7 @@
                   "type": "class",
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
-                  "subject": "Fundamentos de Banco de Dados",
+                  "subject": "Fund. de Banco de Dados",
                   "room": "LABDES",
                   "prof": "Liliane Felix"
                 },
@@ -164,7 +164,7 @@
                   "type": "class",
                   "timeStart": "09:15",
                   "timeEnd": "10:45",
-                  "subject": "Fundamentos de Banco de Dados",
+                  "subject": "Fund. de Banco de Dados",
                   "room": "LABDES",
                   "prof": "Liliane Felix"
                 }
@@ -206,7 +206,7 @@
                   "timeEnd": "09:00",
                   "subject": "Programação Básica para WEB",
                   "room": "LABDES",
-                  "prof": "Ricardo Loureiro Soares"
+                  "prof": "Ricardo Loureiro"
                 },
                 {
                   "type": "interval",
@@ -220,7 +220,7 @@
                   "timeEnd": "10:45",
                   "subject": "Programação Básica para WEB",
                   "room": "LABDES",
-                  "prof": "Ricardo Loureiro Soares"
+                  "prof": "Ricardo Loureiro"
                 }
               ]
             },
@@ -231,7 +231,7 @@
                   "type": "class",
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
-                  "subject": "Fundamentos de Programação Científica",
+                  "subject": "Fund. de Programação Científica",
                   "room": "LABDES",
                   "prof": "Vinicius de Rios"
                 },
@@ -245,7 +245,7 @@
                   "type": "class",
                   "timeStart": "09:15",
                   "timeEnd": "10:45",
-                  "subject": "Fundamentos de Programação Científica",
+                  "subject": "Fund. de Programação Científica",
                   "room": "LABDES",
                   "prof": "Vinicius de Rios"
                 }
@@ -258,9 +258,9 @@
                   "type": "class",
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
-                  "subject": "Programação Orientada a Objetos",
+                  "subject": "Prog. Orientada a Objetos",
                   "room": "LABDES",
-                  "prof": "Helder Cleber Almeida Pereira"
+                  "prof": "Helder Cleber"
                 },
                 {
                   "type": "interval",
@@ -272,9 +272,9 @@
                   "type": "class",
                   "timeStart": "09:15",
                   "timeEnd": "10:45",
-                  "subject": "Programação Orientada a Objetos",
+                  "subject": "Prog. Orientada a Objetos",
                   "room": "LABDES",
-                  "prof": "Helder Cleber Almeida Pereira"
+                  "prof": "Helder Cleber"
                 }
               ]
             }
@@ -314,9 +314,9 @@
                   "type": "class",
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
-                  "subject": "Programação para Web Designers",
+                  "subject": "Prog. para Web Designers",
                   "room": "LABTEC",
-                  "prof": "Wilson Wolf Costa"
+                  "prof": "Wilson Wolf"
                 },
                 {
                   "type": "interval",
@@ -328,9 +328,9 @@
                   "type": "class",
                   "timeStart": "09:15",
                   "timeEnd": "10:45",
-                  "subject": "Programação para Web Designers",
+                  "subject": "Prog. para Web Designers",
                   "room": "LABTEC",
-                  "prof": "Wilson Wolf Costa"
+                  "prof": "Wilson Wolf"
                 }
               ]
             },
@@ -341,9 +341,9 @@
                   "type": "class",
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
-                  "subject": "Programação para Bancos de Dados",
+                  "subject": "Prog. para Bancos de Dados",
                   "room": "LABTEC",
-                  "prof": "Simone Dutra Martins Guarda"
+                  "prof": "Simone Dutra"
                 },
                 {
                   "type": "interval",
@@ -355,9 +355,9 @@
                   "type": "class",
                   "timeStart": "09:15",
                   "timeEnd": "10:45",
-                  "subject": "Programação para Bancos de Dados",
+                  "subject": "Prog. para Bancos de Dados",
                   "room": "LABTEC",
-                  "prof": "Simone Dutra Martins Guarda"
+                  "prof": "Simone Dutra"
                 }
               ]
             },
@@ -368,9 +368,9 @@
                   "type": "class",
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
-                  "subject": "Aplicações de Estruturas de Dados",
+                  "subject": "Aplic. de Estruturas de Dados",
                   "room": "LABTEC",
-                  "prof": "Carlos Henrique Correa Tolentino"
+                  "prof": "Carlos Henrique"
                 },
                 {
                   "type": "interval",
@@ -382,9 +382,9 @@
                   "type": "class",
                   "timeStart": "09:15",
                   "timeEnd": "10:45",
-                  "subject": "Aplicações de Estruturas de Dados",
+                  "subject": "Aplic. de Estruturas de Dados",
                   "room": "LABTEC",
-                  "prof": "Carlos Henrique Correa Tolentino"
+                  "prof": "Carlos Henrique"
                 }
               ]
             },
@@ -397,7 +397,7 @@
                   "timeEnd": "09:00",
                   "subject": "Humanidades, Ética e Cidadania",
                   "room": "LABTEC",
-                  "prof": "Euclides Monteiro Botelho"
+                  "prof": "Euclides Monteiro"
                 },
                 {
                   "type": "interval",
@@ -424,9 +424,9 @@
                   "type": "class",
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
-                  "subject": "Novas Tecnologias em Banco de Dados",
+                  "subject": "Novas Tec. em Banco de Dados",
                   "room": "LABPO",
-                  "prof": "Simone Dutra Martins Guarda"
+                  "prof": "Simone Dutra"
                 },
                 {
                   "type": "interval",
@@ -438,9 +438,9 @@
                   "type": "class",
                   "timeStart": "09:15",
                   "timeEnd": "10:45",
-                  "subject": "Novas Tecnologias em Banco de Dados",
+                  "subject": "Novas Tec. em Banco de Dados",
                   "room": "LABPO",
-                  "prof": "Simone Dutra Martins Guarda"
+                  "prof": "Simone Dutra"
                 }
               ]
             },
@@ -480,7 +480,7 @@
                   "timeEnd": "09:00",
                   "subject": "Programação para Web II",
                   "room": "LABPO",
-                  "prof": "Fagno Alves Fonseca"
+                  "prof": "Fagno Alves"
                 },
                 {
                   "type": "interval",
@@ -494,7 +494,7 @@
                   "timeEnd": "10:45",
                   "subject": "Programação para Web II",
                   "room": "LABPO",
-                  "prof": "Fagno Alves Fonseca"
+                  "prof": "Fagno Alves"
                 }
               ]
             },
@@ -507,7 +507,7 @@
                   "timeEnd": "09:00",
                   "subject": "Sistemas Operacionais",
                   "room": "LABPO",
-                  "prof": "Helder Cleber Almeida Pereira"
+                  "prof": "Helder Cleber"
                 },
                 {
                   "type": "interval",
@@ -590,7 +590,7 @@
                   "timeEnd": "09:00",
                   "subject": "Extensão II",
                   "room": "LABMÍDIA",
-                  "prof": "Gislaine"
+                  "prof": "Gislaine Sales"
                 },
                 {
                   "type": "interval",
@@ -604,7 +604,7 @@
                   "timeEnd": "10:45",
                   "subject": "Adm. Banco de Dados",
                   "room": "LABMÍDIA",
-                  "prof": "Simone Dutra Martins Guarda"
+                  "prof": "Simone Dutra"
                 }
               ]
             },
@@ -617,7 +617,7 @@
                   "timeEnd": "09:00",
                   "subject": "Segurança de Sistemas",
                   "room": "LABMÍDIA",
-                  "prof": "Bruno Viana Coutinho"
+                  "prof": "Bruno Viana"
                 },
                 {
                   "type": "interval",
@@ -631,7 +631,7 @@
                   "timeEnd": "10:45",
                   "subject": "Segurança de Sistemas",
                   "room": "LABMÍDIA",
-                  "prof": "Bruno Viana Coutinho"
+                  "prof": "Bruno Viana"
                 }
               ]
             },
@@ -642,7 +642,7 @@
                   "type": "class",
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
-                  "subject": "Metodologias de Desenvolvimento",
+                  "subject": "Metod. de Desenvolvimento",
                   "room": "LABMÍDIA",
                   "prof": "Liliane Felix"
                 },
@@ -658,7 +658,7 @@
                   "timeEnd": "10:45",
                   "subject": "Ciências do Ambiente",
                   "room": "LABMÍDIA",
-                  "prof": "Simone Dutra Martins Guarda"
+                  "prof": "Simone Dutra"
                 }
               ]
             },
@@ -669,7 +669,7 @@
                   "type": "class",
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
-                  "subject": "Programação para Dispositivos Móveis I",
+                  "subject": "Prog. para Dispositivos Móveis I",
                   "room": "LABMÍDIA",
                   "prof": "Ana Paula"
                 },
@@ -683,7 +683,7 @@
                   "type": "class",
                   "timeStart": "09:15",
                   "timeEnd": "10:45",
-                  "subject": "Programação para Dispositivos Móveis I",
+                  "subject": "Prog. para Dispositivos Móveis I",
                   "room": "LABMÍDIA",
                   "prof": "Ana Paula"
                 }
@@ -698,7 +698,7 @@
                   "type": "class",
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
-                  "subject": "Computação em Nuvem e DevOps",
+                  "subject": "Comp. em Nuvem e DevOps",
                   "room": "LABMOB",
                   "prof": "Fernando Ebrahim"
                 },
@@ -712,7 +712,7 @@
                   "type": "class",
                   "timeStart": "09:15",
                   "timeEnd": "10:45",
-                  "subject": "Computação em Nuvem e DevOps",
+                  "subject": "Comp. em Nuvem e DevOps",
                   "room": "LABMOB",
                   "prof": "Fernando Ebrahim"
                 }
@@ -725,7 +725,7 @@
                   "type": "class",
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
-                  "subject": "Programação para Dispositivos Móveis II",
+                  "subject": "Prog. para Dispositivos Móveis II",
                   "room": "LABMOB",
                   "prof": "Ana Paula"
                 },
@@ -739,7 +739,7 @@
                   "type": "class",
                   "timeStart": "09:15",
                   "timeEnd": "10:45",
-                  "subject": "Programação para Dispositivos Móveis II",
+                  "subject": "Prog. para Dispositivos Móveis II",
                   "room": "LABMOB",
                   "prof": "Ana Paula"
                 }
@@ -839,7 +839,7 @@
                   "timeEnd": "20:30",
                   "subject": "Algoritmos e Programação",
                   "room": "LABCONF",
-                  "prof": "Leonardo José Sales"
+                  "prof": "Leonardo José"
                 },
                 {
                   "type": "interval",
@@ -853,7 +853,7 @@
                   "timeEnd": "22:15",
                   "subject": "Algoritmos e Programação",
                   "room": "LABCONF",
-                  "prof": "Leonardo José Sales"
+                  "prof": "Leonardo José"
                 }
               ]
             },
@@ -864,7 +864,7 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Introdução a Construção de Páginas Web",
+                  "subject": "Intro. a Construção de Pág. Web",
                   "room": "LABCONF",
                   "prof": "Fernando Jorge"
                 },
@@ -878,7 +878,7 @@
                   "type": "class",
                   "timeStart": "20:45",
                   "timeEnd": "22:15",
-                  "subject": "Introdução a Construção de Páginas Web",
+                  "subject": "Intro. a Construção de Pág. Web",
                   "room": "LABCONF",
                   "prof": "Fernando Jorge"
                 }
@@ -893,7 +893,7 @@
                   "timeEnd": "20:30",
                   "subject": "Introdução a Informática",
                   "room": "LABCONF",
-                  "prof": "Ricardo Loureiro Soares"
+                  "prof": "Ricardo Loureiro"
                 },
                 {
                   "type": "interval",
@@ -907,7 +907,7 @@
                   "timeEnd": "22:15",
                   "subject": "Introdução a Informática",
                   "room": "LABCONF",
-                  "prof": "Ricardo Loureiro Soares"
+                  "prof": "Ricardo Loureiro"
                 }
               ]
             },
@@ -920,7 +920,7 @@
                   "timeEnd": "20:30",
                   "subject": "Algoritmos e Programação",
                   "room": "LABCONF",
-                  "prof": "Leonardo José Sales"
+                  "prof": "Leonardo José"
                 },
                 {
                   "type": "interval",
@@ -934,7 +934,7 @@
                   "timeEnd": "22:15",
                   "subject": "Algoritmos e Programação",
                   "room": "LABCONF",
-                  "prof": "Leonardo José Sales"
+                  "prof": "Leonardo José"
                 }
               ]
             },
@@ -945,7 +945,7 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Fundamentos de Redes e Conectividades",
+                  "subject": "Fund. de Redes e Conectividades",
                   "room": "LABCONF",
                   "prof": "Vinicius de Rios"
                 },
@@ -959,7 +959,7 @@
                   "type": "class",
                   "timeStart": "20:45",
                   "timeEnd": "22:15",
-                  "subject": "Fundamentos de Redes e Conectividades",
+                  "subject": "Fund. de Redes e Conectividades",
                   "room": "LABCONF",
                   "prof": "Vinicius de Rios"
                 }
@@ -974,7 +974,7 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Fundamentos de Banco de Dados",
+                  "subject": "Fund. de Banco de Dados",
                   "room": "LABDES",
                   "prof": "Paulo Paz"
                 },
@@ -988,7 +988,7 @@
                   "type": "class",
                   "timeStart": "20:45",
                   "timeEnd": "22:15",
-                  "subject": "Fundamentos de Banco de Dados",
+                  "subject": "Fund. de Banco de Dados",
                   "room": "LABDES",
                   "prof": "Paulo Paz"
                 }
@@ -1001,9 +1001,9 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Fundamentos de Programação Científica",
+                  "subject": "Fund. de Programação Científica",
                   "room": "LABDES",
-                  "prof": "Jonas de Macedo Sousa"
+                  "prof": "Jonas de Macedo"
                 },
                 {
                   "type": "interval",
@@ -1015,9 +1015,9 @@
                   "type": "class",
                   "timeStart": "20:45",
                   "timeEnd": "22:15",
-                  "subject": "Fundamentos de Programação Científica",
+                  "subject": "Fund. de Programação Científica",
                   "room": "LABDES",
-                  "prof": "Jonas de Macedo Sousa"
+                  "prof": "Jonas de Macedo"
                 }
               ]
             },
@@ -1028,9 +1028,9 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Programação Orientada a Objetos",
+                  "subject": "Prog. Orientada a Objetos",
                   "room": "LABDES",
-                  "prof": "Leonardo José Sales"
+                  "prof": "Leonardo José"
                 },
                 {
                   "type": "interval",
@@ -1042,9 +1042,9 @@
                   "type": "class",
                   "timeStart": "20:45",
                   "timeEnd": "22:15",
-                  "subject": "Programação Orientada a Objetos",
+                  "subject": "Prog. Orientada a Objetos",
                   "room": "LABDES",
-                  "prof": "Leonardo José Sales"
+                  "prof": "Leonardo José"
                 }
               ]
             },
@@ -1057,7 +1057,7 @@
                   "timeEnd": "20:30",
                   "subject": "Análise de Sistemas",
                   "room": "LABDES",
-                  "prof": "Gerson Pesente Focking"
+                  "prof": "Gerson Focking"
                 },
                 {
                   "type": "interval",
@@ -1082,9 +1082,9 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Programação Orientada a Objetos",
+                  "subject": "Prog. Orientada a Objetos",
                   "room": "LABTEC",
-                  "prof": "Rodrigo Luiz dos Santos"
+                  "prof": "Rodrigo Luiz"
                 },
                 {
                   "type": "interval",
@@ -1096,9 +1096,9 @@
                   "type": "class",
                   "timeStart": "20:45",
                   "timeEnd": "22:15",
-                  "subject": "Programação Orientada a Objetos",
+                  "subject": "Prog. Orientada a Objetos",
                   "room": "LABTEC",
-                  "prof": "Rodrigo Luiz dos Santos"
+                  "prof": "Rodrigo Luiz"
                 }
               ]
             }
@@ -1113,7 +1113,7 @@
                   "timeEnd": "20:30",
                   "subject": "Projeto de Sistemas",
                   "room": "LABTEC",
-                  "prof": "Gerson Pesente Focking"
+                  "prof": "Gerson Focking"
                 },
                 {
                   "type": "interval",
@@ -1165,9 +1165,9 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Programação para Web Designers",
+                  "subject": "Prog. para Web Designers",
                   "room": "LABTEC",
-                  "prof": "Rodrigo Luiz dos Santos"
+                  "prof": "Rodrigo Luiz"
                 },
                 {
                   "type": "interval",
@@ -1179,9 +1179,9 @@
                   "type": "class",
                   "timeStart": "20:45",
                   "timeEnd": "22:15",
-                  "subject": "Programação para Web Designers",
+                  "subject": "Prog. para Web Designers",
                   "room": "LABTEC",
-                  "prof": "Rodrigo Luiz dos Santos"
+                  "prof": "Rodrigo Luiz"
                 }
               ]
             },
@@ -1192,7 +1192,7 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Aplicação de Estruturas de Dados",
+                  "subject": "Aplic. de Estruturas de Dados",
                   "room": "LABTEC",
                   "prof": "Vinicius Costa"
                 },
@@ -1206,7 +1206,7 @@
                   "type": "class",
                   "timeStart": "20:45",
                   "timeEnd": "22:15",
-                  "subject": "Aplicação de Estruturas de Dados",
+                  "subject": "Aplic. de Estruturas de Dados",
                   "room": "LABTEC",
                   "prof": "Vinicius Costa"
                 }
@@ -1219,7 +1219,7 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Programação para Bancos de Dados",
+                  "subject": "Prog. para Bancos de Dados",
                   "room": "LABDES",
                   "prof": "Vinicius Istofel"
                 },
@@ -1233,7 +1233,7 @@
                   "type": "class",
                   "timeStart": "20:45",
                   "timeEnd": "22:15",
-                  "subject": "Programação para Bancos de Dados",
+                  "subject": "Prog. para Bancos de Dados",
                   "room": "LABDES",
                   "prof": "Vinicius Istofel"
                 }
@@ -1250,7 +1250,7 @@
                   "timeEnd": "20:30",
                   "subject": "Programação para Web II",
                   "room": "LABPO",
-                  "prof": "Fagno Alves Fonseca"
+                  "prof": "Fagno Alves"
                 },
                 {
                   "type": "interval",
@@ -1264,7 +1264,7 @@
                   "timeEnd": "22:15",
                   "subject": "Programação para Web II",
                   "room": "LABPO",
-                  "prof": "Fagno Alves Fonseca"
+                  "prof": "Fagno Alves"
                 }
               ]
             },
@@ -1275,7 +1275,7 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Novas Tecnologias em Banco de Dados",
+                  "subject": "Novas Tec. em Banco de Dados",
                   "room": "LABPO",
                   "prof": "Rodrigo Luiz"
                 },
@@ -1289,7 +1289,7 @@
                   "type": "class",
                   "timeStart": "20:45",
                   "timeEnd": "22:15",
-                  "subject": "Novas Tecnologias em Banco de Dados",
+                  "subject": "Novas Tec. em Banco de Dados",
                   "room": "LABPO",
                   "prof": "Rodrigo Luiz"
                 }
@@ -1304,7 +1304,7 @@
                   "timeEnd": "20:30",
                   "subject": "Testes de Software",
                   "room": "LABPO",
-                  "prof": "Marinaldo Oliveira Santos"
+                  "prof": "Marinaldo Oliveira"
                 },
                 {
                   "type": "interval",
@@ -1318,7 +1318,7 @@
                   "timeEnd": "22:15",
                   "subject": "Testes de Software",
                   "room": "LABPO",
-                  "prof": "Marinaldo Oliveira Santos"
+                  "prof": "Marinaldo Oliveira"
                 }
               ]
             },
@@ -1331,7 +1331,7 @@
                   "timeEnd": "20:30",
                   "subject": "Sistemas Operacionais",
                   "room": "LABPO",
-                  "prof": "Helder Cleber Almeida Pereira"
+                  "prof": "Helder Cleber"
                 },
                 {
                   "type": "interval",
@@ -1387,7 +1387,7 @@
                   "timeEnd": "20:30",
                   "subject": "Segurança de Sistemas",
                   "room": "LABMÍDIA",
-                  "prof": "Jonas de Macedo Sousa Junior"
+                  "prof": "Jonas de Macedo"
                 },
                 {
                   "type": "interval",
@@ -1401,7 +1401,7 @@
                   "timeEnd": "22:15",
                   "subject": "Segurança de Sistemas",
                   "room": "LABMÍDIA",
-                  "prof": "Jonas de Macedo Sousa Junior"
+                  "prof": "Jonas de Macedo"
                 }
               ]
             },
@@ -1439,7 +1439,7 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Metodologias de Desenvolvimento",
+                  "subject": "Metod. de Desenvolvimento",
                   "room": "LABMÍDIA",
                   "prof": "Gerson Pesente"
                 },
@@ -1493,7 +1493,7 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Programação para Dispositivos Móveis I",
+                  "subject": "Prog. para Dispositivos Móveis I",
                   "room": "LABMÍDIA",
                   "prof": "Ana Paula"
                 },
@@ -1507,7 +1507,7 @@
                   "type": "class",
                   "timeStart": "20:45",
                   "timeEnd": "22:15",
-                  "subject": "Programação para Dispositivos Móveis I",
+                  "subject": "Prog. para Dispositivos Móveis I",
                   "room": "LABMÍDIA",
                   "prof": "Ana Paula"
                 }
@@ -1522,7 +1522,7 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Computação em Nuvem e DevOps",
+                  "subject": "Comp. em Nuvem e DevOps",
                   "room": "LABMOB",
                   "prof": "Fernando Ebrahim"
                 },
@@ -1536,7 +1536,7 @@
                   "type": "class",
                   "timeStart": "20:45",
                   "timeEnd": "22:15",
-                  "subject": "Computação em Nuvem e DevOps",
+                  "subject": "Comp. em Nuvem e DevOps",
                   "room": "LABMOB",
                   "prof": "Fernando Ebrahim"
                 }
@@ -1549,7 +1549,7 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Programação para Dispositivos Móveis II",
+                  "subject": "Prog. para Dispositivos Móveis II",
                   "room": "LABMOB",
                   "prof": "Ana Paula"
                 },
@@ -1563,7 +1563,7 @@
                   "type": "class",
                   "timeStart": "20:45",
                   "timeEnd": "22:15",
-                  "subject": "Programação para Dispositivos Móveis II",
+                  "subject": "Prog. para Dispositivos Móveis II",
                   "room": "LABMOB",
                   "prof": "Ana Paula"
                 }
@@ -1630,7 +1630,7 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Novas Tecnologias em Desenvolvimento WEB e Mobile",
+                  "subject": "Novas Tec. em Des. WEB e Mobile",
                   "room": "LABMOB",
                   "prof": "Marinaldo Oliveira"
                 },
@@ -1644,7 +1644,7 @@
                   "type": "class",
                   "timeStart": "20:45",
                   "timeEnd": "22:15",
-                  "subject": "Novas Tecnologias em Desenvolvimento WEB e Mobile",
+                  "subject": "Novas Tec. em Des. WEB e Mobile",
                   "room": "LABMOB",
                   "prof": "Marinaldo Oliveira"
                 }
