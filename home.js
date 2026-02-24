@@ -155,10 +155,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // Validação de Grade Específica (Regra de Negócio Temporária)
         if (isSistemas) {
             const isMatutino = userSelection.shift === 'matutino';
-            const isSegundoPeriodo = userSelection.period === '2';
-            if (!isMatutino || !isSegundoPeriodo) {
+            const periodo = parseInt(userSelection.period);
+
+            // 1. Trava do Turno (Apenas Matutino liberado)
+            if (!isMatutino) {
                 const turnoEscolhido = userSelection.shift.charAt(0).toUpperCase() + userSelection.shift.slice(1);
-                showError(`Grade de ${userSelection.period}º ${turnoEscolhido} não cadastrada. Apenas 2º Matutino disponível.`);
+                showError(`Grade de ${turnoEscolhido} em breve! Por enquanto, apenas Matutino.`);
+                return;
+            }
+
+            // 2. Trava de Período (Sistemas só vai até o 6º)
+            if (periodo > 6) {
+                showError(`O curso de Sistemas só vai até o 6º período!`);
                 return;
             }
         }
