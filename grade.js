@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const scheduleView = document.getElementById('schedule-view');
     const shareBtn = document.getElementById('btn-share');
     const homeBtn = document.getElementById('btn-home');
+    // [NOVO] Botão de Personalização
+    const customBtn = document.getElementById('btn-custom-grade');
 
     // Controles de Navegação Horizontal
     const btnLeft = document.getElementById('scroll-left');
@@ -26,30 +28,108 @@ document.addEventListener('DOMContentLoaded', () => {
     // GERENCIAMENTO DE SESSÃO E ESTADO
     // =================================================================
     
+    // [EDITADO] Verifica modo personalizado via URL ou modo padrão via LocalStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    const isCustomMode = urlParams.get('mode') === 'custom';
     const savedData = localStorage.getItem('mqs_user_data');
     let userContext = null;
 
-    if (savedData) {
+    if (isCustomMode) {
+        // ROTA A: MODO PERSONALIZADO
+        if (displayCourse) displayCourse.textContent = "Minha Grade";
+        if (displayPeriod) displayPeriod.textContent = "Planejamento Personalizado";
+        
+        // Inicia o novo "Mixer" (função que criaremos abaixo)
+        fetchCustomSchedule();
+
+    } else if (savedData) {
+        // ROTA B: MODO PADRÃO (Comportamento original)
         userContext = JSON.parse(savedData);
 
-        // Hidratação da UI com dados persistidos
         if (displayCourse) displayCourse.textContent = userContext.course;
-
         if (displayPeriod) {
             const shiftDisplay = userContext.shift.charAt(0).toUpperCase() + userContext.shift.slice(1);
             displayPeriod.textContent = `${userContext.period}º Período • ${shiftDisplay}`;
         }
 
-        // Inicializa o fluxo de dados
         fetchSchedule(userContext);
 
     } else {
-        // Fallback de Segurança: Redirecionamento forçado caso não haja contexto válido
-        console.warn("Sessão inválida. Redirecionando para index.html...");
+        // Fallback de Segurança
+        console.warn("Sessão inválida. Redirecionando...");
         window.location.href = 'index.html';
         return;
     }
 
+    /**
+     * [NOVO] O "Mixer" de Grade.
+     * Constrói uma grade única misturando aulas de diferentes turnos/períodos.
+     */
+    async function fetchCustomSchedule() {
+        // Reutiliza o loading visual
+        scheduleView.innerHTML = `
+            <div class="loading-state">
+                <span class="material-symbols-rounded spin">sync</span>
+                <p>Carregando sua grade...</p>
+            </div>`;
+
+        const customConfigRaw = localStorage.getItem('mqs_custom_grid');
+        
+        // Se não tiver config salva, manda criar
+        if (!customConfigRaw) {
+            renderError("Nenhuma configuração encontrada.", "Criar Grade", "custom.html");
+            return;
+        }
+
+        try {
+            const customConfig = JSON.parse(customConfigRaw);
+            const response = await fetch('db.json');
+            if (!response.ok) throw new Error('Erro de conexão');
+            
+            const database = await response.json();
+            
+            // Assume curso padrão (Sistemas) pois a personalização é focada nele por enquanto
+            const courseData = database.courses.find(c => c.name === "Sistemas para Internet");
+            if (!courseData) throw new Error('Dados do curso base não encontrados.');
+
+            const mixedSchedule = [];
+            const daysOrder = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
+
+            // Loop Mágico: Para cada dia, busca a aula onde ela estiver (Mat ou Not)
+            daysOrder.forEach(day => {
+                const config = customConfig[day]; // Ex: { shift: 'noturno', period: '2' }
+                
+                if (config) {
+                    const periodSchedule = courseData.schedules[config.shift]?.[config.period];
+                    if (periodSchedule) {
+                        const dayClasses = periodSchedule.find(d => d.day === day);
+                        if (dayClasses) mixedSchedule.push(dayClasses);
+                    }
+                }
+            });
+
+            if (mixedSchedule.length === 0) throw new Error("Sua grade está vazia. Configure os dias.");
+
+            // Reutiliza a renderização padrão (O segredo do sucesso!)
+            renderSchedule(mixedSchedule);
+
+        } catch (error) {
+            console.error(error);
+            renderError(error.message, "Reconfigurar", "custom.html");
+        }
+    }
+
+    // [HELPER] Função auxiliar para erros (para não repetir código)
+    function renderError(msg, btnText, action) {
+        const actionAttr = action.includes('custom') ? `onclick="window.location.href='${action}'"` : `onclick="window.location.reload()"`;
+        scheduleView.innerHTML = `
+            <div class="error-state">
+                <span class="material-symbols-rounded">error</span>
+                <p>${msg}</p>
+                <button class="cta-primary" ${actionAttr} style="width:auto; margin-top:12px;">${btnText}</button>
+            </div>`;
+    }
+    
     /**
      * Busca os dados da grade no repositório local (JSON) baseada no contexto do usuário.
      * @param {Object} context - Objeto contendo curso, turno e período selecionados.
@@ -203,6 +283,12 @@ document.addEventListener('DOMContentLoaded', () => {
         homeBtn.addEventListener('click', () => {
             // Flag 'action=search' força a Home a limpar o estado visual anterior
             window.location.href = 'index.html?action=search';
+        });
+    }
+    // [NOVO] Listener do botão de personalização
+    if (customBtn) {
+        customBtn.addEventListener('click', () => {
+            window.location.href = 'custom.html';
         });
     }
 
