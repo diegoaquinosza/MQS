@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
     // SELEÇÃO DE ELEMENTOS DO DOM
     // ============================================================
-    
+
     // Containers Principais
     const form = document.getElementById('selection-form');
     const warmDiv = document.getElementById('warm-welcome');
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     const updateMiniArrows = () => {
         if (!scrollContainer || !btnLeft || !btnRight) return;
-        
+
         const scrollWidth = scrollContainer.scrollWidth;
         const clientWidth = scrollContainer.offsetWidth;
         const scrollLeft = scrollContainer.scrollLeft;
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
     const savedData = localStorage.getItem('mqs_user_data');
     const urlParams = new URLSearchParams(window.location.search);
-    
+
     // Verifica se a ação é uma nova busca explícita via URL
     const forceNewSearch = urlParams.get('action') === 'search';
 
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
     // INTERAÇÕES DE USUÁRIO
     // ============================================================
-    
+
     quickBtn.addEventListener('click', () => window.location.href = 'grade.html');
 
     resetBtn.addEventListener('click', () => {
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         shiftBtns.forEach(btn => btn.classList.remove('active'));
         periodBtns.forEach(btn => btn.classList.remove('active'));
-        
+
         setTimeout(updateMiniArrows, 50);
     });
 
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
     submitBtn.addEventListener('click', () => {
         const courseValue = courseInput.value.trim();
-        
+
         // Validações básicas de preenchimento
         if (!courseValue) { showError("Por favor, digite o nome do curso!"); return; }
 
@@ -150,7 +150,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Validação de Curso Permitido (Hardcoded MVP)
         const isSistemas = ALLOWED_COURSES.includes(courseValue);
-        if (!isSistemas) { showError(`O curso "${courseValue}" estará disponível em breve!`); return; }
+        if (!isSistemas) {
+            showError(`No momento, apenas o curso "Sistemas para Internet" está disponível.`);
+            return;
+        }
 
         // Validação de Grade Específica (Regra de Negócio Temporária)
         if (isSistemas) {
