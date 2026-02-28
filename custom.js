@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
     // 2. LÓGICA DE INTERAÇÃO (CLIQUE NOS BOTÕES)
     // ============================================================
-    
+
     dayCards.forEach(card => {
         // Agora pegamos as duas linhas de períodos separadamente
         const periodGrids = card.querySelectorAll('.period-grid');
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Para cada linha de períodos (Matutino ou Noturno)
         periodGrids.forEach(grid => {
             const btns = grid.querySelectorAll('.period-btn');
-            
+
             btns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     // Se clicar num botão já ativo, ele desmarca (permite remover apenas 1 turno)
@@ -83,7 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const allBtns = card.querySelectorAll('.period-btn');
                 allBtns.forEach(b => b.classList.remove('active'));
                 updateCardStatus(card);
-                
+
+                // Chamada essencial para remover o feedback visual do card
+                updateCardStatus(card);
+
                 const dayName = card.querySelector('.day-name');
                 dayName.style.color = 'var(--text-muted)';
                 setTimeout(() => dayName.style.color = '', 300);
@@ -93,19 +96,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Atualiza visualmente o card para indicar se está preenchido ou vazio.
-     * (Opcional, mas melhora a UX para saber quais dias faltam)
      */
     function updateCardStatus(card) {
-        const hasPeriod = card.querySelector('.period-btn.active');
-        
-        // Aqui poderíamos mudar a cor da borda ou adicionar um ícone de "check"
-        // Por enquanto, mantemos simples.
-        if (hasAnySelection) {
-            card.style.borderColor = 'var(--primary)';
-            card.style.borderWidth = '1px';
-            card.style.borderStyle = 'solid';
+        // Verifica se existe algum botão de período ativo (Matutino ou Noturno)
+        const hasSelection = card.querySelector('.period-btn.active') !== null;
+
+        // Adiciona ou remove a classe de preenchimento
+        if (hasSelection) {
+            card.classList.add('is-filled');
         } else {
-            card.style.borderColor = 'transparent';
+            card.classList.remove('is-filled');
         }
     }
 
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
     // 3. SALVAR E NAVEGAR
     // ============================================================
-    
+
     saveBtn.addEventListener('click', () => {
         const finalGrid = {};
         let hasSelection = false;
@@ -128,10 +128,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Se tiver pelo menos um selecionado, cria a entrada para o dia
             if (matutinoBtn || noturnoBtn) {
                 finalGrid[dayName] = {};
-                
+
                 if (matutinoBtn) finalGrid[dayName].matutino = matutinoBtn.dataset.value;
                 if (noturnoBtn) finalGrid[dayName].noturno = noturnoBtn.dataset.value;
-                
+
                 hasSelection = true;
             }
         });

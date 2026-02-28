@@ -137,6 +137,19 @@ body {
     color: var(--primary-hover);
 }
 
+/* Feedback visual para card configurado */
+.day-edit-card.is-filled {
+    border: 2px solid var(--primary);
+    background: linear-gradient(to bottom right, #ffffff, #f0fdfa);
+    box-shadow: 0 8px 24px rgba(0, 137, 123, 0.12);
+}
+
+/* Opcional: Animação suave na borda */
+.day-edit-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent; /* Reserva o espaço da borda */
+}
+
 /* ========================================= */
 /* SELETORES (TURNO E PERÍODO)               */
 /* ========================================= */
