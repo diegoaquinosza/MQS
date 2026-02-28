@@ -95,16 +95,56 @@ document.addEventListener('DOMContentLoaded', () => {
             const mixedSchedule = [];
             const daysOrder = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
 
-            // Loop Mágico: Para cada dia, busca a aula onde ela estiver (Mat ou Not)
+            // Super Loop Mágico: Funde Matutino e Noturno com Identificadores Visuais
             daysOrder.forEach(day => {
-                const config = customConfig[day]; // Ex: { shift: 'noturno', period: '2' }
+                const config = customConfig[day]; 
                 
                 if (config) {
-                    const periodSchedule = courseData.schedules[config.shift]?.[config.period];
-                    if (periodSchedule) {
-                        const dayClasses = periodSchedule.find(d => d.day === day);
-                        if (dayClasses) mixedSchedule.push(dayClasses);
+                    let dayItems = []; 
+                    
+                    // 1. Injeta Matutino
+                    if (config.matutino) {
+                        const matSchedule = courseData.schedules['matutino']?.[config.matutino];
+                        if (matSchedule) {
+                            const matClasses = matSchedule.find(d => d.day === day);
+                            if (matClasses && matClasses.items) {
+                                dayItems.push({ type: 'shift-label', shift: 'matutino', icon: 'light_mode', label: 'Manhã' });
+                                dayItems = dayItems.concat(matClasses.items);
+                            }
+                        }
                     }
+
+                    // 2. Injeta Noturno
+                    if (config.noturno) {
+                        const notSchedule = courseData.schedules['noturno']?.[config.noturno];
+                        if (notSchedule) {
+                            const notClasses = notSchedule.find(d => d.day === day);
+                            if (notClasses && notClasses.items) {
+                                dayItems.push({ type: 'shift-label', shift: 'noturno', icon: 'dark_mode', label: 'Noite' });
+                                dayItems = dayItems.concat(notClasses.items);
+                            }
+                        }
+                    }
+
+                    // 3. Empacota o dia (Se tem aulas)
+                    if (dayItems.length > 0) {
+                        mixedSchedule.push({
+                            day: day,
+                            items: dayItems
+                        });
+                    }
+                } else {
+                    // 4. [NOVO] INJEÇÃO DO DIA LIVRE (GHOST CARD)
+                    // Se o aluno não configurou nada para este dia, criamos um card de descanso
+                    mixedSchedule.push({
+                        day: day,
+                        items: [{
+                            type: 'free-day',
+                            emoji: '🛋️',
+                            title: 'Dia Livre!',
+                            message: 'Aproveite para colocar os estudos em dia ou descansar.'
+                        }]
+                    });
                 }
             });
 
@@ -202,6 +242,19 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <span>${item.timeStart}</span>
                                 <span>${item.label}</span>
                                 <span>${item.timeEnd}</span>
+                            </div>`;
+                } else if (item.type === 'shift-label') { // Rótulo de turno
+                    return `
+                            <div class="shift-pill ${item.shift}">
+                                <span class="material-symbols-rounded" style="font-size: 16px;">${item.icon}</span>
+                                <span>${item.label}</span>
+                            </div>`;
+                } else if (item.type === 'free-day') { // <-- NOVO: RENDERIZA O DIA LIVRE
+                    return `
+                            <div class="free-day-card">
+                                <span class="free-day-emoji">${item.emoji}</span>
+                                <p class="free-day-title">${item.title}</p>
+                                <p class="free-day-text">${item.message}</p>
                             </div>`;
                 } else {
                     return `

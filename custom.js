@@ -25,18 +25,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Para cada dia salvo, ativa os botões correspondentes na tela
             Object.keys(gridConfig).forEach(dayName => {
-                const dayConfig = gridConfig[dayName];
+                const dayConfig = gridConfig[dayName]; // Ex: { matutino: "3", noturno: "2" }
                 const card = document.querySelector(`.day-edit-card[data-day="${dayName}"]`);
 
                 if (card && dayConfig) {
-                    // Ativa botão de Turno
-                    const shiftBtn = card.querySelector(`.shift-btn[data-value="${dayConfig.shift}"]`);
-                    if (shiftBtn) shiftBtn.classList.add('active');
-
-                    // Ativa botão de Período
-                    const periodBtn = card.querySelector(`.period-btn[data-value="${dayConfig.period}"]`);
-                    if (periodBtn) periodBtn.classList.add('active');
-
+                    // Ativa período Matutino (se existir)
+                    if (dayConfig.matutino) {
+                        const btn = card.querySelector(`.period-grid[data-shift="matutino"] .period-btn[data-value="${dayConfig.matutino}"]`);
+                        if (btn) btn.classList.add('active');
+                    }
+                    // Ativa período Noturno (se existir)
+                    if (dayConfig.noturno) {
+                        const btn = card.querySelector(`.period-grid[data-shift="noturno"] .period-btn[data-value="${dayConfig.noturno}"]`);
+                        if (btn) btn.classList.add('active');
+                    }
                     updateCardStatus(card);
                 }
             });
@@ -52,40 +54,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
     
     dayCards.forEach(card => {
-        const shiftBtns = card.querySelectorAll('.shift-btn');
-        const periodBtns = card.querySelectorAll('.period-btn');
+        // Agora pegamos as duas linhas de períodos separadamente
+        const periodGrids = card.querySelectorAll('.period-grid');
         const clearBtn = card.querySelector('.btn-clear-day');
 
-        // Seleção de TURNO (Matutino/Noturno)
-        shiftBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active dos irmãos
-                shiftBtns.forEach(b => b.classList.remove('active'));
-                // Ativa o clicado
-                btn.classList.add('active');
-                updateCardStatus(card);
+        // Para cada linha de períodos (Matutino ou Noturno)
+        periodGrids.forEach(grid => {
+            const btns = grid.querySelectorAll('.period-btn');
+            
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Se clicar num botão já ativo, ele desmarca (permite remover apenas 1 turno)
+                    if (btn.classList.contains('active')) {
+                        btn.classList.remove('active');
+                    } else {
+                        // Remove ativo dos vizinhos da mesma linha e ativa o clicado
+                        btns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                    }
+                    updateCardStatus(card);
+                });
             });
         });
 
-        // Seleção de PERÍODO (1 a 6)
-        periodBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active dos irmãos
-                periodBtns.forEach(b => b.classList.remove('active'));
-                // Ativa o clicado
-                btn.classList.add('active');
-                updateCardStatus(card);
-            });
-        });
-
-        // Botão LIMPAR DIA
+        // Botão LIMPAR DIA (limpa tudo do card)
         if (clearBtn) {
             clearBtn.addEventListener('click', () => {
-                shiftBtns.forEach(b => b.classList.remove('active'));
-                periodBtns.forEach(b => b.classList.remove('active'));
+                const allBtns = card.querySelectorAll('.period-btn');
+                allBtns.forEach(b => b.classList.remove('active'));
                 updateCardStatus(card);
                 
-                // Feedback visual sutil
                 const dayName = card.querySelector('.day-name');
                 dayName.style.color = 'var(--text-muted)';
                 setTimeout(() => dayName.style.color = '', 300);
@@ -98,12 +96,11 @@ document.addEventListener('DOMContentLoaded', () => {
      * (Opcional, mas melhora a UX para saber quais dias faltam)
      */
     function updateCardStatus(card) {
-        const hasShift = card.querySelector('.shift-btn.active');
         const hasPeriod = card.querySelector('.period-btn.active');
         
         // Aqui poderíamos mudar a cor da borda ou adicionar um ícone de "check"
         // Por enquanto, mantemos simples.
-        if (hasShift && hasPeriod) {
+        if (hasAnySelection) {
             card.style.borderColor = 'var(--primary)';
             card.style.borderWidth = '1px';
             card.style.borderStyle = 'solid';
@@ -124,21 +121,23 @@ document.addEventListener('DOMContentLoaded', () => {
         // Varre todos os cards para montar o objeto final
         dayCards.forEach(card => {
             const dayName = card.dataset.day;
-            const shiftBtn = card.querySelector('.shift-btn.active');
-            const periodBtn = card.querySelector('.period-btn.active');
+            // Busca o botão ativo em cada linha especificamente
+            const matutinoBtn = card.querySelector('.period-grid[data-shift="matutino"] .period-btn.active');
+            const noturnoBtn = card.querySelector('.period-grid[data-shift="noturno"] .period-btn.active');
 
-            // Só salva se o dia tiver AMBOS (Turno e Período) selecionados
-            if (shiftBtn && periodBtn) {
-                finalGrid[dayName] = {
-                    shift: shiftBtn.dataset.value,
-                    period: periodBtn.dataset.value
-                };
+            // Se tiver pelo menos um selecionado, cria a entrada para o dia
+            if (matutinoBtn || noturnoBtn) {
+                finalGrid[dayName] = {};
+                
+                if (matutinoBtn) finalGrid[dayName].matutino = matutinoBtn.dataset.value;
+                if (noturnoBtn) finalGrid[dayName].noturno = noturnoBtn.dataset.value;
+                
                 hasSelection = true;
             }
         });
 
         if (!hasSelection) {
-            alert("Selecione pelo menos um dia para criar sua grade!");
+            alert("Selecione pelo menos um período para criar sua grade!");
             return;
         }
 

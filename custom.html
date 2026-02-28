@@ -32,8 +32,8 @@
             <h1 class="page-title">Montar Grade</h1>
         </header>
 
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px; line-height: 1.5;">
-            Selecione o turno e o período das matérias que você cursa em cada dia da semana.
+        <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 12px; line-height: 1.5;">
+            Selecione o turno e o período das disciplinas que você cursa em cada dia da semana.
         </p>
 
         <div class="day-edit-card" data-day="Segunda">
@@ -42,14 +42,24 @@
                 <button type="button" class="btn-clear-day" title="Limpar dia">Limpar</button>
             </div>
             
-            <span class="section-label">Turno</span>
-            <div class="shift-group">
-                <button type="button" class="shift-btn" data-value="matutino">Matutino</button>
-                <button type="button" class="shift-btn" data-value="noturno">Noturno</button>
+            <span class="section-label" style="display: flex; align-items: center; gap: 4px;">
+                <span class="material-symbols-rounded" style="font-size: 18px; color: #FFA000;">light_mode</span>
+                Matutino
+            </span>
+            <div class="period-grid" data-shift="matutino" style="margin-bottom: 16px;">
+                <button type="button" class="period-btn" data-value="1">1</button>
+                <button type="button" class="period-btn" data-value="2">2</button>
+                <button type="button" class="period-btn" data-value="3">3</button>
+                <button type="button" class="period-btn" data-value="4">4</button>
+                <button type="button" class="period-btn" data-value="5">5</button>
+                <button type="button" class="period-btn" data-value="6">6</button>
             </div>
 
-            <span class="section-label" style="margin-top: 12px;">Período</span>
-            <div class="period-grid">
+            <span class="section-label" style="display: flex; align-items: center; gap: 4px;">
+                <span class="material-symbols-rounded" style="font-size: 18px; color: #3949AB;">dark_mode</span>
+                Noturno
+            </span>
+            <div class="period-grid" data-shift="noturno">
                 <button type="button" class="period-btn" data-value="1">1</button>
                 <button type="button" class="period-btn" data-value="2">2</button>
                 <button type="button" class="period-btn" data-value="3">3</button>
@@ -62,17 +72,27 @@
         <div class="day-edit-card" data-day="Terça">
             <div class="day-header">
                 <span class="day-name">Terça-feira</span>
-                <button type="button" class="btn-clear-day">Limpar</button>
+                <button type="button" class="btn-clear-day" title="Limpar dia">Limpar</button>
             </div>
             
-            <span class="section-label">Turno</span>
-            <div class="shift-group">
-                <button type="button" class="shift-btn" data-value="matutino">Matutino</button>
-                <button type="button" class="shift-btn" data-value="noturno">Noturno</button>
+            <span class="section-label" style="display: flex; align-items: center; gap: 4px;">
+                <span class="material-symbols-rounded" style="font-size: 18px; color: #FFA000;">light_mode</span>
+                Matutino
+            </span>
+            <div class="period-grid" data-shift="matutino" style="margin-bottom: 16px;">
+                <button type="button" class="period-btn" data-value="1">1</button>
+                <button type="button" class="period-btn" data-value="2">2</button>
+                <button type="button" class="period-btn" data-value="3">3</button>
+                <button type="button" class="period-btn" data-value="4">4</button>
+                <button type="button" class="period-btn" data-value="5">5</button>
+                <button type="button" class="period-btn" data-value="6">6</button>
             </div>
 
-            <span class="section-label" style="margin-top: 12px;">Período</span>
-            <div class="period-grid">
+            <span class="section-label" style="display: flex; align-items: center; gap: 4px;">
+                <span class="material-symbols-rounded" style="font-size: 18px; color: #3949AB;">dark_mode</span>
+                Noturno
+            </span>
+            <div class="period-grid" data-shift="noturno">
                 <button type="button" class="period-btn" data-value="1">1</button>
                 <button type="button" class="period-btn" data-value="2">2</button>
                 <button type="button" class="period-btn" data-value="3">3</button>
@@ -85,17 +105,27 @@
         <div class="day-edit-card" data-day="Quarta">
             <div class="day-header">
                 <span class="day-name">Quarta-feira</span>
-                <button type="button" class="btn-clear-day">Limpar</button>
+                <button type="button" class="btn-clear-day" title="Limpar dia">Limpar</button>
             </div>
             
-            <span class="section-label">Turno</span>
-            <div class="shift-group">
-                <button type="button" class="shift-btn" data-value="matutino">Matutino</button>
-                <button type="button" class="shift-btn" data-value="noturno">Noturno</button>
+            <span class="section-label" style="display: flex; align-items: center; gap: 4px;">
+                <span class="material-symbols-rounded" style="font-size: 18px; color: #FFA000;">light_mode</span>
+                Matutino
+            </span>
+            <div class="period-grid" data-shift="matutino" style="margin-bottom: 16px;">
+                <button type="button" class="period-btn" data-value="1">1</button>
+                <button type="button" class="period-btn" data-value="2">2</button>
+                <button type="button" class="period-btn" data-value="3">3</button>
+                <button type="button" class="period-btn" data-value="4">4</button>
+                <button type="button" class="period-btn" data-value="5">5</button>
+                <button type="button" class="period-btn" data-value="6">6</button>
             </div>
 
-            <span class="section-label" style="margin-top: 12px;">Período</span>
-            <div class="period-grid">
+            <span class="section-label" style="display: flex; align-items: center; gap: 4px;">
+                <span class="material-symbols-rounded" style="font-size: 18px; color: #3949AB;">dark_mode</span>
+                Noturno
+            </span>
+            <div class="period-grid" data-shift="noturno">
                 <button type="button" class="period-btn" data-value="1">1</button>
                 <button type="button" class="period-btn" data-value="2">2</button>
                 <button type="button" class="period-btn" data-value="3">3</button>
@@ -108,17 +138,27 @@
         <div class="day-edit-card" data-day="Quinta">
             <div class="day-header">
                 <span class="day-name">Quinta-feira</span>
-                <button type="button" class="btn-clear-day">Limpar</button>
+                <button type="button" class="btn-clear-day" title="Limpar dia">Limpar</button>
             </div>
             
-            <span class="section-label">Turno</span>
-            <div class="shift-group">
-                <button type="button" class="shift-btn" data-value="matutino">Matutino</button>
-                <button type="button" class="shift-btn" data-value="noturno">Noturno</button>
+            <span class="section-label" style="display: flex; align-items: center; gap: 4px;">
+                <span class="material-symbols-rounded" style="font-size: 18px; color: #FFA000;">light_mode</span>
+                Matutino
+            </span>
+            <div class="period-grid" data-shift="matutino" style="margin-bottom: 16px;">
+                <button type="button" class="period-btn" data-value="1">1</button>
+                <button type="button" class="period-btn" data-value="2">2</button>
+                <button type="button" class="period-btn" data-value="3">3</button>
+                <button type="button" class="period-btn" data-value="4">4</button>
+                <button type="button" class="period-btn" data-value="5">5</button>
+                <button type="button" class="period-btn" data-value="6">6</button>
             </div>
 
-            <span class="section-label" style="margin-top: 12px;">Período</span>
-            <div class="period-grid">
+            <span class="section-label" style="display: flex; align-items: center; gap: 4px;">
+                <span class="material-symbols-rounded" style="font-size: 18px; color: #3949AB;">dark_mode</span>
+                Noturno
+            </span>
+            <div class="period-grid" data-shift="noturno">
                 <button type="button" class="period-btn" data-value="1">1</button>
                 <button type="button" class="period-btn" data-value="2">2</button>
                 <button type="button" class="period-btn" data-value="3">3</button>
@@ -131,17 +171,27 @@
         <div class="day-edit-card" data-day="Sexta">
             <div class="day-header">
                 <span class="day-name">Sexta-feira</span>
-                <button type="button" class="btn-clear-day">Limpar</button>
+                <button type="button" class="btn-clear-day" title="Limpar dia">Limpar</button>
             </div>
             
-            <span class="section-label">Turno</span>
-            <div class="shift-group">
-                <button type="button" class="shift-btn" data-value="matutino">Matutino</button>
-                <button type="button" class="shift-btn" data-value="noturno">Noturno</button>
+            <span class="section-label" style="display: flex; align-items: center; gap: 4px;">
+                <span class="material-symbols-rounded" style="font-size: 18px; color: #FFA000;">light_mode</span>
+                Matutino
+            </span>
+            <div class="period-grid" data-shift="matutino" style="margin-bottom: 16px;">
+                <button type="button" class="period-btn" data-value="1">1</button>
+                <button type="button" class="period-btn" data-value="2">2</button>
+                <button type="button" class="period-btn" data-value="3">3</button>
+                <button type="button" class="period-btn" data-value="4">4</button>
+                <button type="button" class="period-btn" data-value="5">5</button>
+                <button type="button" class="period-btn" data-value="6">6</button>
             </div>
 
-            <span class="section-label" style="margin-top: 12px;">Período</span>
-            <div class="period-grid">
+            <span class="section-label" style="display: flex; align-items: center; gap: 4px;">
+                <span class="material-symbols-rounded" style="font-size: 18px; color: #3949AB;">dark_mode</span>
+                Noturno
+            </span>
+            <div class="period-grid" data-shift="noturno">
                 <button type="button" class="period-btn" data-value="1">1</button>
                 <button type="button" class="period-btn" data-value="2">2</button>
                 <button type="button" class="period-btn" data-value="3">3</button>
