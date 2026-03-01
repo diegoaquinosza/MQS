@@ -19,8 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const quickBtn = document.getElementById('btn-quick-access');
     const resetBtn = document.getElementById('btn-reset-app');
     const customAccessBtn = document.getElementById('btn-custom-access');
+    const iconCustomAccess = document.getElementById('icon-custom-access');
+    const editCustomBtn = document.getElementById('btn-edit-custom');
     const tipTextElement = document.getElementById('warm-tip-text');
     const formCustomAccessBtn = document.getElementById('btn-form-custom-access');
+    const textFormCustomAccess = document.getElementById('text-form-custom-access');
+    const textCustomAccess = document.getElementById('text-custom-access');
 
     // Componentes do Formulário (Novo Acesso)
     const courseInput = document.getElementById('course-input');
@@ -86,22 +90,45 @@ document.addEventListener('DOMContentLoaded', () => {
         form.classList.add('hidden');
         warmDiv.classList.remove('hidden');
 
+        // Dinamismo dos Botões: Verifica a Grade Personalizada
+        if (customData) {
+            customAccessBtn.className = 'cta-primary';
+            if (iconCustomAccess) iconCustomAccess.style.color = 'white';
+            if (textCustomAccess) textCustomAccess.textContent = 'Ver minha grade';
+            quickBtn.className = 'btn-tonal outline-btn';
+            if (editCustomBtn) editCustomBtn.classList.remove('hidden');
+        } else {
+            customAccessBtn.className = 'btn-tonal outline-btn';
+            if (iconCustomAccess) iconCustomAccess.style.color = 'var(--primary)';
+            if (textCustomAccess) textCustomAccess.textContent = 'Montar minha grade';
+            quickBtn.className = 'cta-primary';
+            if (editCustomBtn) editCustomBtn.classList.add('hidden');
+        }
+
         if (savedData) {
-            // Cenário A: Tem busca padrão salva (Útil para o fluxo de montar a grade aos poucos)
+            // Cenário A: Tem busca padrão salva
             const data = JSON.parse(savedData);
             savedCourse.textContent = data.course;
             const shiftFormatted = data.shift.charAt(0).toUpperCase() + data.shift.slice(1);
             savedDetails.textContent = `${data.period}º Período • ${shiftFormatted}`;
+            quickBtn.textContent = "Ver grade padrão";
         } else {
-            // Cenário B: Aluno foi direto montar a grade mista e nunca pesquisou a padrão
-            savedCourse.textContent = "Sistemas para Internet";
-            savedDetails.textContent = "Grade Personalizada Ativa";
-            quickBtn.textContent = "Ver Grade Personalizada"; // Ajusta o texto do botão
+            // Cenário B: Aluno nunca pesquisou a padrão (Edge Case tratado)
+            savedCourse.textContent = "Sem histórico padrão";
+            savedDetails.textContent = "Consulte uma grade para salvá-la";
+            quickBtn.textContent = "Consultar grade padrão";
         }
 
     } else {
         warmDiv.classList.add('hidden');
         form.classList.remove('hidden');
+
+        // Dinamismo do Botão do Formulário
+        if (customData && textFormCustomAccess) {
+            textFormCustomAccess.textContent = "Ver minha grade";
+        } else if (textFormCustomAccess) {
+            textFormCustomAccess.textContent = "Montar minha grade";
+        }
 
         // Limpa a URL para evitar loop de estado ao recarregar a página
         if (forceNewSearch) {
@@ -114,19 +141,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
 
     quickBtn.addEventListener('click', () => {
-        // Se o usuário NÃO tem grade padrão salva, o botão leva direto para a customizada
+        // Se não tem grade padrão salva, envia ele para buscar
         if (!localStorage.getItem('mqs_user_data')) {
-            window.location.href = 'grade.html?mode=custom';
+            window.location.href = 'index.html?action=search';
         } else {
             window.location.href = 'grade.html';
         }
     });
+
+    if (editCustomBtn) {
+        editCustomBtn.addEventListener('click', () => {
+            window.location.href = 'custom.html';
+        });
+    }
 
     resetBtn.addEventListener('click', () => {
         // Limpeza total do estado e persistência
         localStorage.removeItem('mqs_user_data');
         warmDiv.classList.add('hidden');
         form.classList.remove('hidden');
+
+        // Atualização Dinâmica do botão "Minha Grade" ao voltar para o formulário
+        const hasCustomGrid = localStorage.getItem('mqs_custom_grid');
+        if (hasCustomGrid && textFormCustomAccess) {
+            textFormCustomAccess.textContent = "Ver minha grade";
+        } else if (textFormCustomAccess) {
+            textFormCustomAccess.textContent = "Montar minha grade";
+        }
 
         courseInput.value = '';
         userSelection = { course: '', shift: null, period: null };

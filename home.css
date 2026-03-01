@@ -132,21 +132,36 @@ body {
     opacity: 0.9;
 }
 
-.saved-context-box {
-    background: hsl(220, 14%, 95%);
-    border-radius: 24px;
-    padding: 16px;
+.saved-context-group,
+.warm-action-group {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
+}
+
+.action-area {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.action-area .btn-tonal {
+    width: 100%;
+    margin-top: 0;
 }
 
 #saved-course {
+    display: block;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--primary-hover);
+    margin-bottom: 2px; /* Pequeno respiro extra entre o curso e os detalhes */
+    line-height: 1.2;
 }
 
 #saved-details {
+    display: block;
     font-size: 0.9rem;
     color: var(--text-medium);
 }
@@ -197,6 +212,10 @@ body {
     transition: background 0.2s, transform 0.1s;
     font-family: 'Inter', sans-serif;
     box-shadow: 0 4px 12px rgba(26, 83, 69, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .cta-primary:hover {

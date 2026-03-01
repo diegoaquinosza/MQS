@@ -42,14 +42,13 @@
                 <p id="warm-tip-text" class="tip-text">Carregando sua dose de sabedoria...</p>
             </div>
 
-            <div class="saved-context-box">
-                <span id="saved-course">Curso Salvo</span>
-                <span id="saved-details">Detalhes Salvos</span>
-            </div>
-
-            <div class="warm-action-group">
+            <div class="saved-context-group">
+                <div class="saved-context-box">
+                    <span id="saved-course">Curso Salvo</span>
+                    <span id="saved-details">Detalhes Salvos</span>
+                </div>
                 <button id="btn-quick-access" class="cta-primary">
-                    Ver a grade padrão
+                    Ver grade padrão
                 </button>
             </div>
 
@@ -59,13 +58,18 @@
 
             <div class="warm-action-group">
                 <button id="btn-custom-access" class="btn-tonal outline-btn">
-                    <span class="material-symbols-rounded" style="color: var(--primary);">tune</span>
-                    <span>Minha Grade</span>
+                    <span class="material-symbols-rounded" id="icon-custom-access">tune</span>
+                    <span id="text-custom-access">Ver minha grade</span>
+                </button>
+
+                <button id="btn-edit-custom" class="btn-tonal outline-btn hidden">
+                    <span class="material-symbols-rounded">edit</span>
+                    <span>Editar minha grade</span>
                 </button>
 
                 <button id="btn-reset-app" class="btn-tonal outline-btn">
-                    <span class="material-symbols-rounded" style="color: var(--primary);">sync_alt</span>
-                    <span>Trocar curso ou período</span>
+                    <span class="material-symbols-rounded">home</span>
+                    <span>Outro turno ou período</span>
                 </button>
             </div>
         </div>
@@ -122,12 +126,12 @@
 
             <div class="action-area">
                 <button type="button" id="btn-ver-horarios" class="cta-primary">
-                    Ver grade Padrão
+                    Consultar grade padrão
                 </button>
                 
-                <button type="button" id="btn-form-custom-access" class="btn-tonal outline-btn" style="width: 100%; margin-top: 16px;">
-                    <span class="material-symbols-rounded" style="color: var(--primary);">tune</span>
-                    <span>Montar minha Grade</span>
+                <button type="button" id="btn-form-custom-access" class="btn-tonal outline-btn">
+                    <span class="material-symbols-rounded">tune</span>
+                    <span id="text-form-custom-access">Montar minha grade</span>
                 </button>
             </div>
 

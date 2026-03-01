@@ -11,9 +11,19 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const scheduleView = document.getElementById('schedule-view');
     const shareBtn = document.getElementById('btn-share');
+    const shareIcon = document.getElementById('icon-share');
     const homeBtn = document.getElementById('btn-home');
-    // [NOVO] Botão de Personalização
     const customBtn = document.getElementById('btn-custom-grade');
+    const feedbackBtn = document.getElementById('btn-feedback');
+
+    // =================================================================
+    // UX NATIVA: DETECÇÃO DE PLATAFORMA PARA ÍCONE DE COMPARTILHAR
+    // =================================================================
+    if (shareIcon) {
+        // Verifica se o usuário está em um dispositivo da Apple
+        const isAppleDevice = /Mac|iPod|iPhone|iPad/.test(navigator.userAgent);
+        shareIcon.textContent = isAppleDevice ? 'ios_share' : 'share';
+    }
 
     // Controles de Navegação Horizontal
     const btnLeft = document.getElementById('scroll-left');
@@ -338,10 +348,20 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'index.html?action=search';
         });
     }
-    // [NOVO] Listener do botão de personalização
+    // Listener do botão de personalização
     if (customBtn) {
         customBtn.addEventListener('click', () => {
             window.location.href = 'custom.html';
+        });
+    }
+
+    // Listener do botão de feedback (E-mail)
+    if (feedbackBtn) {
+        feedbackBtn.addEventListener('click', () => {
+            const email = 'diegoaquinosza@gmail.com';
+            const subject = encodeURIComponent('Feedback MQS');
+            const body = encodeURIComponent('Olá,\n\nEncontrei a seguinte inconsistência na grade:\n\n[Descreva aqui o problema]');
+            window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
         });
     }
 
