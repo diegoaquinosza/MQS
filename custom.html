@@ -25,16 +25,21 @@
 
     <main class="edit-container">
         
-        <header class="edit-header">
-            <button class="btn-back" onclick="window.history.back()">
-                <span class="material-symbols-rounded">chevron_left</span>
-            </button>
-            <h1 class="page-title">Montar Grade</h1>
-        </header>
+        <header class="context-header">
+            <div class="hero-card">
+                <img src="./assets/banner-mqs4.png" class="hero-image" alt="Banner MQS">
+            </div>
 
-        <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 12px; line-height: 1.5;">
-            Selecione o turno e o período das disciplinas que você cursa em cada dia da semana.
-        </p>
+            <div class="header-content">
+                <button class="btn-back-new" onclick="window.history.back()" title="Voltar">
+                    <span class="material-symbols-rounded">chevron_left</span>
+                </button>
+                <div class="user-context">
+                    <h2>Montar Grade</h2>
+                    <span>Selecione o turno e o período das disciplinas que você cursa em cada dia da semana</span>
+                </div>
+            </div>
+        </header>
 
         <div class="day-edit-card" data-day="Segunda">
             <div class="day-header">
@@ -204,6 +209,9 @@
     </main>
 
     <div class="action-bar">
+        <button type="button" id="btn-clear-all" class="dock-btn-icon is-hidden" title="Limpar tudo">
+            <span class="material-symbols-rounded">delete</span>
+        </button>
         <div class="save-btn-wrapper">
             <button type="button" id="btn-save-custom" class="btn-save">
                 <span class="material-symbols-rounded">check</span>

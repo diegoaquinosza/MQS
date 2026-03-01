@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Referências aos Cards de Dia (Segunda, Terça, etc.)
     const dayCards = document.querySelectorAll('.day-edit-card');
     const saveBtn = document.getElementById('btn-save-custom');
+    const clearAllBtn = document.getElementById('btn-clear-all'); // Novo botão mestre de limpar
 
     // Chave de armazenamento (O "Banco de Dados" local)
     const STORAGE_KEY = 'mqs_custom_grid';
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. CARGA INICIAL (RESTORE STATE)
     // ============================================================
     loadSavedState();
+    checkFormState();
 
     function loadSavedState() {
         const savedData = localStorage.getItem(STORAGE_KEY);
@@ -73,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         btn.classList.add('active');
                     }
                     updateCardStatus(card);
+                    checkFormState(); // Atualiza o botão mestre
                 });
             });
         });
@@ -86,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Chamada essencial para remover o feedback visual do card
                 updateCardStatus(card);
+                checkFormState(); // Atualiza o botão mestre
 
                 const dayName = card.querySelector('.day-name');
                 dayName.style.color = 'var(--text-muted)';
@@ -111,46 +115,104 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ============================================================
-    // 3. SALVAR E NAVEGAR
+    // 3. ESTADO DINÂMICO E SALVAMENTO
     // ============================================================
 
-    saveBtn.addEventListener('click', () => {
-        const finalGrid = {};
-        let hasSelection = false;
+    // Evento do Botão Mestre de Limpar Tudo
+    if (clearAllBtn) {
+        clearAllBtn.addEventListener('click', () => {
+            // Remove a seleção de todos os botões de período ativos
+            const allActiveBtns = document.querySelectorAll('.period-btn.active');
+            allActiveBtns.forEach(b => b.classList.remove('active'));
+            
+            // Atualiza o status visual (borda e fundo) de todos os cards
+            dayCards.forEach(card => {
+                card.classList.remove('is-filled');
+                
+                // Pisca o título para dar feedback visual de que foi apagado
+                const dayName = card.querySelector('.day-name');
+                dayName.style.color = 'var(--text-muted)';
+                setTimeout(() => dayName.style.color = '', 300);
+            });
 
-        // Varre todos os cards para montar o objeto final
-        dayCards.forEach(card => {
-            const dayName = card.dataset.day;
-            // Busca o botão ativo em cada linha especificamente
-            const matutinoBtn = card.querySelector('.period-grid[data-shift="matutino"] .period-btn.active');
-            const noturnoBtn = card.querySelector('.period-grid[data-shift="noturno"] .period-btn.active');
-
-            // Se tiver pelo menos um selecionado, cria a entrada para o dia
-            if (matutinoBtn || noturnoBtn) {
-                finalGrid[dayName] = {};
-
-                if (matutinoBtn) finalGrid[dayName].matutino = matutinoBtn.dataset.value;
-                if (noturnoBtn) finalGrid[dayName].noturno = noturnoBtn.dataset.value;
-
-                hasSelection = true;
-            }
+            // Reavalia a tela para atualizar o botão principal e sumir com a lixeira
+            checkFormState();
         });
+    }
 
-        if (!hasSelection) {
+    /**
+     * Verifica o estado geral da tela para adaptar o botão principal.
+     */
+    function checkFormState() {
+        const hasAnySelection = document.querySelector('.period-btn.active') !== null;
+        const hasSavedGrid = localStorage.getItem(STORAGE_KEY) !== null;
+
+        // Mostra ou esconde o botão da lixeira mestre
+        if (clearAllBtn) {
+            if (hasAnySelection) {
+                clearAllBtn.classList.remove('is-hidden');
+            } else {
+                clearAllBtn.classList.add('is-hidden');
+            }
+        }
+
+        if (!hasAnySelection && hasSavedGrid) {
+            // Quer apagar a grade que já existe
+            saveBtn.classList.add('btn-danger');
+            saveBtn.innerHTML = `<span class="material-symbols-rounded">delete</span> Apagar Grade Personalizada`;
+            saveBtn.style.background = ''; // Limpa estilo inline se houver
+        } else {
+            // Criando ou Atualizando normalmente
+            saveBtn.classList.remove('btn-danger');
+            saveBtn.innerHTML = `<span class="material-symbols-rounded">check</span> Salvar e Ver Grade`;
+            saveBtn.style.background = '';
+        }
+    }
+
+    saveBtn.addEventListener('click', () => {
+        const hasAnySelection = document.querySelector('.period-btn.active') !== null;
+        const hasSavedGrid = localStorage.getItem(STORAGE_KEY) !== null;
+
+        // CENA 1: Usuário limpou tudo e já tinha grade -> Deletar Grade!
+        if (!hasAnySelection && hasSavedGrid) {
+            localStorage.removeItem(STORAGE_KEY);
+            saveBtn.innerHTML = `<span class="material-symbols-rounded">delete_forever</span> Grade Apagada!`;
+            
+            setTimeout(() => {
+                // Ao apagar, volta para a home para recalcular estado de veterano
+                window.location.href = 'index.html';
+            }, 600);
+            return;
+        }
+
+        // CENA 2: Tela vazia, mas ele não tem grade salva (Tentando salvar o nada)
+        if (!hasAnySelection) {
             alert("Selecione pelo menos um período para criar sua grade!");
             return;
         }
 
-        // Salva no LocalStorage
+        // CENA 3: Fluxo Feliz -> Montar e salvar a grade
+        const finalGrid = {};
+        
+        dayCards.forEach(card => {
+            const dayName = card.dataset.day;
+            const matutinoBtn = card.querySelector('.period-grid[data-shift="matutino"] .period-btn.active');
+            const noturnoBtn = card.querySelector('.period-grid[data-shift="noturno"] .period-btn.active');
+
+            if (matutinoBtn || noturnoBtn) {
+                finalGrid[dayName] = {};
+                if (matutinoBtn) finalGrid[dayName].matutino = matutinoBtn.dataset.value;
+                if (noturnoBtn) finalGrid[dayName].noturno = noturnoBtn.dataset.value;
+            }
+        });
+
         localStorage.setItem(STORAGE_KEY, JSON.stringify(finalGrid));
 
-        // Animação de sucesso no botão
-        const originalText = saveBtn.innerHTML;
         saveBtn.innerHTML = `<span class="material-symbols-rounded">check_circle</span> Grade Salva!`;
         saveBtn.style.background = '#4CAF50';
+        saveBtn.classList.remove('btn-danger');
 
         setTimeout(() => {
-            // Redireciona para a visualização no modo CUSTOM
             window.location.href = 'grade.html?mode=custom';
         }, 600);
     });
