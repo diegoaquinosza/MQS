@@ -207,6 +207,41 @@ body {
     transform: scale(0.98);
 }
 
+.outline-btn {
+    background: #FFFFFF;
+    border: 1px solid var(--border-light);
+    width: 100%;
+    margin-top: 8px;
+}
+
+.outline-btn:hover {
+    background: #F5F7FA;
+    border-color: #d1d5db;
+}
+
+.warm-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 8px 0;
+    color: var(--text-muted);
+}
+
+.warm-divider::before,
+.warm-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.warm-divider span {
+    padding: 0 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
 /* ========================================= */
 /* FORMULÁRIO E INPUTS                       */
 /* ========================================= */

@@ -369,6 +369,22 @@ body {
     z-index: 99;
 }
 
+/* Comportamento fixo do Dock apenas para Mobile e Tablets (Thumb Zone) */
+@media (max-width: 1023px) {
+    body {
+        padding-bottom: 110px; /* Garante que o último card não fique escondido atrás do dock */
+    }
+
+    .floating-dock {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0;
+        box-shadow: 0 4px 32px rgba(0, 0, 0, 0.2); 
+    }
+}
+
 .dock-btn-icon {
     background: transparent;
     border: none;
