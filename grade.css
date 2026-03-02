@@ -10,8 +10,8 @@
     --primary-light: #c8e5e4;
     --primary-medium: #a2ccc9;
     --primary-dark: #00816b;
-    --surface-glass: rgba(255, 255, 255, 0.901);
-    --surface: #FFFFFF;
+    --surface-glass: #ffffffe6;
+    --surface: #ffffff;
     --bg-body: #DAE5E3;
     --text-main: #004c44;
     --text-medium: #008b7e;
@@ -215,6 +215,7 @@ body {
         max-width: 100%;
         margin: 0 auto;
         justify-content: start;
+        align-items: start;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         padding: 40px;
@@ -274,7 +275,7 @@ body {
         width: auto;
         max-width: none;
         height: fit-content;
-        min-height: 100%;
+        min-height: fit-content;
     }
 }
 
@@ -584,4 +585,73 @@ body {
 .footer-link {
     font-size: 0.85rem;
     opacity: 0.8;
+}
+
+/* ========================================= */
+/* RÓTULOS DE TURNO (SHIFT LABELS)           */
+/* ========================================= */
+.shift-pill {
+    border-radius: var(--radius-pill);
+    padding: 6px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Tema Manhã (Sol) */
+.shift-pill.matutino {
+    background: #FFF8E1;
+    color: #F57C00;
+    border: 1px solid #FFE082;
+}
+
+/* Tema Noite (Lua) */
+.shift-pill.noturno {
+    background: #E8EAF6;
+    color: #3949AB;
+    border: 1px solid #C5CAE9;
+}
+
+/* ========================================= */
+/* ESTADO VAZIO: DIA LIVRE (FREE DAY)        */
+/* ========================================= */
+.free-day-card {
+    background: var(--surface-glass);
+    border-radius: var(--radius-item);
+    padding: 32px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.free-day-emoji {
+    font-size: 3rem;
+    margin-bottom: 8px;
+    opacity: 0.9;
+}
+
+.free-day-title {
+    font-weight: 700;
+    color: var(--primary-dark);
+    font-size: 1.1rem;
+}
+
+.free-day-text {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.4;
 }

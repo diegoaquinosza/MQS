@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const scheduleView = document.getElementById('schedule-view');
     const shareBtn = document.getElementById('btn-share');
     const homeBtn = document.getElementById('btn-home');
+    // [NOVO] Botão de Personalização
+    const customBtn = document.getElementById('btn-custom-grade');
 
     // Controles de Navegação Horizontal
     const btnLeft = document.getElementById('scroll-left');
@@ -26,30 +28,148 @@ document.addEventListener('DOMContentLoaded', () => {
     // GERENCIAMENTO DE SESSÃO E ESTADO
     // =================================================================
     
+    // [EDITADO] Verifica modo personalizado via URL ou modo padrão via LocalStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    const isCustomMode = urlParams.get('mode') === 'custom';
     const savedData = localStorage.getItem('mqs_user_data');
     let userContext = null;
 
-    if (savedData) {
+    if (isCustomMode) {
+        // ROTA A: MODO PERSONALIZADO
+        if (displayCourse) displayCourse.textContent = "Minha Grade";
+        if (displayPeriod) displayPeriod.textContent = "Planejamento Personalizado";
+        
+        // Inicia o novo "Mixer" (função que criaremos abaixo)
+        fetchCustomSchedule();
+
+    } else if (savedData) {
+        // ROTA B: MODO PADRÃO (Comportamento original)
         userContext = JSON.parse(savedData);
 
-        // Hidratação da UI com dados persistidos
         if (displayCourse) displayCourse.textContent = userContext.course;
-
         if (displayPeriod) {
             const shiftDisplay = userContext.shift.charAt(0).toUpperCase() + userContext.shift.slice(1);
             displayPeriod.textContent = `${userContext.period}º Período • ${shiftDisplay}`;
         }
 
-        // Inicializa o fluxo de dados
         fetchSchedule(userContext);
 
     } else {
-        // Fallback de Segurança: Redirecionamento forçado caso não haja contexto válido
-        console.warn("Sessão inválida. Redirecionando para index.html...");
+        // Fallback de Segurança
+        console.warn("Sessão inválida. Redirecionando...");
         window.location.href = 'index.html';
         return;
     }
 
+    /**
+     * [NOVO] O "Mixer" de Grade.
+     * Constrói uma grade única misturando aulas de diferentes turnos/períodos.
+     */
+    async function fetchCustomSchedule() {
+        // Reutiliza o loading visual
+        scheduleView.innerHTML = `
+            <div class="loading-state">
+                <span class="material-symbols-rounded spin">sync</span>
+                <p>Carregando sua grade...</p>
+            </div>`;
+
+        const customConfigRaw = localStorage.getItem('mqs_custom_grid');
+        
+        // Se não tiver config salva, manda criar
+        if (!customConfigRaw) {
+            renderError("Nenhuma configuração encontrada.", "Criar Grade", "custom.html");
+            return;
+        }
+
+        try {
+            const customConfig = JSON.parse(customConfigRaw);
+            const response = await fetch('db.json');
+            if (!response.ok) throw new Error('Erro de conexão');
+            
+            const database = await response.json();
+            
+            // Assume curso padrão (Sistemas) pois a personalização é focada nele por enquanto
+            const courseData = database.courses.find(c => c.name === "Sistemas para Internet");
+            if (!courseData) throw new Error('Dados do curso base não encontrados.');
+
+            const mixedSchedule = [];
+            const daysOrder = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
+
+            // Super Loop Mágico: Funde Matutino e Noturno com Identificadores Visuais
+            daysOrder.forEach(day => {
+                const config = customConfig[day]; 
+                
+                if (config) {
+                    let dayItems = []; 
+                    
+                    // 1. Injeta Matutino
+                    if (config.matutino) {
+                        const matSchedule = courseData.schedules['matutino']?.[config.matutino];
+                        if (matSchedule) {
+                            const matClasses = matSchedule.find(d => d.day === day);
+                            if (matClasses && matClasses.items) {
+                                dayItems.push({ type: 'shift-label', shift: 'matutino', icon: 'light_mode', label: 'Manhã' });
+                                dayItems = dayItems.concat(matClasses.items);
+                            }
+                        }
+                    }
+
+                    // 2. Injeta Noturno
+                    if (config.noturno) {
+                        const notSchedule = courseData.schedules['noturno']?.[config.noturno];
+                        if (notSchedule) {
+                            const notClasses = notSchedule.find(d => d.day === day);
+                            if (notClasses && notClasses.items) {
+                                dayItems.push({ type: 'shift-label', shift: 'noturno', icon: 'dark_mode', label: 'Noite' });
+                                dayItems = dayItems.concat(notClasses.items);
+                            }
+                        }
+                    }
+
+                    // 3. Empacota o dia (Se tem aulas)
+                    if (dayItems.length > 0) {
+                        mixedSchedule.push({
+                            day: day,
+                            items: dayItems
+                        });
+                    }
+                } else {
+                    // 4. [NOVO] INJEÇÃO DO DIA LIVRE (GHOST CARD)
+                    // Se o aluno não configurou nada para este dia, criamos um card de descanso
+                    mixedSchedule.push({
+                        day: day,
+                        items: [{
+                            type: 'free-day',
+                            emoji: '🛋️',
+                            title: 'Dia Livre!',
+                            message: 'Aproveite para colocar os estudos em dia ou descansar.'
+                        }]
+                    });
+                }
+            });
+
+            if (mixedSchedule.length === 0) throw new Error("Sua grade está vazia. Configure os dias.");
+
+            // Reutiliza a renderização padrão (O segredo do sucesso!)
+            renderSchedule(mixedSchedule);
+
+        } catch (error) {
+            console.error(error);
+            renderError(error.message, "Reconfigurar", "custom.html");
+        }
+    }
+
+    // [HELPER] Função auxiliar para erros (para não repetir código)
+    function renderError(msg, btnText, action) {
+        const actionAttr = action.includes('custom') ? `onclick="window.location.href='${action}'"` : `onclick="window.location.reload()"`;
+        scheduleView.innerHTML = `
+            <div class="error-state">
+                <span class="material-symbols-rounded">error</span>
+                <p>${msg}</p>
+                <button class="cta-primary" ${actionAttr} style="width:auto; margin-top:12px;">${btnText}</button>
+            </div>`;
+    }
+    
     /**
      * Busca os dados da grade no repositório local (JSON) baseada no contexto do usuário.
      * @param {Object} context - Objeto contendo curso, turno e período selecionados.
@@ -122,6 +242,19 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <span>${item.timeStart}</span>
                                 <span>${item.label}</span>
                                 <span>${item.timeEnd}</span>
+                            </div>`;
+                } else if (item.type === 'shift-label') { // Rótulo de turno
+                    return `
+                            <div class="shift-pill ${item.shift}">
+                                <span class="material-symbols-rounded" style="font-size: 16px;">${item.icon}</span>
+                                <span>${item.label}</span>
+                            </div>`;
+                } else if (item.type === 'free-day') { // <-- NOVO: RENDERIZA O DIA LIVRE
+                    return `
+                            <div class="free-day-card">
+                                <span class="free-day-emoji">${item.emoji}</span>
+                                <p class="free-day-title">${item.title}</p>
+                                <p class="free-day-text">${item.message}</p>
                             </div>`;
                 } else {
                     return `
@@ -203,6 +336,12 @@ document.addEventListener('DOMContentLoaded', () => {
         homeBtn.addEventListener('click', () => {
             // Flag 'action=search' força a Home a limpar o estado visual anterior
             window.location.href = 'index.html?action=search';
+        });
+    }
+    // [NOVO] Listener do botão de personalização
+    if (customBtn) {
+        customBtn.addEventListener('click', () => {
+            window.location.href = 'custom.html';
         });
     }
 

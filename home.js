@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedDetails = document.getElementById('saved-details');
     const quickBtn = document.getElementById('btn-quick-access');
     const resetBtn = document.getElementById('btn-reset-app');
+    const customAccessBtn = document.getElementById('btn-custom-access');
     const tipTextElement = document.getElementById('warm-tip-text');
 
     // Componentes do Formulário (Novo Acesso)
@@ -119,6 +120,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(updateMiniArrows, 50);
     });
+
+    if (customAccessBtn) {
+        customAccessBtn.addEventListener('click', () => {
+            // Verifica se já existe configuração salva
+            const hasCustomGrid = localStorage.getItem('mqs_custom_grid');
+            if (hasCustomGrid) {
+                // Se tiver, vai direto pra grade
+                window.location.href = 'grade.html?mode=custom';
+            } else {
+                // Se não tiver, manda criar
+                window.location.href = 'custom.html';
+            }
+        });
+    }
 
     shiftBtns.forEach(btn => {
         btn.addEventListener('click', () => {
