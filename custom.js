@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Referências aos Cards de Dia (Segunda, Terça, etc.)
     const dayCards = document.querySelectorAll('.day-edit-card');
     const saveBtn = document.getElementById('btn-save-custom');
+    const feedbackMsg = document.getElementById('form-feedback');
+    const editContainer = document.querySelector('.edit-container');
     const clearAllBtn = document.getElementById('btn-clear-all'); // Novo botão mestre de limpar
 
     // Chave de armazenamento (O "Banco de Dados" local)
@@ -187,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // CENA 2: Tela vazia, mas ele não tem grade salva (Tentando salvar o nada)
         if (!hasAnySelection) {
-            alert("Selecione pelo menos um período para criar sua grade!");
+            showError("Selecione pelo menos um período para criar sua grade!");
             return;
         }
 
@@ -216,5 +218,22 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'grade.html?mode=custom';
         }, 600);
     });
+
+    /**
+     * Exibe feedback visual de erro padronizado com animação de vibração.
+     */
+    function showError(message) {
+        if (!feedbackMsg) return;
+        
+        feedbackMsg.innerHTML = `<span class="material-symbols-rounded">error</span> ${message}`;
+        feedbackMsg.classList.remove('hidden');
+
+        // Garante que o usuário veja o erro no topo
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Efeito de vibração (shake) apenas no banner de erro (mais suave)
+        feedbackMsg.classList.add('shake-anim');
+        setTimeout(() => feedbackMsg.classList.remove('shake-anim'), 500);
+    }
 
 });
