@@ -81,6 +81,36 @@ body {
     display: block;
 }
 
+/* Container de Dica Estilo Header (Baseado no custom.css) */
+.tip-context-header {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    min-height: 64px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    animation: fadeIn 0.5s ease;
+    margin-bottom: -4px; /* Aproxima do card de ações */
+}
+
+.tip-context-header .tip-icon {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+}
+
+.tip-context-header .tip-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-medium);
+    line-height: 1.4;
+    text-align: center;
+    margin: 0;
+}
+
 .brand-title {
     font-family: 'Inter', sans-serif;
     font-weight: 700;
@@ -132,21 +162,36 @@ body {
     opacity: 0.9;
 }
 
-.saved-context-box {
-    background: hsl(220, 14%, 95%);
-    border-radius: 24px;
-    padding: 16px;
+.saved-context-group,
+.warm-action-group {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
+}
+
+.action-area {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.action-area .btn-tonal {
+    width: 100%;
+    margin-top: 0;
 }
 
 #saved-course {
+    display: block;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--primary-hover);
+    margin-bottom: 2px; /* Pequeno respiro extra entre o curso e os detalhes */
+    line-height: 1.2;
 }
 
 #saved-details {
+    display: block;
     font-size: 0.9rem;
     color: var(--text-medium);
 }
@@ -197,6 +242,10 @@ body {
     transition: background 0.2s, transform 0.1s;
     font-family: 'Inter', sans-serif;
     box-shadow: 0 4px 12px rgba(26, 83, 69, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .cta-primary:hover {
@@ -205,6 +254,41 @@ body {
 
 .cta-primary:active {
     transform: scale(0.98);
+}
+
+.outline-btn {
+    background: #FFFFFF;
+    border: 1px solid var(--border-light);
+    width: 100%;
+    margin-top: 8px;
+}
+
+.outline-btn:hover {
+    background: #F5F7FA;
+    border-color: #d1d5db;
+}
+
+.warm-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 8px 0;
+    color: var(--text-muted);
+}
+
+.warm-divider::before,
+.warm-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.warm-divider span {
+    padding: 0 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* ========================================= */

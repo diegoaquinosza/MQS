@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Containers Principais
     const form = document.getElementById('selection-form');
     const warmDiv = document.getElementById('warm-welcome');
+    const tipContainer = document.getElementById('tip-container');
 
     // Componentes do Warm Start (Estado Logado)
     const savedCourse = document.getElementById('saved-course');
@@ -19,7 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const quickBtn = document.getElementById('btn-quick-access');
     const resetBtn = document.getElementById('btn-reset-app');
     const customAccessBtn = document.getElementById('btn-custom-access');
+    const iconCustomAccess = document.getElementById('icon-custom-access');
+    const editCustomBtn = document.getElementById('btn-edit-custom');
     const tipTextElement = document.getElementById('warm-tip-text');
+    const formCustomAccessBtn = document.getElementById('btn-form-custom-access');
+    const textFormCustomAccess = document.getElementById('text-form-custom-access');
+    const textCustomAccess = document.getElementById('text-custom-access');
 
     // Componentes do Formulário (Novo Acesso)
     const courseInput = document.getElementById('course-input');
@@ -74,24 +80,57 @@ document.addEventListener('DOMContentLoaded', () => {
     // LÓGICA DE INICIALIZAÇÃO E ESTADO
     // ============================================================
     const savedData = localStorage.getItem('mqs_user_data');
+    const customData = localStorage.getItem('mqs_custom_grid');
     const urlParams = new URLSearchParams(window.location.search);
 
     // Verifica se a ação é uma nova busca explícita via URL
     const forceNewSearch = urlParams.get('action') === 'search';
 
     // Decide entre exibir o Warm Start ou o Formulário Limpo
-    if (savedData && !forceNewSearch) {
-        const data = JSON.parse(savedData);
+    if ((savedData || customData) && !forceNewSearch) {
         form.classList.add('hidden');
         warmDiv.classList.remove('hidden');
+        if (tipContainer) tipContainer.classList.remove('hidden');
 
-        savedCourse.textContent = data.course;
-        const shiftFormatted = data.shift.charAt(0).toUpperCase() + data.shift.slice(1);
-        savedDetails.textContent = `${data.period}º Período • ${shiftFormatted}`;
+        // Dinamismo dos Botões: Verifica a Grade Personalizada
+        if (customData) {
+            customAccessBtn.className = 'cta-primary';
+            if (iconCustomAccess) iconCustomAccess.style.color = 'white';
+            if (textCustomAccess) textCustomAccess.textContent = 'Ver minha grade';
+            quickBtn.className = 'btn-tonal outline-btn';
+            if (editCustomBtn) editCustomBtn.classList.remove('hidden');
+        } else {
+            customAccessBtn.className = 'btn-tonal outline-btn';
+            if (iconCustomAccess) iconCustomAccess.style.color = 'var(--primary)';
+            if (textCustomAccess) textCustomAccess.textContent = 'Montar minha grade';
+            quickBtn.className = 'cta-primary';
+            if (editCustomBtn) editCustomBtn.classList.add('hidden');
+        }
+
+        if (savedData) {
+            // Cenário A: Tem busca padrão salva
+            const data = JSON.parse(savedData);
+            savedCourse.textContent = data.course;
+            const shiftFormatted = data.shift.charAt(0).toUpperCase() + data.shift.slice(1);
+            savedDetails.textContent = `${data.period}º Período • ${shiftFormatted}`;
+            quickBtn.textContent = "Ver grade padrão";
+        } else {
+            // Cenário B: Aluno nunca pesquisou a padrão (Edge Case tratado)
+            savedCourse.textContent = "Sem histórico padrão";
+            savedDetails.textContent = "Consulte uma grade para salvá-la";
+            quickBtn.textContent = "Consultar grade padrão";
+        }
 
     } else {
         warmDiv.classList.add('hidden');
         form.classList.remove('hidden');
+
+        // Dinamismo do Botão do Formulário
+        if (customData && textFormCustomAccess) {
+            textFormCustomAccess.textContent = "Ver minha grade";
+        } else if (textFormCustomAccess) {
+            textFormCustomAccess.textContent = "Montar minha grade";
+        }
 
         // Limpa a URL para evitar loop de estado ao recarregar a página
         if (forceNewSearch) {
@@ -103,13 +142,35 @@ document.addEventListener('DOMContentLoaded', () => {
     // INTERAÇÕES DE USUÁRIO
     // ============================================================
 
-    quickBtn.addEventListener('click', () => window.location.href = 'grade.html');
+    quickBtn.addEventListener('click', () => {
+        // Se não tem grade padrão salva, envia ele para buscar
+        if (!localStorage.getItem('mqs_user_data')) {
+            window.location.href = 'index.html?action=search';
+        } else {
+            window.location.href = 'grade.html';
+        }
+    });
+
+    if (editCustomBtn) {
+        editCustomBtn.addEventListener('click', () => {
+            window.location.href = 'custom.html';
+        });
+    }
 
     resetBtn.addEventListener('click', () => {
         // Limpeza total do estado e persistência
         localStorage.removeItem('mqs_user_data');
         warmDiv.classList.add('hidden');
+        if (tipContainer) tipContainer.classList.add('hidden');
         form.classList.remove('hidden');
+
+        // Atualização Dinâmica do botão "Minha Grade" ao voltar para o formulário
+        const hasCustomGrid = localStorage.getItem('mqs_custom_grid');
+        if (hasCustomGrid && textFormCustomAccess) {
+            textFormCustomAccess.textContent = "Ver minha grade";
+        } else if (textFormCustomAccess) {
+            textFormCustomAccess.textContent = "Montar minha grade";
+        }
 
         courseInput.value = '';
         userSelection = { course: '', shift: null, period: null };
@@ -121,18 +182,24 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(updateMiniArrows, 50);
     });
 
+    // Função auxiliar para verificar a grade e redirecionar corretamente
+    const handleCustomGridAccess = () => {
+        const hasCustomGrid = localStorage.getItem('mqs_custom_grid');
+        if (hasCustomGrid) {
+            window.location.href = 'grade.html?mode=custom';
+        } else {
+            window.location.href = 'custom.html';
+        }
+    };
+
+    // Botão de acesso na tela de Warm Start (Veteranos)
     if (customAccessBtn) {
-        customAccessBtn.addEventListener('click', () => {
-            // Verifica se já existe configuração salva
-            const hasCustomGrid = localStorage.getItem('mqs_custom_grid');
-            if (hasCustomGrid) {
-                // Se tiver, vai direto pra grade
-                window.location.href = 'grade.html?mode=custom';
-            } else {
-                // Se não tiver, manda criar
-                window.location.href = 'custom.html';
-            }
-        });
+        customAccessBtn.addEventListener('click', handleCustomGridAccess);
+    }
+
+    // Botão de acesso no Formulário Inicial (Calouros)
+    if (formCustomAccessBtn) {
+        formCustomAccessBtn.addEventListener('click', handleCustomGridAccess);
     }
 
     shiftBtns.forEach(btn => {
@@ -215,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
     // FUNCIONALIDADE: DICA DO DIA
     // ============================================================
-    if (savedData) {
+    if (savedData || localStorage.getItem('mqs_custom_grid')) {
         // Fetch em arquivo local para garantir funcionamento offline/PWA
         fetch('tip_of_day.json')
             .then(response => {

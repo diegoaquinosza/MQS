@@ -11,9 +11,23 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const scheduleView = document.getElementById('schedule-view');
     const shareBtn = document.getElementById('btn-share');
+    const shareIcon = document.getElementById('icon-share');
     const homeBtn = document.getElementById('btn-home');
-    // [NOVO] Botão de Personalização
     const customBtn = document.getElementById('btn-custom-grade');
+    const feedbackBtn = document.getElementById('btn-feedback');
+    const donateBtn = document.getElementById('btn-donate');
+    const pixPopover = document.getElementById('pix-popover');
+    const closePixBtn = document.getElementById('btn-close-pix');
+    const copyPixBtn = document.getElementById('btn-copy-pix');
+
+    // =================================================================
+    // UX NATIVA: DETECÇÃO DE PLATAFORMA PARA ÍCONE DE COMPARTILHAR
+    // =================================================================
+    if (shareIcon) {
+        // Verifica se o usuário está em um dispositivo da Apple
+        const isAppleDevice = /Mac|iPod|iPhone|iPad/.test(navigator.userAgent);
+        shareIcon.textContent = isAppleDevice ? 'ios_share' : 'share';
+    }
 
     // Controles de Navegação Horizontal
     const btnLeft = document.getElementById('scroll-left');
@@ -338,11 +352,56 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'index.html?action=search';
         });
     }
-    // [NOVO] Listener do botão de personalização
+    // Listener do botão de personalização
     if (customBtn) {
         customBtn.addEventListener('click', () => {
             window.location.href = 'custom.html';
         });
+    }
+
+    // Listener do botão de feedback (E-mail)
+    if (feedbackBtn) {
+        feedbackBtn.addEventListener('click', () => {
+            const email = 'diegoaquinosza@gmail.com';
+            const subject = encodeURIComponent('Feedback MQS');
+            const body = encodeURIComponent('Olá,\n\nEncontrei a seguinte inconsistência na grade:\n\n[Descreva aqui o problema]');
+            window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+        });
+    }
+
+    // Lógica do Botão de Doação (PIX)
+    if (donateBtn && pixPopover) {
+        donateBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            pixPopover.classList.toggle('hidden');
+        });
+
+        closePixBtn.addEventListener('click', () => {
+            pixPopover.classList.add('hidden');
+        });
+
+        // Fecha ao clicar fora do popover
+        document.addEventListener('click', (e) => {
+            if (!pixPopover.contains(e.target) && e.target !== donateBtn) {
+                pixPopover.classList.add('hidden');
+            }
+        });
+
+        if (copyPixBtn) {
+            copyPixBtn.addEventListener('click', () => {
+                const pixKey = "diegoaquinosza@gmail.com";
+                navigator.clipboard.writeText(pixKey).then(() => {
+                    const originalText = copyPixBtn.innerHTML;
+                    copyPixBtn.innerHTML = '<span class="material-symbols-rounded">check</span> Copiado!';
+                    copyPixBtn.style.background = '#4CAF50';
+                    
+                    setTimeout(() => {
+                        copyPixBtn.innerHTML = originalText;
+                        copyPixBtn.style.background = '';
+                    }, 2000);
+                });
+            });
+        }
     }
 
     if (shareBtn) {
