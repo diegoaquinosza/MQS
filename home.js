@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
     if (savedData || localStorage.getItem('mqs_custom_grid')) {
         // Fetch em arquivo local para garantir funcionamento offline/PWA
-        fetch('tip_of_day.json')
+        fetch('tip_of_day.json?v=20260302')
             .then(response => {
                 if (!response.ok) throw new Error('Erro ao ler dicas');
                 return response.json();
