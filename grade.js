@@ -15,6 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const homeBtn = document.getElementById('btn-home');
     const customBtn = document.getElementById('btn-custom-grade');
     const feedbackBtn = document.getElementById('btn-feedback');
+    const donateBtn = document.getElementById('btn-donate');
+    const pixPopover = document.getElementById('pix-popover');
+    const closePixBtn = document.getElementById('btn-close-pix');
+    const copyPixBtn = document.getElementById('btn-copy-pix');
 
     // =================================================================
     // UX NATIVA: DETECÇÃO DE PLATAFORMA PARA ÍCONE DE COMPARTILHAR
@@ -363,6 +367,41 @@ document.addEventListener('DOMContentLoaded', () => {
             const body = encodeURIComponent('Olá,\n\nEncontrei a seguinte inconsistência na grade:\n\n[Descreva aqui o problema]');
             window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
         });
+    }
+
+    // Lógica do Botão de Doação (PIX)
+    if (donateBtn && pixPopover) {
+        donateBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            pixPopover.classList.toggle('hidden');
+        });
+
+        closePixBtn.addEventListener('click', () => {
+            pixPopover.classList.add('hidden');
+        });
+
+        // Fecha ao clicar fora do popover
+        document.addEventListener('click', (e) => {
+            if (!pixPopover.contains(e.target) && e.target !== donateBtn) {
+                pixPopover.classList.add('hidden');
+            }
+        });
+
+        if (copyPixBtn) {
+            copyPixBtn.addEventListener('click', () => {
+                const pixKey = "diegoaquinosza@gmail.com";
+                navigator.clipboard.writeText(pixKey).then(() => {
+                    const originalText = copyPixBtn.innerHTML;
+                    copyPixBtn.innerHTML = '<span class="material-symbols-rounded">check</span> Copiado!';
+                    copyPixBtn.style.background = '#4CAF50';
+                    
+                    setTimeout(() => {
+                        copyPixBtn.innerHTML = originalText;
+                        copyPixBtn.style.background = '';
+                    }, 2000);
+                });
+            });
+        }
     }
 
     if (shareBtn) {

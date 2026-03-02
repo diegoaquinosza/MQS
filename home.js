@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Containers Principais
     const form = document.getElementById('selection-form');
     const warmDiv = document.getElementById('warm-welcome');
+    const tipContainer = document.getElementById('tip-container');
 
     // Componentes do Warm Start (Estado Logado)
     const savedCourse = document.getElementById('saved-course');
@@ -89,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if ((savedData || customData) && !forceNewSearch) {
         form.classList.add('hidden');
         warmDiv.classList.remove('hidden');
+        if (tipContainer) tipContainer.classList.remove('hidden');
 
         // Dinamismo dos Botões: Verifica a Grade Personalizada
         if (customData) {
@@ -159,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Limpeza total do estado e persistência
         localStorage.removeItem('mqs_user_data');
         warmDiv.classList.add('hidden');
+        if (tipContainer) tipContainer.classList.add('hidden');
         form.classList.remove('hidden');
 
         // Atualização Dinâmica do botão "Minha Grade" ao voltar para o formulário

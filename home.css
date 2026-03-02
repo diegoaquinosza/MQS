@@ -81,6 +81,36 @@ body {
     display: block;
 }
 
+/* Container de Dica Estilo Header (Baseado no custom.css) */
+.tip-context-header {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    min-height: 64px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    animation: fadeIn 0.5s ease;
+    margin-bottom: -4px; /* Aproxima do card de ações */
+}
+
+.tip-context-header .tip-icon {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+}
+
+.tip-context-header .tip-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-medium);
+    line-height: 1.4;
+    text-align: center;
+    margin: 0;
+}
+
 .brand-title {
     font-family: 'Inter', sans-serif;
     font-weight: 700;
