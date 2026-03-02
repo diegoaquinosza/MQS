@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const customConfig = JSON.parse(customConfigRaw);
-            const response = await fetch('db.json');
+            const response = await fetch('db.json?v=20260302');
             if (!response.ok) throw new Error('Erro de conexão');
             
             const database = await response.json();
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>`;
 
         try {
-            const response = await fetch('db.json');
+            const response = await fetch('db.json?v=20260302');
             if (!response.ok) throw new Error('Erro de conexão');
 
             const database = await response.json();
