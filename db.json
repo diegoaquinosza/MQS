@@ -342,7 +342,7 @@
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
                   "subject": "Prog. para Bancos de Dados",
-                  "room": "LABTEC",
+                  "room": "LABPO",
                   "prof": "Simone Dutra"
                 },
                 {
@@ -356,7 +356,7 @@
                   "timeStart": "09:15",
                   "timeEnd": "10:45",
                   "subject": "Prog. para Bancos de Dados",
-                  "room": "LABTEC",
+                  "room": "LABPO",
                   "prof": "Simone Dutra"
                 }
               ]
@@ -479,7 +479,7 @@
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
                   "subject": "Programação para Web II",
-                  "room": "LABPO",
+                  "room": "LABTEC",
                   "prof": "Fagno Alves"
                 },
                 {
@@ -493,7 +493,7 @@
                   "timeStart": "09:15",
                   "timeEnd": "10:45",
                   "subject": "Programação para Web II",
-                  "room": "LABPO",
+                  "room": "LABTEC",
                   "prof": "Fagno Alves"
                 }
               ]
@@ -839,7 +839,7 @@
                   "timeEnd": "20:30",
                   "subject": "Algoritmos e Programação",
                   "room": "LABCONF",
-                  "prof": "Leonardo José"
+                  "prof": "Leonardo Sales"
                 },
                 {
                   "type": "interval",
@@ -853,7 +853,7 @@
                   "timeEnd": "22:15",
                   "subject": "Algoritmos e Programação",
                   "room": "LABCONF",
-                  "prof": "Leonardo José"
+                  "prof": "Leonardo Sales"
                 }
               ]
             },
@@ -920,7 +920,7 @@
                   "timeEnd": "20:30",
                   "subject": "Algoritmos e Programação",
                   "room": "LABCONF",
-                  "prof": "Leonardo José"
+                  "prof": "Leonardo Sales"
                 },
                 {
                   "type": "interval",
@@ -934,7 +934,7 @@
                   "timeEnd": "22:15",
                   "subject": "Algoritmos e Programação",
                   "room": "LABCONF",
-                  "prof": "Leonardo José"
+                  "prof": "Leonardo Sales"
                 }
               ]
             },
@@ -1030,7 +1030,7 @@
                   "timeEnd": "20:30",
                   "subject": "Prog. Orientada a Objetos",
                   "room": "LABDES",
-                  "prof": "Leonardo José"
+                  "prof": "Leonardo Sales"
                 },
                 {
                   "type": "interval",
@@ -1044,7 +1044,7 @@
                   "timeEnd": "22:15",
                   "subject": "Prog. Orientada a Objetos",
                   "room": "LABDES",
-                  "prof": "Leonardo José"
+                  "prof": "Leonardo Sales"
                 }
               ]
             },
