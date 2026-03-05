@@ -204,7 +204,7 @@
                   "type": "class",
                   "timeStart": "07:30",
                   "timeEnd": "09:00",
-                  "subject": "Programação Básica para WEB",
+                  "subject": "Prog. Básica para WEB",
                   "room": "LABDES",
                   "prof": "Ricardo Loureiro"
                 },
@@ -218,7 +218,7 @@
                   "type": "class",
                   "timeStart": "09:15",
                   "timeEnd": "10:45",
-                  "subject": "Programação Básica para WEB",
+                  "subject": "Prog. Básica para WEB",
                   "room": "LABDES",
                   "prof": "Ricardo Loureiro"
                 }
@@ -1082,9 +1082,9 @@
                   "type": "class",
                   "timeStart": "19:00",
                   "timeEnd": "20:30",
-                  "subject": "Prog. Orientada a Objetos",
+                  "subject": "Prog. Básica para WEB",
                   "room": "LABTEC",
-                  "prof": "Rodrigo Luiz"
+                  "prof": "Rodrigo Santos"
                 },
                 {
                   "type": "interval",
@@ -1096,9 +1096,9 @@
                   "type": "class",
                   "timeStart": "20:45",
                   "timeEnd": "22:15",
-                  "subject": "Prog. Orientada a Objetos",
+                  "subject": "Prog. Básica para WEB",
                   "room": "LABTEC",
-                  "prof": "Rodrigo Luiz"
+                  "prof": "Rodrigo Santos"
                 }
               ]
             }
@@ -1167,7 +1167,7 @@
                   "timeEnd": "20:30",
                   "subject": "Prog. para Web Designers",
                   "room": "LABTEC",
-                  "prof": "Rodrigo Luiz"
+                  "prof": "Rodrigo Santos"
                 },
                 {
                   "type": "interval",
@@ -1181,7 +1181,7 @@
                   "timeEnd": "22:15",
                   "subject": "Prog. para Web Designers",
                   "room": "LABTEC",
-                  "prof": "Rodrigo Luiz"
+                  "prof": "Rodrigo Santos"
                 }
               ]
             },
@@ -1277,7 +1277,7 @@
                   "timeEnd": "20:30",
                   "subject": "Novas Tec. em Banco de Dados",
                   "room": "LABPO",
-                  "prof": "Rodrigo Luiz"
+                  "prof": "Rodrigo Santos"
                 },
                 {
                   "type": "interval",
@@ -1291,7 +1291,7 @@
                   "timeEnd": "22:15",
                   "subject": "Novas Tec. em Banco de Dados",
                   "room": "LABPO",
-                  "prof": "Rodrigo Luiz"
+                  "prof": "Rodrigo Santos"
                 }
               ]
             },
@@ -1468,7 +1468,7 @@
                   "timeEnd": "20:30",
                   "subject": "Extensão II",
                   "room": "LABMÍDIA",
-                  "prof": "Rodrigo Luiz"
+                  "prof": "Rodrigo Santos"
                 },
                 {
                   "type": "interval",
@@ -1482,7 +1482,7 @@
                   "timeEnd": "22:15",
                   "subject": "Extensão II",
                   "room": "LABMÍDIA",
-                  "prof": "Rodrigo Luiz"
+                  "prof": "Rodrigo Santos"
                 }
               ]
             },
