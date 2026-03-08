@@ -48,9 +48,11 @@ O projeto prioriza a experiência do usuário (UX) fundamentada em princípios d
 
 1.  **Onboarding Inteligente:** Filtros de Curso/Turno/Período com UX otimizada (Scroll horizontal e Choice Chips).
 2.  **Dashboard "Zen":** Visualização clara da aula atual com destaque visual para o dia da semana (Auto-Scroll).
-3.  **Layout Adaptativo:** Transição fluida entre visualização de Cards (Mobile) e Grade Estendida (Desktop).
-4.  **Snap & Share:** Geração automática de imagem (PNG) da grade horária para compartilhamento via WhatsApp/Galeria (Web Share API).
-5.  **Offline Ready:** Estrutura preparada para PWA com manifesto e ícones configurados.
+3.  **Mixer de Grade Horária:** Permite mesclar aulas de diferentes turnos e períodos em uma única visão personalizada, incluindo a detecção automática de "Dias Livres".
+4.  **Snap & Share:** Geração automática de imagem (PNG) da grade horária para compartilhamento via WhatsApp/Galeria (Web Share API), com ícones adaptativos para Android e iOS.
+5.  **Dica do Dia:** Micro-mensagens motivacionais e informativas carregadas dinamicamente para melhorar o engajamento do aluno.
+6.  **Offline Ready (PWA):** Estrutura preparada para instalação no dispositivo, com manifesto e carregamento instantâneo via cache local.
+
 
 ---
 
@@ -139,9 +141,12 @@ A arquitetura segue o princípio de Separação de Responsabilidades (SoC), gara
 ├── grade.js            # Motor da Grade (Async + Renderização - Antigo app.js)
 │
 ├── db.json             # Base de dados (Grade Horária)
-├── tip_of_day.json     # Micro-serviço de frases (Dica do dia)
+├── custom.html          # Interface de Personalização (Mixer de Grade)
+├── custom.js            # Lógica de Seleção e Persistência da Grade Customizada
+├── custom.css           # Estilização do Editor de Grade
 │
 ├── manifest.json       # Configuração PWA (Instalabilidade)
+
 ├── package.json        # Gerenciamento de Dependências e Scripts
 ├── README.md           # Documentação Geral do Projeto
 │
