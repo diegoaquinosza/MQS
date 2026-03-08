@@ -27,3 +27,4 @@ LICENSE
 build/
 dist/
 coverage/
+.antigravity/
