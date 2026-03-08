@@ -28,3 +28,4 @@ build/
 dist/
 coverage/
 .antigravity/
+.antigravity_docs/
