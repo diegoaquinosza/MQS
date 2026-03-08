@@ -13,7 +13,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 
-    <link rel="stylesheet" href="custom.css?v=20260302">
+    <link rel="stylesheet" href="custom.css?v=20260308">
 
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📅</text></svg>">
@@ -214,7 +214,61 @@
             </div>
         </div>
 
+        <div class="day-edit-card" data-day="Sábado">
+            <div class="day-header">
+                <span class="day-name">Sábado</span>
+                <span class="day-status">Extra</span>
+                <button type="button" class="btn-clear-day" title="Limpar dia">Limpar</button>
+            </div>
+
+            <span class="section-label" style="display: flex; align-items: center; gap: 4px;">
+                <span class="material-symbols-rounded" style="font-size: 18px; color: #FFA000;">light_mode</span>
+                Matutino
+            </span>
+            <div class="period-grid" data-shift="matutino" style="margin-bottom: 16px;">
+                <button type="button" class="period-btn" data-value="1">1</button>
+                <button type="button" class="period-btn" data-value="2">2</button>
+                <button type="button" class="period-btn" data-value="3">3</button>
+                <button type="button" class="period-btn" data-value="4">4</button>
+                <button type="button" class="period-btn" data-value="5">5</button>
+                <button type="button" class="period-btn" data-value="6">6</button>
+            </div>
+
+            <span class="section-label" style="display: flex; align-items: center; gap: 4px;">
+                <span class="material-symbols-rounded" style="font-size: 18px; color: #3949AB;">dark_mode</span>
+                Noturno
+            </span>
+            <div class="period-grid" data-shift="noturno">
+                <button type="button" class="period-btn" data-value="1">1</button>
+                <button type="button" class="period-btn" data-value="2">2</button>
+                <button type="button" class="period-btn" data-value="3">3</button>
+                <button type="button" class="period-btn" data-value="4">4</button>
+                <button type="button" class="period-btn" data-value="5">5</button>
+                <button type="button" class="period-btn" data-value="6">6</button>
+            </div>
+        </div>
+
     </main>
+
+    <!-- Estrutura Menu Flutuante (Popover) -->
+    <div id="period-context-menu" class="period-popover">
+        <button type="button" class="popover-btn" data-action="full">
+            <span class="material-symbols-rounded" style="color: var(--primary);">radio_button_checked</span>
+            Completo
+        </button>
+        <button type="button" class="popover-btn" data-action="top">
+            <span class="material-symbols-rounded" style="color: #4CAF50;">vertical_align_top</span>
+            1ª Aula
+        </button>
+        <button type="button" class="popover-btn" data-action="bottom">
+            <span class="material-symbols-rounded" style="color: #FF9800;">vertical_align_bottom</span>
+            2ª Aula
+        </button>
+        <button type="button" class="popover-btn btn-deselect" data-action="clear">
+            <span class="material-symbols-rounded">close</span>
+            Desmarcar
+        </button>
+    </div>
 
     <div class="action-bar">
         <button type="button" id="btn-clear-all" class="dock-btn-icon is-hidden" title="Limpar tudo">
@@ -228,7 +282,7 @@
         </div>
     </div>
 
-    <script src="custom.js?v=20260302"></script>
+    <script src="custom.js?v=20260308"></script>
 </body>
 
 </html>

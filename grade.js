@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const customConfig = JSON.parse(customConfigRaw);
-            const response = await fetch('db.json?v=20260302');
+            const response = await fetch('db.json?v=20260308');
             if (!response.ok) throw new Error('Erro de conexão');
             
             const database = await response.json();
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!courseData) throw new Error('Dados do curso base não encontrados.');
 
             const mixedSchedule = [];
-            const daysOrder = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta"];
+            const daysOrder = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
 
             // Super Loop Mágico: Funde Matutino e Noturno com Identificadores Visuais
             daysOrder.forEach(day => {
@@ -116,28 +116,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (config) {
                     let dayItems = []; 
                     
-                    // 1. Injeta Matutino
-                    if (config.matutino) {
-                        const matSchedule = courseData.schedules['matutino']?.[config.matutino];
-                        if (matSchedule) {
-                            const matClasses = matSchedule.find(d => d.day === day);
-                            if (matClasses && matClasses.items) {
-                                dayItems.push({ type: 'shift-label', shift: 'matutino', icon: 'light_mode', label: 'Manhã' });
-                                dayItems = dayItems.concat(matClasses.items);
+                    // 1. Injeta Matutino (Agora itera sobre as "fatias")
+                    if (config.matutino && Object.keys(config.matutino).length > 0) {
+                        dayItems.push({ type: 'shift-label', shift: 'matutino', icon: 'light_mode', label: 'Manhã' });
+                        
+                        Object.keys(config.matutino).forEach(periodStr => {
+                            const selectionType = config.matutino[periodStr]; // 'full', 'top', 'bottom'
+                            const matSchedule = courseData.schedules['matutino']?.[periodStr];
+                            
+                            if (matSchedule) {
+                                const dayClasses = matSchedule.find(d => d.day === day);
+                                if (dayClasses && dayClasses.items) {
+                                    dayItems = dayItems.concat(filterScheduleItems(dayClasses.items, selectionType));
+                                }
                             }
-                        }
+                        });
                     }
 
-                    // 2. Injeta Noturno
-                    if (config.noturno) {
-                        const notSchedule = courseData.schedules['noturno']?.[config.noturno];
-                        if (notSchedule) {
-                            const notClasses = notSchedule.find(d => d.day === day);
-                            if (notClasses && notClasses.items) {
-                                dayItems.push({ type: 'shift-label', shift: 'noturno', icon: 'dark_mode', label: 'Noite' });
-                                dayItems = dayItems.concat(notClasses.items);
+                    // 2. Injeta Noturno (Itera sobre as "fatias")
+                    if (config.noturno && Object.keys(config.noturno).length > 0) {
+                        dayItems.push({ type: 'shift-label', shift: 'noturno', icon: 'dark_mode', label: 'Noite' });
+                        
+                        Object.keys(config.noturno).forEach(periodStr => {
+                            const selectionType = config.noturno[periodStr]; // 'full', 'top', 'bottom'
+                            const notSchedule = courseData.schedules['noturno']?.[periodStr];
+                            
+                            if (notSchedule) {
+                                const dayClasses = notSchedule.find(d => d.day === day);
+                                if (dayClasses && dayClasses.items) {
+                                    dayItems = dayItems.concat(filterScheduleItems(dayClasses.items, selectionType));
+                                }
                             }
-                        }
+                        });
                     }
 
                     // 3. Empacota o dia (Se tem aulas)
@@ -147,9 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             items: dayItems
                         });
                     }
-                } else {
-                    // 4. [NOVO] INJEÇÃO DO DIA LIVRE (GHOST CARD)
-                    // Se o aluno não configurou nada para este dia, criamos um card de descanso
+                } else if (day !== "Sábado") { // Regra do Sábado Oculto: não injeta Ghost Card nele
+                    // 4. INJEÇÃO DO DIA LIVRE (GHOST CARD)
                     mixedSchedule.push({
                         day: day,
                         items: [{
@@ -171,6 +180,29 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error(error);
             renderError(error.message, "Reconfigurar", "custom.html");
         }
+    }
+
+    /**
+     * Filtra os itens de aula baseado no tipo de seleção (full, top, bottom)
+     */
+    function filterScheduleItems(itemsArray, selectionType) {
+        if (!itemsArray || itemsArray.length === 0) return [];
+        
+        // Formato padrão do MQS: [Aula 1, Intervalo, Aula 2]
+        if (selectionType === 'full') {
+            return itemsArray; // Pega tudo
+        } else if (selectionType === 'top') {
+            // Retorna apenas os itens que terminam ANTES ou IGUAL ao início do intervalo
+            // (Para garantir compatibilidade, pegamos o primeiro item class)
+            const firstClass = itemsArray.find(item => item.type === 'class');
+            return firstClass ? [firstClass] : [];
+        } else if (selectionType === 'bottom') {
+            // Retorna a segunda aula
+            const classesOnly = itemsArray.filter(item => item.type === 'class');
+            return classesOnly.length > 1 ? [classesOnly[1]] : classesOnly; 
+        }
+        
+        return itemsArray; // Fallback
     }
 
     // [HELPER] Função auxiliar para erros (para não repetir código)
@@ -197,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>`;
 
         try {
-            const response = await fetch('db.json?v=20260302');
+            const response = await fetch('db.json?v=20260308');
             if (!response.ok) throw new Error('Erro de conexão');
 
             const database = await response.json();

@@ -282,12 +282,97 @@ body {
     background: #F9FAFB;
 }
 
-.period-btn.active {
+/* Modificadores Visuais de Seleção (Círculo Fatiado) */
+.period-btn.pill-full {
     background: var(--primary);
     color: white;
     border-color: var(--primary);
     transform: scale(1.1);
     box-shadow: 0 4px 10px rgba(0, 137, 123, 0.2);
+}
+
+.period-btn.pill-top {
+    /* Gradiente: Metade superior preenchida, inferior branca */
+    background: linear-gradient(to bottom, var(--primary) 50%, #ffffff 50%);
+    color: var(--text-main); /* Cor de texto neutra para contraste nas duas áreas */
+    border-color: var(--primary);
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 137, 123, 0.2);
+}
+
+/* Força a cor branca para o número se ele estiver na parte superior (usando pseudo-elemento ou técnica similar se precisarmos de cor de texto dinâmica, mas no caso do Inter, o text-main escuro é legível no verde primary). 
+Para segurança visual, vamos manter uma cor de texto mais escura para esses pills híbridos */
+
+.period-btn.pill-bottom {
+    /* Gradiente: Metade inferior preenchida, superior branca */
+    background: linear-gradient(to top, var(--primary) 50%, #ffffff 50%);
+    color: var(--text-main);
+    border-color: var(--primary);
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 137, 123, 0.2);
+}
+
+/* ========================================= */
+/* MENU FLUTUANTE (POPOVER DE SELEÇÃO)       */
+/* ========================================= */
+.period-popover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--surface);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 1000;
+    width: 140px;
+    border: 1px solid var(--border-light);
+    
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    pointer-events: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.period-popover.is-active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.popover-btn {
+    background: transparent;
+    border: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-main);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.1s;
+}
+
+.popover-btn:hover {
+    background: #F3F4F6;
+}
+
+.popover-btn.btn-deselect {
+    color: #E53935;
+    border-top: 1px solid var(--border-light);
+    border-radius: 0 0 8px 8px;
+    margin-top: 4px;
+    padding-top: 12px;
+}
+
+.popover-btn.btn-deselect:hover {
+    background: #FFEBEE;
 }
 
 /* Botão de Limpar (Opcional por dia) */

@@ -4,12 +4,17 @@
  */
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Referências aos Cards de Dia (Segunda, Terça, etc.)
+    // Referências aos Cards de Dia e Popover
     const dayCards = document.querySelectorAll('.day-edit-card');
     const saveBtn = document.getElementById('btn-save-custom');
     const feedbackMsg = document.getElementById('form-feedback');
     const editContainer = document.querySelector('.edit-container');
-    const clearAllBtn = document.getElementById('btn-clear-all'); // Novo botão mestre de limpar
+    const clearAllBtn = document.getElementById('btn-clear-all');
+    
+    // Elementos do Popover
+    const popover = document.getElementById('period-context-menu');
+    const popoverBtns = popover.querySelectorAll('.popover-btn');
+    let currentTargetBtn = null; // Armazena qual botão abriu o popover
 
     // Chave de armazenamento (O "Banco de Dados" local)
     const STORAGE_KEY = 'mqs_custom_grid';
@@ -33,15 +38,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 const card = document.querySelector(`.day-edit-card[data-day="${dayName}"]`);
 
                 if (card && dayConfig) {
-                    // Ativa período Matutino (se existir)
+                    // Ativa período Matutino (agora é um objeto de fatias)
                     if (dayConfig.matutino) {
-                        const btn = card.querySelector(`.period-grid[data-shift="matutino"] .period-btn[data-value="${dayConfig.matutino}"]`);
-                        if (btn) btn.classList.add('active');
+                        Object.keys(dayConfig.matutino).forEach(periodVal => {
+                            const btn = card.querySelector(`.period-grid[data-shift="matutino"] .period-btn[data-value="${periodVal}"]`);
+                            if (btn) applySelectionVisuals(btn, dayConfig.matutino[periodVal]);
+                        });
                     }
-                    // Ativa período Noturno (se existir)
+                    // Ativa período Noturno (agora é um objeto de fatias)
                     if (dayConfig.noturno) {
-                        const btn = card.querySelector(`.period-grid[data-shift="noturno"] .period-btn[data-value="${dayConfig.noturno}"]`);
-                        if (btn) btn.classList.add('active');
+                        Object.keys(dayConfig.noturno).forEach(periodVal => {
+                            const btn = card.querySelector(`.period-grid[data-shift="noturno"] .period-btn[data-value="${periodVal}"]`);
+                            if (btn) applySelectionVisuals(btn, dayConfig.noturno[periodVal]);
+                        });
                     }
                     updateCardStatus(card);
                 }
@@ -66,18 +75,23 @@ document.addEventListener('DOMContentLoaded', () => {
         periodGrids.forEach(grid => {
             const btns = grid.querySelectorAll('.period-btn');
 
+            // Lógica de abertura do Popover ao clicar nos botões numéricos
             btns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    // Se clicar num botão já ativo, ele desmarca (permite remover apenas 1 turno)
-                    if (btn.classList.contains('active')) {
-                        btn.classList.remove('active');
-                    } else {
-                        // Remove ativo dos vizinhos da mesma linha e ativa o clicado
-                        btns.forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Evita que o click feche o popover imediatamente
+                    
+                    // Se clicar no mesmo botão que já está com o popover aberto, fecha o popover
+                    if (currentTargetBtn === btn && popover.classList.contains('is-active')) {
+                        closePopover();
+                        return;
                     }
+
+                    // [REMOVIDO] A regra antiga de exclusividade que impedia montar
+                    // 1ª aula do 4º per + 2ª aula do 5º per no mesmo turno.
+
+                    openPopover(btn);
                     updateCardStatus(card);
-                    checkFormState(); // Atualiza o botão mestre
+                    checkFormState(); 
                 });
             });
         });
@@ -104,8 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
      * Atualiza visualmente o card para indicar se está preenchido ou vazio.
      */
     function updateCardStatus(card) {
-        // Verifica se existe algum botão de período ativo (Matutino ou Noturno)
-        const hasSelection = card.querySelector('.period-btn.active') !== null;
+        // Verifica se existe algum botão de período ativo (com qualquer uma das 3 classes novas)
+        const hasSelection = card.querySelector('.period-btn.pill-full, .period-btn.pill-top, .period-btn.pill-bottom') !== null;
 
         // Adiciona ou remove a classe de preenchimento
         if (hasSelection) {
@@ -117,15 +131,92 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ============================================================
-    // 3. ESTADO DINÂMICO E SALVAMENTO
+    // 3. FUNÇÕES UTILITÁRIAS E POPOVER
+    // ============================================================
+
+    // Função que aplica a classe e o dataset baseado no salvamento ou clique
+    function applySelectionVisuals(btn, type) {
+        clearSelectionVisuals(btn); // Limpa resíduos
+        if (type === 'full') btn.classList.add('pill-full');
+        else if (type === 'top') btn.classList.add('pill-top');
+        else if (type === 'bottom') btn.classList.add('pill-bottom');
+    }
+
+    // Função que remove todas as classes daquele botão
+    function clearSelectionVisuals(btn) {
+        btn.classList.remove('pill-full', 'pill-top', 'pill-bottom');
+    }
+
+    // Identifica que tipo de botão é baseado nas classes CSS aplicadas (útil para salvar no LocalStorage)
+    function getSelectionType(btn) {
+        if (btn.classList.contains('pill-full')) return 'full';
+        if (btn.classList.contains('pill-top')) return 'top';
+        if (btn.classList.contains('pill-bottom')) return 'bottom';
+        return null;
+    }
+
+    // --- LÓGICA DO MENU POPOVER ---
+
+    function openPopover(targetBtn) {
+        currentTargetBtn = targetBtn;
+        
+        // Pega as coordenadas matemáticas exatas do botão clicado em relação ao viewport
+        const rect = targetBtn.getBoundingClientRect();
+        
+        // Posicionamento base via JS
+        // Precisamos compensar o scroll (window.scrollY) pois o popover é "absolute" (comportando-se como fixed aqui)
+        popover.style.top = `${rect.top + window.scrollY - popover.offsetHeight - 12}px`;
+        popover.style.left = `${rect.left + (rect.width / 2) - (popover.offsetWidth / 2)}px`;
+
+        popover.classList.add('is-active');
+    }
+
+    function closePopover() {
+        popover.classList.remove('is-active');
+        currentTargetBtn = null;
+    }
+
+    // Eventos do popover (Clicks nas opções de aula)
+    popoverBtns.forEach(pBtn => {
+        pBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!currentTargetBtn) return;
+
+            const action = pBtn.dataset.action;
+            const cardParent = currentTargetBtn.closest('.day-edit-card');
+
+            if (action === 'clear') {
+                clearSelectionVisuals(currentTargetBtn);
+            } else {
+                applySelectionVisuals(currentTargetBtn, action);
+            }
+
+            closePopover();
+            if (cardParent) updateCardStatus(cardParent);
+            checkFormState();
+        });
+    });
+
+    // Fechar popover se clicar fora de qualquer coisa
+    document.addEventListener('click', (e) => {
+        if (popover.classList.contains('is-active')) {
+            // Se o alvo não estiver dentro do popover e nem for um period-btn, fecha
+            if (!popover.contains(e.target) && !e.target.classList.contains('period-btn')) {
+                closePopover();
+            }
+        }
+    });
+
+    // ============================================================
+    // 4. ESTADO DINÂMICO E SALVAMENTO
     // ============================================================
 
     // Evento do Botão Mestre de Limpar Tudo
     if (clearAllBtn) {
         clearAllBtn.addEventListener('click', () => {
-            // Remove a seleção de todos os botões de período ativos
-            const allActiveBtns = document.querySelectorAll('.period-btn.active');
-            allActiveBtns.forEach(b => b.classList.remove('active'));
+            // Remove todas as seleções preenchendo as classes visuais corretas
+            const allBtns = document.querySelectorAll('.period-btn');
+            allBtns.forEach(b => clearSelectionVisuals(b));
             
             // Atualiza o status visual (borda e fundo) de todos os cards
             dayCards.forEach(card => {
@@ -146,7 +237,8 @@ document.addEventListener('DOMContentLoaded', () => {
      * Verifica o estado geral da tela para adaptar o botão principal.
      */
     function checkFormState() {
-        const hasAnySelection = document.querySelector('.period-btn.active') !== null;
+        // Verifica se há seleções considerando as novas classes
+        const hasAnySelection = document.querySelectorAll('.period-btn.pill-full, .period-btn.pill-top, .period-btn.pill-bottom').length > 0;
         const hasSavedGrid = localStorage.getItem(STORAGE_KEY) !== null;
 
         // Mostra ou esconde o botão da lixeira mestre
@@ -171,43 +263,116 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // ============================================================
+    // 5. VALIDAÇÃO DE CONFLITOS E SALVAMENTO SEGURO
+    // ============================================================
+
+    /**
+     * Valida se existem aulas sendo selecionadas ao mesmo tempo no mesmo dia
+     * (Ex: Pegar 2º Período Matutino Completo e 4º Período Matutino Completo)
+     */
+    function validateSchedule(gridObject) {
+        for (const [day, dayConfig] of Object.entries(gridObject)) {
+            // Se a pessoa misturou algo no mesmo dia num mesmo turno, precisamos checar.
+            // Para Matutino:
+            if (dayConfig.matutino) {
+                const matSelections = Object.values(dayConfig.matutino);
+                const hasFull = matSelections.includes('full');
+                
+                // Conflitos mapeados:
+                // 1. Tem 1 Full e mais QUALQUER outra coisa (Top, Bottom ou outro Full)
+                if (hasFull && matSelections.length > 1) {
+                    return `Conflito (Manhã de ${day}): Você selecionou um período completo junto de outras aulas.`;
+                }
+                
+                // 2. Tem mais de 1 Top (2 professores diferentes dando a 1ª aula)
+                if (matSelections.filter(x => x === 'top').length > 1) {
+                    return `Conflito (Manhã de ${day}): Você selecionou mais de uma 1ª Aula no mesmo turno.`;
+                }
+
+                // 3. Tem mais de 1 Bottom (2 professores diferentes dando a 2ª aula)
+                if (matSelections.filter(x => x === 'bottom').length > 1) {
+                    return `Conflito (Manhã de ${day}): Você selecionou mais de uma 2ª Aula no mesmo turno.`;
+                }
+            }
+
+            // Para Noturno (Mesma Lógica Numérica O[1]):
+            if (dayConfig.noturno) {
+                const notSelections = Object.values(dayConfig.noturno);
+                const hasFull = notSelections.includes('full');
+                
+                if (hasFull && notSelections.length > 1) {
+                    return `Conflito (Noite de ${day}): Você selecionou um período completo junto de outras aulas.`;
+                }
+                if (notSelections.filter(x => x === 'top').length > 1) {
+                    return `Conflito (Noite de ${day}): Você selecionou mais de uma 1ª Aula no mesmo turno.`;
+                }
+                if (notSelections.filter(x => x === 'bottom').length > 1) {
+                    return `Conflito (Noite de ${day}): Você selecionou mais de uma 2ª Aula no mesmo turno.`;
+                }
+            }
+        }
+        return null; // Null significa Sucesso
+    }
+
     saveBtn.addEventListener('click', () => {
-        const hasAnySelection = document.querySelector('.period-btn.active') !== null;
+        const hasAnySelection = document.querySelectorAll('.period-btn.pill-full, .period-btn.pill-top, .period-btn.pill-bottom').length > 0;
         const hasSavedGrid = localStorage.getItem(STORAGE_KEY) !== null;
 
-        // CENA 1: Usuário limpou tudo e já tinha grade -> Deletar Grade!
         if (!hasAnySelection && hasSavedGrid) {
             localStorage.removeItem(STORAGE_KEY);
             saveBtn.innerHTML = `<span class="material-symbols-rounded">delete_forever</span> Grade Apagada!`;
-            
-            setTimeout(() => {
-                // Ao apagar, volta para a home para recalcular estado de veterano
-                window.location.href = 'index.html';
-            }, 600);
+            setTimeout(() => window.location.href = 'index.html', 600);
             return;
         }
 
-        // CENA 2: Tela vazia, mas ele não tem grade salva (Tentando salvar o nada)
         if (!hasAnySelection) {
             showError("Selecione pelo menos um período para criar sua grade!");
             return;
         }
 
-        // CENA 3: Fluxo Feliz -> Montar e salvar a grade
+        // Fluxo Feliz -> Montar a grade lendo as fatias
         const finalGrid = {};
         
         dayCards.forEach(card => {
             const dayName = card.dataset.day;
-            const matutinoBtn = card.querySelector('.period-grid[data-shift="matutino"] .period-btn.active');
-            const noturnoBtn = card.querySelector('.period-grid[data-shift="noturno"] .period-btn.active');
+            // Busca apenas botões que tem ALGUMA seleção de classe fatiada
+            const matutinoBtns = card.querySelectorAll('.period-grid[data-shift="matutino"] .period-btn.pill-full, .period-grid[data-shift="matutino"] .period-btn.pill-top, .period-grid[data-shift="matutino"] .period-btn.pill-bottom');
+            const noturnoBtns = card.querySelectorAll('.period-grid[data-shift="noturno"] .period-btn.pill-full, .period-grid[data-shift="noturno"] .period-btn.pill-top, .period-grid[data-shift="noturno"] .period-btn.pill-bottom');
 
-            if (matutinoBtn || noturnoBtn) {
+            if (matutinoBtns.length > 0 || noturnoBtns.length > 0) {
                 finalGrid[dayName] = {};
-                if (matutinoBtn) finalGrid[dayName].matutino = matutinoBtn.dataset.value;
-                if (noturnoBtn) finalGrid[dayName].noturno = noturnoBtn.dataset.value;
+                
+                if (matutinoBtns.length > 0) {
+                    finalGrid[dayName].matutino = {};
+                    matutinoBtns.forEach(btn => {
+                        finalGrid[dayName].matutino[btn.dataset.value] = getSelectionType(btn);
+                    });
+                }
+                
+                if (noturnoBtns.length > 0) {
+                    finalGrid[dayName].noturno = {};
+                    noturnoBtns.forEach(btn => {
+                        finalGrid[dayName].noturno[btn.dataset.value] = getSelectionType(btn);
+                    });
+                }
             }
         });
 
+        // ==========================
+        // VALIDAÇÃO ANTES DE SALVAR
+        // ==========================
+        const conflictError = validateSchedule(finalGrid);
+        
+        if (conflictError) {
+            showError(conflictError);
+            // Dá um feedback visual vibrando o botão
+            saveBtn.classList.add('shake-anim');
+            setTimeout(() => saveBtn.classList.remove('shake-anim'), 400);
+            return;
+        }
+
+        // Se passar da validação, salva!
         localStorage.setItem(STORAGE_KEY, JSON.stringify(finalGrid));
 
         saveBtn.innerHTML = `<span class="material-symbols-rounded">check_circle</span> Grade Salva!`;
