@@ -76,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * [NOVO] O "Mixer" de Grade.
-     * Constrói uma grade única misturando aulas de diferentes turnos/períodos.
+     * Busca, mescla e renderiza uma grade mista com base na configuração personalizada do usuário.
+     * Incorpora migração silenciosa para interpretar configurações antigas (em string).
      */
     async function fetchCustomSchedule() {
         // Reutiliza o loading visual
@@ -97,6 +97,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const customConfig = JSON.parse(customConfigRaw);
+            let hasMigrated = false;
+
+            // ===== INÍCIO DA MIGRAÇÃO SILENCIOSA =====
+            Object.keys(customConfig).forEach(day => {
+                if (customConfig[day].matutino && typeof customConfig[day].matutino === 'string') {
+                    const oldVal = customConfig[day].matutino;
+                    customConfig[day].matutino = {};
+                    customConfig[day].matutino[oldVal] = 'full';
+                    hasMigrated = true;
+                }
+                if (customConfig[day].noturno && typeof customConfig[day].noturno === 'string') {
+                    const oldVal = customConfig[day].noturno;
+                    customConfig[day].noturno = {};
+                    customConfig[day].noturno[oldVal] = 'full';
+                    hasMigrated = true;
+                }
+            });
+
+            if (hasMigrated) {
+                localStorage.setItem('mqs_custom_grid', JSON.stringify(customConfig));
+            }
+            // ===== FIM DA MIGRAÇÃO SILENCIOSA =====
+
             const response = await fetch('db.json?v=20260308');
             if (!response.ok) throw new Error('Erro de conexão');
             
@@ -116,12 +139,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (config) {
                     let dayItems = []; 
                     
-                    // 1. Injeta Matutino (Agora itera sobre as "fatias")
+                    // 1. Processar turnos do Matutino
                     if (config.matutino && Object.keys(config.matutino).length > 0) {
                         dayItems.push({ type: 'shift-label', shift: 'matutino', icon: 'light_mode', label: 'Manhã' });
                         
                         Object.keys(config.matutino).forEach(periodStr => {
-                            const selectionType = config.matutino[periodStr]; // 'full', 'top', 'bottom'
+                            const selectionType = config.matutino[periodStr];
                             const matSchedule = courseData.schedules['matutino']?.[periodStr];
                             
                             if (matSchedule) {
@@ -133,12 +156,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     }
 
-                    // 2. Injeta Noturno (Itera sobre as "fatias")
+                    // 2. Processar turnos do Noturno
                     if (config.noturno && Object.keys(config.noturno).length > 0) {
                         dayItems.push({ type: 'shift-label', shift: 'noturno', icon: 'dark_mode', label: 'Noite' });
                         
                         Object.keys(config.noturno).forEach(periodStr => {
-                            const selectionType = config.noturno[periodStr]; // 'full', 'top', 'bottom'
+                            const selectionType = config.noturno[periodStr];
                             const notSchedule = courseData.schedules['noturno']?.[periodStr];
                             
                             if (notSchedule) {
@@ -157,8 +180,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             items: dayItems
                         });
                     }
-                } else if (day !== "Sábado") { // Regra do Sábado Oculto: não injeta Ghost Card nele
-                    // 4. INJEÇÃO DO DIA LIVRE (GHOST CARD)
+                } else if (day !== "Sábado") {
+                    // 4. Injeta Dia Livre (Cartão Fantasma) para dias da semana sem aulas
                     mixedSchedule.push({
                         day: day,
                         items: [{
@@ -173,7 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (mixedSchedule.length === 0) throw new Error("Sua grade está vazia. Configure os dias.");
 
-            // Reutiliza a renderização padrão (O segredo do sucesso!)
             renderSchedule(mixedSchedule);
 
         } catch (error) {
@@ -183,7 +205,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Filtra os itens de aula baseado no tipo de seleção (full, top, bottom)
+     * Filtra um array de itens da grade com base na seleção de fração feita pelo usuário.
+     * @param {Array} itemsArray - O array bruto de itens para um determinado dia/período.
+     * @param {'full'|'top'|'bottom'} selectionType - O tipo de fração selecionada.
+     * @returns {Array} - O array filtrado de itens que representa a fração selecionada.
      */
     function filterScheduleItems(itemsArray, selectionType) {
         if (!itemsArray || itemsArray.length === 0) return [];

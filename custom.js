@@ -1,6 +1,7 @@
 /**
- * Controlador da Tela de Personalização de Grade (custom.html)
- * Gerencia a seleção de turno e período por dia da semana e salva no LocalStorage.
+ * Controlador da Aplicação para a Tela de Grade Personalizada (custom.html).
+ * Gerencia a seleção de períodos por turnos/dias e persiste o estado no LocalStorage.
+ * Lida com a migração silenciosa de formatos de grade antigos para o formato baseado em objetos.
  */
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -25,27 +26,48 @@ document.addEventListener('DOMContentLoaded', () => {
     loadSavedState();
     checkFormState();
 
+    /**
+     * Tenta carregar a grade personalizada previamente salva no LocalStorage.
+     * Migra silenciosamente as antigas grades primitivas "baseadas em string" para um
+     * formato baseado em objeto compatível antes da renderização.
+     */
     function loadSavedState() {
         const savedData = localStorage.getItem(STORAGE_KEY);
         if (!savedData) return;
 
         try {
             const gridConfig = JSON.parse(savedData);
+            let hasMigrated = false;
 
             // Para cada dia salvo, ativa os botões correspondentes na tela
             Object.keys(gridConfig).forEach(dayName => {
-                const dayConfig = gridConfig[dayName]; // Ex: { matutino: "3", noturno: "2" }
+                const dayConfig = gridConfig[dayName]; // Ex formato antigo: { matutino: "3", noturno: "2" }
                 const card = document.querySelector(`.day-edit-card[data-day="${dayName}"]`);
 
                 if (card && dayConfig) {
-                    // Ativa período Matutino (agora é um objeto de fatias)
+                    // ===== INÍCIO DA MIGRAÇÃO SILENCIOSA =====
+                    if (typeof dayConfig.matutino === 'string') {
+                        const oldVal = dayConfig.matutino;
+                        dayConfig.matutino = {};
+                        dayConfig.matutino[oldVal] = 'full';
+                        hasMigrated = true;
+                    }
+                    if (typeof dayConfig.noturno === 'string') {
+                        const oldVal = dayConfig.noturno;
+                        dayConfig.noturno = {};
+                        dayConfig.noturno[oldVal] = 'full';
+                        hasMigrated = true;
+                    }
+                    // ===== FIM DA MIGRAÇÃO SILENCIOSA =====
+
+                    // Ativa período Matutino (agora é sempre um objeto de fatias)
                     if (dayConfig.matutino) {
                         Object.keys(dayConfig.matutino).forEach(periodVal => {
                             const btn = card.querySelector(`.period-grid[data-shift="matutino"] .period-btn[data-value="${periodVal}"]`);
                             if (btn) applySelectionVisuals(btn, dayConfig.matutino[periodVal]);
                         });
                     }
-                    // Ativa período Noturno (agora é um objeto de fatias)
+                    // Ativa período Noturno
                     if (dayConfig.noturno) {
                         Object.keys(dayConfig.noturno).forEach(periodVal => {
                             const btn = card.querySelector(`.period-grid[data-shift="noturno"] .period-btn[data-value="${periodVal}"]`);
@@ -55,6 +77,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     updateCardStatus(card);
                 }
             });
+
+            // Se convertemos dados antigos, salvamos imediatamente e avisamos o usuário
+            if (hasMigrated) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(gridConfig));
+                showFeedback("✨ Atualizamos sua grade! Agora você pode fatiar os horários e mesclar aulas clicando nelas.", "info");
+            }
+
         } catch (e) {
             console.error("Erro ao carregar grade salva:", e);
             localStorage.removeItem(STORAGE_KEY); // Limpa se estiver corrompido
@@ -67,11 +96,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
 
     dayCards.forEach(card => {
-        // Agora pegamos as duas linhas de períodos separadamente
         const periodGrids = card.querySelectorAll('.period-grid');
         const clearBtn = card.querySelector('.btn-clear-day');
 
-        // Para cada linha de períodos (Matutino ou Noturno)
         periodGrids.forEach(grid => {
             const btns = grid.querySelectorAll('.period-btn');
 
@@ -115,18 +142,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /**
-     * Atualiza visualmente o card para indicar se está preenchido ou vazio.
+     * Indica visualmente se um cartão de dia específico contém alguma seleção de período ativa.
+     * @param {HTMLElement} card - O elemento DOM que representa o cartão do dia.
      */
     function updateCardStatus(card) {
-        // Verifica se existe algum botão de período ativo (com qualquer uma das 3 classes novas)
         const hasSelection = card.querySelector('.period-btn.pill-full, .period-btn.pill-top, .period-btn.pill-bottom') !== null;
-
-        // Adiciona ou remove a classe de preenchimento
-        if (hasSelection) {
-            card.classList.add('is-filled');
-        } else {
-            card.classList.remove('is-filled');
-        }
+        card.classList.toggle('is-filled', hasSelection);
     }
 
 
@@ -134,9 +155,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. FUNÇÕES UTILITÁRIAS E POPOVER
     // ============================================================
 
-    // Função que aplica a classe e o dataset baseado no salvamento ou clique
+    /**
+     * Aplica a classe de seleção visual apropriada a um botão de período fornecido.
+     * @param {HTMLElement} btn - O botão alvo.
+     * @param {'full'|'top'|'bottom'} type - O tipo de seleção a aplicar.
+     */
     function applySelectionVisuals(btn, type) {
-        clearSelectionVisuals(btn); // Limpa resíduos
+        clearSelectionVisuals(btn);
         if (type === 'full') btn.classList.add('pill-full');
         else if (type === 'top') btn.classList.add('pill-top');
         else if (type === 'bottom') btn.classList.add('pill-bottom');
@@ -268,8 +293,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
 
     /**
-     * Valida se existem aulas sendo selecionadas ao mesmo tempo no mesmo dia
-     * (Ex: Pegar 2º Período Matutino Completo e 4º Período Matutino Completo)
+     * Valida se um determinado objeto de grade personalizada tem conflitos de seleção de períodos
+     * dentro do mesmo turno (ex: selecionar 'full' junto com uma seção 'top' ou 'bottom').
+     * 
+     * @param {Object} gridObject - A configuração da grade construída mapeada por dia.
+     * @returns {string|null} - Uma mensagem de erro caso seja detectado um conflito, caso contrário null.
      */
     function validateSchedule(gridObject) {
         for (const [day, dayConfig] of Object.entries(gridObject)) {
@@ -385,20 +413,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /**
-     * Exibe feedback visual de erro padronizado com animação de vibração.
+     * Exibe feedback visual genérico com animação e cores personalizadas
      */
-    function showError(message) {
+    function showFeedback(message, type = 'error') {
         if (!feedbackMsg) return;
         
-        feedbackMsg.innerHTML = `<span class="material-symbols-rounded">error</span> ${message}`;
+        let icon = 'error';
+        let bg = '#FFEBEE';
+        let color = '#C62828';
+        let border = '#EF9A9A';
+
+        if (type === 'info') {
+            icon = 'auto_awesome';
+            bg = '#E3F2FD';
+            color = '#1565C0';
+            border = '#90CAF9';
+        } else if (type === 'success') {
+            icon = 'check_circle';
+            bg = '#E8F5E9';
+            color = '#2E7D32';
+            border = '#A5D6A7';
+        }
+
+        feedbackMsg.innerHTML = `<span class="material-symbols-rounded">${icon}</span> ${message}`;
+        feedbackMsg.style.background = bg;
+        feedbackMsg.style.color = color;
+        feedbackMsg.style.borderColor = border;
         feedbackMsg.classList.remove('hidden');
 
-        // Garante que o usuário veja o erro no topo
         window.scrollTo({ top: 0, behavior: 'smooth' });
         
-        // Efeito de vibração (shake) apenas no banner de erro (mais suave)
         feedbackMsg.classList.add('shake-anim');
         setTimeout(() => feedbackMsg.classList.remove('shake-anim'), 500);
+    }
+
+    function showError(message) {
+        showFeedback(message, 'error');
     }
 
 });
